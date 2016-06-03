@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/app/swiper.min.css" />
+	<script type="text/javascript" src="../../js/app/common/highcharts_pie.js"></script>
+	<script type="text/javascript" src="../../js/app/common/exporting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/swiper.jquery.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/BL/MBLMG0M2.js"></script>
+	<style>
+	.swiper-slide img {
+	  width: 100%;
+	  height: 51px;
+	}
+	</style>
+	<script>TITLE('모바일 청구서 상세');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('모바일 청구서 상세');	</script>
+	<div id="container" class="clearfix dispNone">
+		<div class="topLogoDiv">
+			<!-- <h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2> -->
+		</div>
+		<div class="content">
+			<div class="month_view">
+				<p class="monthViewList">
+					<a href="javascript:void(0);" class="prev_month">이전 월 보기</a>
+					<span class="">&nbsp; 년 &nbsp; 월</span>
+					<a href="javascript:void(0);" class="next_month">다음 월 보기</a>
+				</p>
+				<p class="list"><a href="javascript:void(0);" class="view_list">모바일 청구서 목록보기</a></p>
+			</div>
+			<div class="box_type3">
+				<ul class="topInfoView">
+					<li class="tit"><strong>납입자번호</strong> <span class="col_red">&nbsp;</span></li>
+					<li><strong>고객명</strong>&nbsp;</li>
+					<li><strong>고객주소</strong>&nbsp;</li>
+				</ul>
+			</div>
+			<div class="box_form">
+				<ul>
+					<li class="middleInfoView">
+						<a href="javascript:void(0);">
+							<div>
+								<p class="form_title">&nbsp;</p>
+								<p class="form_view">&nbsp;</p>
+							</div>
+							<div class="pt10">
+								<p class="form_closed"><span class="bg_green">미납</span> 납부마감일 <span class="col_red">&nbsp;</span></p>
+								<p class="form_price">&nbsp;</p>
+							</div>
+						</a>
+						<p class="tac pt10 dispNone"><a href="javascript:void(0);" class="Button red big billBtn" >납부하기</a></p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="swiper-bg">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide swipe1"><a href="javascript:void(0);"><img src="../../images/tab_bill1_off.png" alt="기본정보" /></a></div>
+					<div class="swiper-slide swipe2"><a href="javascript:void(0);"><img src="../../images/tab_bill2_off.png" alt="청구내역" /></a></div>
+					<div class="swiper-slide swipe3"><a href="javascript:void(0);"><img src="../../images/tab_bill3_off.png" alt="상세내역" /></a></div>
+					<div class="swiper-slide swipe4"><a href="javascript:void(0);"><img src="../../images/tab_bill4_off.png" alt="미납내역" /></a></div>
+					<div class="swiper-slide swipe5"><a href="javascript:void(0);"><img src="../../images/tab_bill5_off.png" alt="납부정보" /></a></div>
+					<div class="swiper-slide swipe6"><a href="javascript:void(0);"><img src="../../images/tab_bill6_off.png" alt="고객안내" /></a></div>
+				</div>
+			</div>
+			<div class="swiper-button-next"><a href="#"><span style="display: none;">다음버튼보기</span></a></div>
+			<div class="swiper-button-prev"><a href="#"><span style="display: none;">이전버튼보기</span></a></div>
+		</div>
+		  <!-- <div class="Tabs" id="Tabs_m2">
+            <div class="Scroller">
+                <ul>
+                    <li data-content="#tab1">기본정보</li>
+                    <li data-content="#tab2">청구내역</li>
+                    <li data-content="#tab3">상세내역</li>
+                    <li data-content="#tab4">미납내역</li>
+                    <li data-content="#tab5">납부정보</li>
+                    <li data-content="#tab6">고객정보</li>
+                </ul>
+            </div>
+            <div class="swiper-button-next"><a href="#"><span>다음버튼보기</span></a></div>
+            <div class="swiper-button-prev"><a href="#"><span>이전버튼보기</span></a></div>
+        </div> -->
+		<div class="content">
+			<!-- 기본정보 -->
+			<div id="tab1" class="dispNone">
+				<div class="form_list">
+					<dl>
+						<dt>고객정보</dt>
+						<dd>
+							<ul class='tab1_1'>
+								<li><strong>납입자번호</strong> <span class="floatR">10046700</span></li>
+								<li><strong>홈페이지 가입번호(A)</strong> <span class="floatR">10365244</span></li>
+								<li><strong>사용기간</strong> <span class="floatR">2015-02-12 ~ 2015-03-12</span></li>
+								<li><strong>작성일자</strong> <span class="floatR">2015-03-12</span></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl>
+						<dt>기타정보</dt>
+						<dd>
+							<ul class='tab1_2'>
+								<li><strong>검침원정보</strong> <span class="floatR">010-0000-0000</span></li>
+								<li><strong>검침일</strong> <span class="floatR">2015-03-12</span></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- 청구내역 -->
+			<div id="tab2" class="dispNone">
+				<div class="form_list">
+					<dl>
+						<dt>당월 청구내역</dt>
+						<dd>
+							<ul class='tab2_1'>
+								<li><strong>당월사용량</strong> <span class="floatR">13821 ㎥</span></li>
+								<li><strong>가스요금</strong> <span class="floatR">84,357 원</span></li>
+								<li><strong>할인금액</strong> <span class="floatR">-3,000 원</span></li>
+								<li><strong>부가가치세</strong> <span class="floatR">9,000 원</span></li>
+								<li><strong>연체료</strong> <span class="floatR">2,000 원</span></li>
+								<li><strong>미납요금</strong> <span class="floatR">22,000 원</span></li>
+								<li><strong>절사액</strong> <span class="floatR">7 원</span></li>
+								<li class="total"><strong>합계</strong> <span class="floatR">212,320 원</span></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl>
+						<dt>전자세금계산서</dt>
+						<dd>
+							<ul class='tab2_2'>
+								<li><strong>공급자등록번호</strong> <span class="floatR">120-81-14525</span></li>
+								<li><strong>공급받는 자 등록번호</strong> <span class="floatR">220-07-36775</span></li>
+								<li><strong>상호</strong> <span class="floatR">홍*동</span></li>
+								<li><strong>공급가액</strong> <span class="floatR">403,024 원</span></li>
+								<li><strong>부가가치세</strong> <span class="floatR">40,302 원</span></li>
+							</ul>
+							<p class="txt col_red">당 청구서는 부가가치세법 시행령 제 68조, 제 8항에 의하여 관할세무서장에게 신청하여 등록한 사업자가 발행한 전자세금계산서입니다.</p>
+						</dd>
+					</dl>
+					<dl>
+						<dt>최근 1년간 사용량 추이</dt>
+						<dd><p class="tar">(단위 : ㎥)</p>
+							<div class="">
+							
+								<div id="chart" style="min-width:258px;max-width:100%;width:82%;height: 160px;"></div>
+								<div class="hidden grpText">고객님의 최근 1년간 도시가스 사용량은 2014년 5월 117m<sup>3</sup>, 6월 140m<sup>3</sup>, 7월 160m<sup>3</sup>, 8월 165m<sup>3</sup>, 9월 120m<sup>3</sup>,10월 132m<sup>3</sup>, 11월 117m<sup>3</sup>, 12월 140m<sup>3</sup>, 2015년 1월 160m<sup>3</sup>, 2월 165m<sup>3</sup>,3월 120m<sup>3</sup>, 4월 132m<sup>3</sup> 입니다.</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- 상세내역 -->
+			<div id="tab3" class="dispNone">
+				<div class='form_list GRGSelectDiv dispNone'>
+					<dl>
+						<dt>계량기번호</dt>
+						<dd class="select_num">
+							<select id="krgList" name="krgList" title="계량기번호 선택" class="Select">
+								<option value="" selected="selected">0123456789</option>
+								<option value="">0123456789</option>
+							</select>
+							<p class="btn"><a href="javascript:void(0);" class="Button red searchGRG">조회</a></p>
+						</dd>
+					</dl>
+					<!-- <span style="margin-right:50px;"><b>계량기번호</b></span>
+					<span style="width:150px;">
+						<div class="Divselect">
+							<select id='krgList' class="Select">
+								<option value='EM0001010101' selected>EM0001010101</option>
+								<option value='RM0001010101'>RM0001010101</option>
+								<option value='TM0001010101'>TM0001010101</option>
+							</select>
+							<span></span>
+						</div>
+					</span>
+					<span>
+						<a href='javascript:void(0);' class='Button searchGRG'>조회</a>
+					</span> -->
+				</div>
+				<div class="form_list tab3ListHtml">
+					
+				</div>
+			</div>
+			<!-- 미납내역 -->
+			<div id="tab4" class="dispNone">
+				<div class="form_list">
+					<dl class='tab4_1M dispNone'>
+						<dt>미납내역</dt>
+						<dd>
+							<ul class='tab4_1'>
+								<li><strong>기준일자</strong> <span class="floatR">2014년 04월 23일 기준</span></li>
+								<li><strong>1월 미납내역</strong> <span class="floatR">999 원</span></li>
+								<li><strong>2월 미납내역</strong> <span class="floatR">999 원</span></li>
+								<li class="total"><strong>합계</strong> <span class="floatR">1,998 원</span></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl class='tab4_2M dispNone'>
+						<dt>미납내역</dt>
+						<dd>
+							<ul class='tab4_2'>
+								<li class="tac"><span class="unpaid">미납내역 없음</span></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- 납부정보 -->
+			<div id="tab5" class="dispNone">
+				<div class="form_list">
+					<!-- 납부정보 - 자동이체 -->
+					<dl class='tab5_1M dispNone'>
+						<dt>자동납부 이체안내</dt>
+						<dd>
+							<ul class='tab5_1'>
+								<li><strong>예금주명</strong> <span class="floatR">홍*동</span></li>
+								<li><strong>금융기관</strong> <span class="floatR">국민은행</span></li>
+								<li><strong>계좌번호</strong> <span class="floatR">037140 *********</span></li>
+								<li><strong>이체일자</strong> <span class="floatR">2015.03.23</span></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl class='tab5_2M dispNone'>
+						<dt>요금납부 정보</dt>
+						<dd>
+							<ul class='tab5_2'>
+								<li><strong>금액수납일</strong> <span class="floatR">2015.03.23</span></li>
+								<li><strong>납부방법</strong> <span class="floatR">자동이체</span></li>
+								<li><strong>금액</strong> <span class="floatR">79,000 원</span></li>
+							</ul>
+						</dd>
+					</dl>
+					<!-- 납부정보 - 기타납부 -->
+					<dl class='tab5_3M dispNone'>
+						<dt>입금전용계좌</dt>
+						<dd>
+							<ul class='tab5_3'>
+								
+							</ul>
+							<p class="txt pt10">고객님만을 위한 요금납부계좌로 <span class="col_red">입금 즉시 수납처리</span> 됩니다. 타행 이체 시 수수료가 발생할 수 있습니다.</p>
+						</dd>
+					</dl>
+					<dl class='tab5_4M dispNone'>
+						<dt>요급납부 정보</dt>
+						<dd>
+							<ul class='tab5_4'>
+								<li><strong>금액수납일</strong> <span class="floatR">2015.03.23</span></li>
+								<li><strong>납부방법</strong> <span class="floatR">계좌이체</span></li>
+								<li><strong>금액</strong> <span class="floatR">79,000 원</span></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- 고객정보 -->
+			<div id="tab6" class="dispNone">
+				<div class="form_list">
+					<!-- 자동이체 미 신청 고객의 경우 고객 안내사항  -->
+					<dl class='tab6_1M'>
+						<dt>고객 안내사항</dt>
+						<dd>
+							<ul class="txt_list tab6_1">
+								<li>자동이체 납부를 신청하시면 더욱 편리합니다. 자동이체에 관한 자세한 내용은 거래 금융기관 또는 “고객센터＂로 문의하여 주시기 바랍니다.</li>
+								<li>개인정보보호를 위해 고객님 성함 가운데 * 표시를 하고 있습니다.</li>
+								<li>성함이 틀리거나 없는 경우 고객센터를 통해 수정 바랍니다.</li>
+							</ul>
+							<p class="tac"><span class="small btn_account_regist"><button class="Button blue big">고객센터 문의</button></span></p>
+						</dd>
+					</dl>
+					<!-- 자동이체 신청 고객의 고객 안내사항  -->
+<!-- 					<dl class='tab6_2M dispNone'>
+						<dt>고객 안내사항</dt>
+						<dd>
+							<ul class="txt_list tab6_2">
+								<li>자동이체는 3월 30일 인출됩니다. 추가인출일은 4월 11일입니다.</li>
+								<li>자동이체 추가 인출 시 연체료가 부과되며 계좌자동이체가 6개월 이상 출금 되지 않을 때에는 자동이체가 해지 됩니다.</li>
+								<li>개인정보보호를 위해 고객님 성함 가운데 * 표시를 하고 있습니다.</li>
+								<li>성함이 틀리거나 없는 경우 고객센터를 통해 수정 바랍니다.</li>
+							</ul>
+						</dd>
+					</dl> -->
+					<dl class="tab6_3 dispNone">
+						<dt>요금 미납 안내</dt>
+						<dd>고객님의 가스요금은 미납 중에 있습니다. 미납요금은 고지서에 합산 청구 되었으며 납부 마감일까지 납부하여 주시기 바랍니다. 2개월 이상 체납된 세대는 납부마감일과 관계없이 공급중지 될 수 있습니다.</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+	
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 자동이체 상담전화 -->
+<div id="popup2" class="pop_account_regist">
+	<div class="pop_head">
+		<h4><span class="call">고객센터 문의</span></h4>
+	</div>
+	<div class="inner">
+		<div class="tac">
+			<span class="small"><button class="Button red2 phoneCancle">취소하기</button></span>
+			<span class="small"><button class="Button red phoneCall">전화걸기</button></span>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

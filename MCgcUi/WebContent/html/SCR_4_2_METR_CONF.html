@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" href="../css/lib/alopex/alopex-ui.css" />
+<link rel="stylesheet" type="text/css" href="../css/lib/alopex/alopex-grid.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/reset.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/sub.css" />
+
+<script type="text/javascript" src="../js/lib/jquery/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../js/lib/alopex/alopex-ui.js"></script>
+<script type="text/javascript" src="../js/lib/alopex/alopex-grid.js"></script>
+<script type="text/javascript" src="../js/app/common/common.js"></script>
+<script type="text/javascript" src="../js/app/common/jquery.easing.min.js"></script>
+<script type="text/javascript" src="../js/app/common/jquery.bpopup.min.js"></script>
+
+<title><!-- 접근성 title수정 -->자가검침 입력확인 &gt; 스마트 도시가스 3.0 | SK E&amp;S</title>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<div id="header">
+		<h1 class="title"><a href="#"><!-- 접근성 -->자가검침 입력확인</a></h1>
+		<p class="btn_home"><button id="button_home">홈으로</button></p>
+		<p class="btn_set"><button id="button_set">설정</button></p>
+	</div>
+	<div id="container" class="clearfix">
+		<h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2>
+		<div class="content">
+		<div class="box_type1">
+			<h3>납입자번호</h3>
+			<span class="col_red">12345678</span>
+			<span class="input input_date">03.07</span>
+			<p class="small btn_input_num"><button id="button_input_num">납입자번호 선택하기</button></p>
+		</div>
+		<div class="box_type2">
+			<ul>
+				<li><strong>고객명</strong> 홍길동</li>
+				<li><strong>고객주소</strong> 서울시 송파구 성내천로 37길</li>
+			</ul>
+			<ul>
+				<li><strong>등록기간</strong> 2015.05.06 ~ 03.10까지</li>
+				<li><strong>계량기번호</strong> BM107311004</li>
+				<li><strong>전월지침</strong> 02350㎥</li>
+			</ul>
+			<ul>
+				<li><strong>당월지침</strong> <span>02370</span><span class="col_gray">㎥</span></li>
+				<li><strong>4월 사용량</strong> <span class="col_red">00020</span><span class="col_gray">㎥</span></li>
+			</ul>
+			<ul>
+				<li class="none"><strong style="width:200px">사용량 전년도 비교</strong> <br />
+<div class="clear pt10 pb10">
+	
+	<script src="../js/app/common/highcharts_pie.js"></script>
+	<script src="../js/app/common/exporting.js"></script>
+	<script src="../js/app/common/highcharts-3d.js"></script>
+	<div id="chart_pie" style="height: 90px"></div>
+	<script type="text/javascript">
+	//<![CDATA[
+	$(function () {
+		var gp = [{
+			name: '15.06',
+			data:[100]
+		}, {
+			name: '14.06',
+			data:[120]
+		}];
+		
+		 $('#chart_pie').highcharts({
+			 	credits: {
+					enabled: false
+				},
+		        chart: {
+		            type: 'bar',
+		            zoomType: 'none'
+		        },
+		        legend : {
+		        	enabled : false
+		        },
+		        exporting: {							// export 막기
+		        	contextButton: {
+		        		enabled : false
+		        	},
+		        	enabled : false
+		        },
+		        title: {
+		            text:''								// title 없애기
+		        },
+		        xAxis: {
+		        	categories: ['사용량'],
+		        	labels : {
+		        		enabled : false
+		        	},
+		        	title : '',
+		        	gridLineWidth: 0,
+		        	lineWidth: 0,
+		        	minorTickWidth: 0,
+		        	minorGridLineWidth: 0
+		        },
+		        yAxis: {
+		        	min: 0,
+		        //	tickPixelInterval : 200,
+		        	labels : {
+		        		enabled : false
+		        	},
+		        	title : '',
+		        	//gridLineWidth: 0
+		        },
+		        plotOptions: {
+		            series: {
+		            	//stacking: 'percent'
+		            	//pointWidth : 20
+		            	//lineWidth: 10
+		            },
+		            bar : {
+		            	dataLabels : {
+		            		enabled : true,
+		            		padding : 0,
+		            		align: 'right',
+		            		style : {
+		            			"fontSize" : "11px"
+		            		},
+		            	//	verticalAlign : 'bottom',
+		            		//overflow : 'none',
+		            		format : '\'{series.name} [ {y}㎥ ]'
+		            	}
+		            //	,borderWidth: 2
+		           // 	,borderColor: 'black'
+		            //	,pointPadding : 0.1
+		            }
+		        },
+		        series: gp
+		    });
+	});
+	//]]>
+	</script>
+</div>
+				<p class="hidden">2014년 04월 사용량은 20.0㎥이고, 2015년 04월 사용량은 16.0㎥ 입니다.</p>
+				
+				</li>
+				<li class="none tac pt10"><button class="Button red2 big" id="btn_save">다시입력</button><button class="Button red big" id="btn_save">저장</button></li>
+			</ul>
+		</div>
+		</div>
+	</div>
+	<div id="footer" class="clearfix">
+		<ul class="foot">
+			<li class="foot1"><a href="#">모바일 청구서</a></li>
+			<li class="foot2"><a href="#">자가점검</a></li>
+			<li class="foot3"><a href="#">이용안내</a></li>
+			<li class="foot4"><a href="#">지인추천</a></li>
+		</ul>
+	</div>
+</div>
+
+
+
+
+
+</body>
+</html>

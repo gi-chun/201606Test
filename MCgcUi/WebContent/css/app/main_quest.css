@@ -1,0 +1,75 @@
+body {background:#d5e4f5 url(../../images/bg_main.png) no-repeat 50% 0;background-size:360px 360px;font-size: 0.75em }
+
+#wrap{margin:0 auto;padding-bottom:60px}
+
+#header {position: relative;height:50px}
+#header h1 {position: absolute; top:13px; left: 14px;}
+#header h1 a{display: block; height: 29px; text-indent: -9999px; }
+#header h1.guest a {background: url(../../images/logo_guest.png) 0 0 no-repeat;background-size: 115px 28px;width: 115px;}
+#header h1.koone a {background: url(../../images/logo_koone.png) 0 0 no-repeat;background-size: 214px 29px;width: 214px;}
+#header h1.bs a {background: url(../../images/logo_bs.png) 0 0 no-repeat;background-size: 173px 29px;width:173px}
+#header h1.ch a {background: url(../../images/logo_ch.png) 0 0 no-repeat;background-size: 200px 29px;width:200px}
+#header h1.gumi a {background: url(../../images/logo_gumi.png) 0 0 no-repeat;background-size: 238px 29px;width:238px}
+#header h1.gw a {background: url(../../images/logo_gw.png) 0 0 no-repeat;background-size: 167px 29px;width:167px}
+#header h1.jb a {background: url(../../images/logo_jb.png) 0 0 no-repeat;background-size: 201px 29px;width:201px}
+#header h1.jn a {background: url(../../images/logo_jn.png) 0 0 no-repeat;background-size: 182px 29px;width:182px}
+#header h1.pohang a {background: url(../../images/logo_pohang.png) 0 0 no-repeat;background-size: 238px 29px;width:238px}
+#header .btn_set {position: absolute;top: 16px;right: 16px;}
+#header #slidx_button {background: url(../../images/btn_set.png) 50% 50% no-repeat; background-size: 22px 22px; width: 22px; height: 22px; display: block;text-indent: -9999px;border: none;}
+#header #slidx_button:hover {cursor: pointer}
+#header .btn_more{position:absolute;top:16px;right:46px}
+#header #more_button{background:url(../../images/btn_more.png) 50% 50% no-repeat;background-size:24px 21px; width:24px; height:21px; display:block; text-indent:-999em; border:none}
+
+/*
+#header h2 { font-family:'Moebius','Moebius Korea';font-size:1.5em;height: 50px; line-height: 50px;margin: 0 0 0 65px;color:#333}
+#header .btn_set {position: absolute;top: 16px;right: 16px;}
+#header #slidx_button {background: url(../../images/btn_set.png) 50% 50% no-repeat; background-size: 22px 22px; width: 22px; height: 22px; display: block;text-indent: -9999px;border: none;}
+#header #login_button {background: url(../../images/btn_login.png) 50% 50% no-repeat; background-size: 22px 22px; width: 22px; height: 22px; display: block;text-indent: -9999px;border: none;}
+#header #slidx_button:hover,
+#header #login_button:hover{cursor: pointer}
+*/
+
+#container{padding: 0 14px}
+
+.cont1,
+.cont2,
+.cont3,
+.swiper-container{margin-bottom:4px!important}
+
+/*
+.cont1 .img{float:left;width: 67%;}
+.cont1 .img img{width:100%;}
+.cont1 .floatR{width: 32%;display: inline-block}
+.cont1 .floatR img{width: 100%; }
+*/
+.cont1 a{width: 49%;}
+.cont1 a img{width: 100%;}
+
+.cont2{border: 1px solid #5c6d7f;border-radius: 3px;background:#fff;padding:20px 20px;overflow: hidden;}
+.cont2 .floatL{width: 50%;}
+.cont2 .floatL img{width: 100%;}
+.cont2 .floatR{width: 50%;}
+.cont2 .floatR img{width: 100%;padding-top:4px}
+
+.cont3 a{width: 49%;}
+.cont3 a img{width: 100%;}
+
+.swiper-container{position: relative;overflow: hidden;}
+.swiper-slide{text-align:center;display:-webkit-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;-webkit-align-items:center;align-items:center;width: 33.3%;float:left;text-align: center;}
+.swiper-slide img{width:98%;height: 98%;}
+
+#footer{ overflow:hidden; background-color:#292929; position:fixed; bottom:0; left:0; width:100%; height:49px; z-index:9999;clear: both;}
+.foot li{ float:left; width:25%;}
+.foot li a{ display:block; text-indent:-9999px; height:49px; line-height:49px; text-align:center; margin:0 auto;}
+.foot li.foot1 a{ background:url(../../images/foot1.png) 50% 0 no-repeat; border-left:none; background-size:90px 49px;}
+.foot li.foot2 a{ background:url(../../images/foot2.png) 50% 0 no-repeat; border-left:none; background-size:90px 49px;}
+.foot li.foot3 a{ background:url(../../images/foot3.png) 50% 0 no-repeat; border-left:none; background-size:90px 49px;}
+.foot li.foot4 a{ background:url(../../images/foot4.png) 50% 0 no-repeat; border-left:none; background-size:90px 49px;}
+
+.Button.big{padding:0 20px!important}
+.Button.red{background:#ea002c!important;border:none!important;font-size:1.2em;color:#fff;font-weight:bold;border-radius:5px;}
+.Button.red2{background:#fff!important;border:1px solid #ea002c;font-size:1.2em;color:#ea002c;font-weight:bold;border-radius:5px;}
+.Button.red21{background:#fff!important;border:1px solid #ea002c;font-size:1.2em;color:#ea002c;font-weight:bold;border-radius:5px;width:45%;}
+.Button.blue{background:#455668!important;border:none!important;font-size:1.2em;color:#fff;font-weight:bold;border-radius:5px;}
+.Button.blue2{background:#455668!important;border-radius:30px;border-color:#455668;font-size:1.125em;color:#fff;font-weight:bold;height: 20px;line-height:24px}
+
