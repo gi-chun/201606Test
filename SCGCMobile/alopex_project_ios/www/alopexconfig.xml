@@ -47,6 +47,7 @@
     <page id="MNTQA0M2" uri="/html/NT/MNTQA0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MINRE0M0" uri="/html/IN/MINRE0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="pushstart" uri="/html/MN/MMNPS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="PAYMENT" uri="/html/MN/MMNPS0M0.html" type="local" container="PaymentViewController" orientation="portrait" changeOrientation="false" skipPage="true"></page>
   </pageList>
   <userDefinedJSNIList>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.GetPhoneNumber"></userDefinedJSNI>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28DE7F1F1D11539D00F07B17 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */; };
+		28DE7F221D115D2C00F07B17 /* PaymentViewClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */; };
 		36751DF1183C7A2C00E7E68D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 36751DF0183C7A2C00E7E68D /* config.json */; };
 		36751DF4183C7BDD00E7E68D /* NEWALOPEX in Resources */ = {isa = PBXBuildFile; fileRef = 36751DF3183C7BDD00E7E68D /* NEWALOPEX */; };
 		36C5AE201A66428A0072086D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 36C5AE1F1A66428A0072086D /* Default-568h@2x.png */; };
@@ -59,6 +61,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28DE7F1D1D11539D00F07B17 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		28DE7F201D115D2C00F07B17 /* PaymentViewClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewClient.h; sourceTree = "<group>"; };
+		28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewClient.m; sourceTree = "<group>"; };
 		36751DF0183C7A2C00E7E68D /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		36751DF3183C7BDD00E7E68D /* NEWALOPEX */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWALOPEX; sourceTree = "<group>"; };
 		36C5AE1F1A66428A0072086D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -658,6 +664,10 @@
 				A8D10A711B042C0200E91B10 /* SocialSharing.h */,
 				A8D10A721B042C1500E91B10 /* SocialSharing.m */,
 				BF228C5B1B30079400051D01 /* PushService.h */,
+				28DE7F1D1D11539D00F07B17 /* PaymentViewController.h */,
+				28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */,
+				28DE7F201D115D2C00F07B17 /* PaymentViewClient.h */,
+				28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */,
 				BF228C5C1B3007CF00051D01 /* PushService.m */,
 				BFE734FF1B4E4A1F0067D603 /* Images.xcassets */,
 			);
@@ -1318,6 +1328,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28DE7F221D115D2C00F07B17 /* PaymentViewClient.m in Sources */,
+				28DE7F1F1D11539D00F07B17 /* PaymentViewController.m in Sources */,
 				B060163C14679620006D320F /* main.m in Sources */,
 				BF228C4B1B2FFAD200051D01 /* BarcodeReaderViewController.m in Sources */,
 				BF228C591B2FFD4A00051D01 /* DeviceSecurityPlugin.m in Sources */,
