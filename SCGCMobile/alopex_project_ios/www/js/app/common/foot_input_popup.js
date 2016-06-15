@@ -1,0 +1,11 @@
+document.write('<div id="popup3" class="noti_pop">');
+document.write('<div class="pop_head">');
+document.write('<h4><span id="titleNotiP3">&nbsp;</span></h4>');
+document.write('</div>');
+document.write('<div class="inner">');
+document.write('<p class="txt" id="contNotiP3">&nbsp;</p>');
+document.write('<div class="tac btnGrpNotiP3">');
+document.write('<span class="small"><button class="Button red2 pNotiP3Cancel">취소</button><button class="Button red pNotiP3Ok">확인</button></span>');
+document.write('</div>');
+document.write('</div>');
+document.write('</div>');

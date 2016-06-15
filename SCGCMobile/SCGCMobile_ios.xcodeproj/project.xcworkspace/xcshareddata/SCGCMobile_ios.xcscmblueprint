@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "489750df-3ce5-3f42-8493-6e9501b0d2b2++1732",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "489750df-3ce5-3f42-8493-6e9501b0d2b2++1732" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "489750df-3ce5-3f42-8493-6e9501b0d2b2++1732" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "628536F7-1C3B-4EC5-9848-5275C100408F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "489750df-3ce5-3f42-8493-6e9501b0d2b2++1732" : "work_gas\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SCGCMobile_ios",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SCGCMobile\/SCGCMobile_ios.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.9.100.134\/svn\/smartCGC",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "489750df-3ce5-3f42-8493-6e9501b0d2b2++1732"
+    }
+  ]
+}

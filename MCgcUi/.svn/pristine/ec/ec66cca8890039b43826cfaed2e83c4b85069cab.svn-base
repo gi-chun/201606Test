@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/BL/MBLMG1M0.js"></script>
+	<script>TITLE('요금납부');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('요금납부');	</script>
+	<div id="container" class="clearfix dispNone">
+		<div class='topLogoDiv'>
+			<!-- <h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2> -->
+		</div>
+		<div class="content">
+			<div class="box_type1">
+				<h3>납입자번호</h3>
+				<span class="col_red">12345678</span>
+				<span class="input input_no">미납</span>
+				<!--
+				<span class="input input_date">03.07</span>
+				<span class="input input_closed">마감</span>
+				-->
+				<p class="small btn_input_num"><button id="button_input_num">납입자번호 선택하기</button></p>
+			</div>
+			<div class="dispNone box_form box_form_none">
+				<ul>
+					<li>
+						납부 내역이 없습니다.
+					</li>
+				</ul>
+			</div>
+			<div class="box_form dispNone formBox1">
+				<ul>
+					<li>
+						<a href="#">
+							<div>
+								<p class="form_title">청구금액</p>
+								<p class="form_price col_red">-원</p>
+							</div>
+							<div>
+								<p class="form_closed">납부마감일</p>
+								<p class="form_closed2">2000.00.00까지</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="form_list dispNone formBox2">
+				<dl class='tacBox1 dispNone'>
+					<dt>납부방식</dt>
+					<dd class="tac ">
+						<span class="small btn_account"><button class="Button red">편의점 수납</button></span>
+						<span class="small btn_account_regist"><button class="Button red2">자동이체신청</button></span>
+						<span class="small btn_account_confirm"><button class="Button red2">입금계좌확인</button></span>
+						<!-- gclee -->
+						<span class="small btn_account_card"><button class="Button red2">카드결제</button></span>
+					</dd>
+				</dl>
+				<dl class='tacBox2 dispNone'>
+					<dt><span>납부방식</span><span class='btnLogo'>자동이체</span></dt>
+					<dd class="tac">
+						<span class="small btn_account_info"><button class="Button red21">자동이체정보</button></span>
+						<span class="small btn_account_regist"><button class="Button red21">자동이체변경</button></span>
+					</dd>
+				</dl>
+				<dl>
+					<dt>청구내역</dt>
+					<dd>
+						<ul class='cgInfo'>
+							<!-- <li><strong>당월사용량</strong> <span class="floatR">13821 ㎥</span></li>
+							<li><strong>가스요금</strong> <span class="floatR">84,357 원</span></li>
+							<li><strong>할인금액</strong> <span class="floatR">-3,000 원</span></li>
+							<li><strong>부가가치세</strong> <span class="floatR">9,000 원</span></li>
+							<li><strong>연체료</strong> <span class="floatR">2,000 원</span></li>
+							<li><strong>미납요금</strong> <span class="floatR">22,000 원</span></li>
+							<li><strong>절사액</strong> <span class="floatR">7 원</span></li>
+							<li class="total"><strong>합계</strong> <span class="floatR">212,320 원</span></li> -->
+						</ul>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 납입자번호 선택 -->
+<div id="popup" class="pop_input_num">
+	<div class="pop_head">
+		<h4>납입자번호 선택</h4>
+	</div>
+	<div class="inner">
+		<ul class="list_num">
+			<li class="key_num"><a href="#">12345678</a><span class="input long input_no">미납</span></li>
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+		<!-- 	<li class="closed_num">12345677<span class="input long2 input_closed">청구서신청</span></li> -->	
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+		</ul>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 자동이체 계좌정보 -->
+<div id="popup" class="pop_account">
+	<div class="pop_head">
+		<h4>자동이체 계좌정보</h4>
+	</div>
+	<div class="inner">
+		<ul class="account_list">
+			<!-- <li><strong>예금주 명</strong> <span class="floatR">홍길*</span></li>
+			<li><strong>금융기관</strong> <span class="floatR">우리은행</span></li>
+			<li><strong>계좌번호</strong> <span class="floatR">123-456-789123</span></li>
+			<li><strong>이체일자</strong> <span class="floatR">2015.03.25</span></li> -->
+		</ul>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 자동이체 상담전화 -->
+<div id="popup2" class="pop_account_regist">
+	<div class="pop_head">
+		<h4><span class="call">자동이체 상담전화</span></h4>
+	</div>
+	<div class="inner">
+		<div class="tac">
+			<span class="small"><button class="Button red2 phoneCancle">취소하기</button></span>
+			<span class="small"><button class="Button red phoneCall">전화걸기</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 입금계좌확인 -->
+<div id="popup2" class="pop_prepare">
+	<div class="inner">
+		<p class="prepare">서비스 준비중입니다.</p>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 입금계좌확인 -->
+<div id="popup" class="pop_bank">
+	<div class="pop_head">
+		<h4><span class="call">입금전용계좌</span></h4>
+	</div>
+	<div class="inner">
+		<ul class='bankList'>
+			
+		</ul>
+		<p class="txt pt10">고객님만을 위한 요금납부계좌로 <br />
+		<span class="col_red">입금 즉시 수납처리</span> 됩니다. <br />
+		타행 이체 시 수수료가 발생할 수 있습니다.</p>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

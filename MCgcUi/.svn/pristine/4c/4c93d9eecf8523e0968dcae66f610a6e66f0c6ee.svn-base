@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/FX/MFXUS0M0.js"></script>
+	<script>TITLE('앱 설정');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('앱 설정');	</script>
+	<div id="container" class="clearfix dispNone">
+		<div class="content pt10">
+			<div class="box_join dispNone multiCaListJoin">
+				<h2>가입 관리</h2>
+				<div class="certify_list">
+					<ul>
+						<li class='caSelect'><a href="javascript:void(0);">
+							<strong>납입자 번호 관리</strong>
+							<span>보유하고 계신 납입자번호를 앱 회원으로 가입, 해지하실 수 있습니다.</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_join">
+				<h2>서비스 관리</h2>
+				<div class="certify_list">
+					<ul>
+						<!-- <li><span id="bill_setMNG"><a href="javascript:void(0);"><strong>청구서 신청관리</strong></a></span></li> -->
+						<li><span id="bill_setMNG"><a href="javascript:void(0);"><strong>푸시 알림 관리</strong></a></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_join dispNone multiCaList">
+				<h2>개인 맞춤 기능 설정</h2>
+				<div class="certify_list">
+					<ul>
+						<li class='bpSelect'><a href="javascript:void(0);">
+							<strong>청구회사 관리</strong>
+							<span>여러 SK E&S 도시가스에 가입하신 고객님들의 스마트 도시가스 앱 초기하면 설정 기능입니다.</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_join">
+				<h2>이용 약관</h2>
+				<div class="certify_list">
+					<ul>
+						<li><span id="view_use"><a href="#view_use"><strong>서비스 이용약관</strong></a></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_join">
+				<h2>앱 회원 탈퇴</h2>
+				<div class="certify_list">
+					<ul>
+						<li><span id="app_secede"><a href="javascript:void(0);"><span><strong>앱 회원 탈퇴 시, 회원 인증 정보와 청구서 수령방식이 변경됩니다.</strong></span></a></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_join">
+				<h2>앱 오류 확인</h2>
+				<div class="certify_list">
+					<ul>
+						<li><span id="app_check2"><a href="javascript:void(0);"><span><strong>상태를 확인 합니다.</strong></span></a></span></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 
+			<div class="box_join" id="provide_info" style="display:none;">
+				<h2>제3자 제공 동의(선택)</h2>
+				<span class="btn" id="btn_provide_info_popup"><a href="javascript:void(0);" class="Button red2">보기</a></span>
+				<div class="certify_list">
+					<ul>
+						<li style="background:none"><strong>제3자 제공에 거부할 수 있으며 거부 시 가입조건이더라도 도시가스화재보험에 가입되지 않습니다.</strong>
+						<p class="tar" style="float:right; margin-left:20px; margin-top:5px;"><label for="refuse_provide_info">거부	 <input class="Checkbox" name="chk2" value = "check3" id="refuse_provide_info"></label></p>
+						<p class="tar" style="margin-top:5px;"><label for="agree_provide_info">동의 <input class="Checkbox" name="chk3" value = "check4" id="agree_provide_info"></label></p></li>
+					</ul>
+				</div>
+			</div>
+			-->
+			
+		</div>
+		<div class="content pt10 versionV">
+		V1.0
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 청구회사 관리 -->
+<div id="popup" class="bill_set">
+	<div class="pop_head">
+		<h4>청구회사 관리</h4>
+	</div>
+	<div class="inner">
+		<div class="table_type2">
+			<table cellpadding="0" cellspacing="0">
+				<colgroup>
+					<col width="20%" />
+					<col width="30%" />
+					<col width="50%" />
+				</colgroup>
+				<caption class="hidden">대표 납입자번호 설정표</caption>
+				<thead>
+					<tr>
+						<th scope="col">선택</th>
+						<th scope="col">납입자번호</th>
+						<th scope="col">청구회사</th>
+					</tr>
+				</tbody>
+				<tbody class='billSetList'>
+					<tr class="col_red">
+						<td><label for=""><input class="Checkbox" name="chk0" value="check1" checked="checked"></label></td>
+						<td>12345678</td>
+						<td>코원에너지서비스</td>
+					</tr>
+					<tr>
+						<td><label for=""><input class="Checkbox" name="chk0" value="check2"></label></td>
+						<td>12345678</td>
+						<td>코원에너지서비스</td>
+					</tr>
+					<tr>
+						<td><label for=""><input class="Checkbox" name="chk0" value="check3" ></label></td>
+						<td>12345678</td>
+						<td>부산도시가스</td>
+					</tr>
+					<tr>
+						<td class="borderbn"><label for=""><input class="Checkbox" name="chk0" value="check4"></label></td>
+						<td class="borderbn">12345678</td>
+						<td class="borderbn">강원도시가스</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="info">대표 청구회사를 설정하시면, 앱 화면에서 다양한 맞춤 정보를 받으실 수 있습니다.</p>
+		<p class="tac pt10"><a href="javascript:void(0);" class="Button red big comMainBP">확인</a></p>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 앱 회원 탈퇴 -->
+<div id="popup" class="app_secede">
+	<div class="pop_head">
+		<h4>앱 회원 탈퇴</h4>
+	</div>
+	<div class="inner">
+		<p class="txt tal">앱 회원 탈퇴 시 변경사항 안내입니다.<br/> 모든 항목에 대해 동의 체크를 해 주세요.</p>
+		<div class="table_type2">
+			<table cellpadding="0" cellspacing="0">
+				<colgroup>
+					<col width="80%" />
+					<col width="20%" />
+				</colgroup>
+				<caption class="hidden">앱 회원 탈퇴 동의</caption>
+				<thead>
+					<tr>
+						<th scope="col">변경항목</th>
+						<th scope="col">동의</th>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr>
+						<td class="tal pl10">회원 인증 전화번호 삭제</td>
+						<td><label for=""><input class="Checkbox" name="chk1" value="check1" ></label></td>
+					</tr>
+					<tr>
+						<td class="tal pl10">모든 청구서가 문자메시지로 발송</td>
+						<td><label for=""><input class="Checkbox" name="chk1" value="check2" ></label></td>
+					</tr>
+					<tr>
+						<td class="tal pl10 borderbn">모든 푸시 알림 중단</td>
+						<td class="borderbn"><label for=""><input class="Checkbox" name="chk1" value="check3" ></label></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="tac pt10"><span id="closeBtnExit"><a href="javascript:void(0);" class="Button red2 big">취소하기</a></span><span id="app_secede_ok"><a href="javascript:void(0);" class="Button red big">탈퇴신청</a></span></p>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 모든 항목에 동의 필요 -->
+<div id="popup2" class="app_secede_agree">
+	<div class="pop_head">
+		<h4><span class="warning">모든 항목에 동의 필요</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">탈퇴  신청시 변경사항에 대한 <br />모든 항목에 동의 체크를 하셔야 합니다.</p>
+		<p class="tac pt10"><a href="javascript:void(0);" class="Button red big closeBtnASA">확인</a></p>
+	</div>
+</div>
+
+<!-- 앱 회원 탈퇴 완료 -->
+<div id="popup2" class="app_secede_ok">
+	<div class="pop_head">
+		<h4><span class="warning">앱 회원 탈퇴 완료</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">앱 회원 탈퇴 후에도 <br />
+		휴대폰 번호 인증을 다시 하시면 <br />
+		기존의 서비스를 다시 이용하실 수 있습니다.</p>
+		<p class="tac pt10"><a href="javascript:void(0);" class="Button red big btnLastExit">확인</a></p>
+	</div>
+</div>
+
+<!-- 이용약관 -->
+<div id="popup" class="view_use" style="height:360px">
+	<div class="pop_head">
+		<h4>이용약관</h4>
+	</div>
+	<div class="inner">
+		<div class="scroll2 use">
+			<!-- <ol>
+				<li>1. 도시가스 App.을 통해 도시가스에서 제공하는 청구서, 모바일 검침, 편의점 수납 등 다양한 서비스를 이용하실 수 있습니다.</li>
+				<li>2. 가입 후 고객님 의사에 따라 서비스를 해지할 수 있으며 서비스 해지 시 문자청구서(LMS)로 전환됩니다.</li>
+				<li>3. 매주 목요일 21:00 ~ 24:00시에는 시스템 정기 점검으로 서비스 신청/사용이 불가합니다.</li>
+				<li>4. 고객님께 서비스를 제공하기 위해 아래와 같이 개인정보를 수집하고 있으며, 수집된 정보는 안전하게 관리될 수 있도록 필요한 사항을 규정하고 있습니다.
+					<ul>
+						<li>수집항목 : 연락처, 납입자번호, 홈페이지 회원번호, 세대번호</li>
+						<li>수집항목 : 연락처</li>
+						<li>수집/이용 목적 
+							<ul>
+								<li>① App.을 통한 전자문서 및 Push형 메시지 수신(검침/청구, 에너지 관련 정보제공/홍보)</li>
+								<li>② 검침, 안전점검, 요금 청구/수납/추심</li>
+								<li>③ 품질개선활동(고객만족도 조사, 해피콜 등)</li>
+								<li>④ 고객 혜택 제공을 위한 경품추천/배송</li>
+								<li>⑤ App.을 통한 상업적 광고</li>
+								<li>⑥ 탈퇴 후 문자청구서(LMS) 발송</li>
+							</ul>
+						</li>
+						<li>보유 및 이용기간 : 서비스 이용목적 만료 시</li>
+					</ul>
+				</li>
+			</ol>
+			<p class="pt10">※ 개인정보처리와 관련한 상세 내역은 도시가스 홈페이지의 개인정보취급방침에 게시 합니다.</p> -->
+			<ol>
+				<li>1. 도시가스 App.을 통해 도시가스에서 제공하는 청구서, 모바일 검침, 편의점 수납 등 다양한 서비스를 이용하실 수 있습니다.</li>
+				<li>2. 가입 후 고객님 의사에 따라 서비스를 해지할 수 있으며 서비스 해지 시 문자청구서(LMS)로 전환됩니다.</li>
+				<li>3. 매주 목요일 21:00 ~ 24:00시에는 시스템 정기 점검으로 서비스 신청/사용이 불가합니다.</li>
+				<li>4. 고객님께 서비스를 제공하기 위해 아래와 같이 개인정보를 수집하고 있으며, 수집된 정보는 안전하게 관리될 수 있도록 필요한 사항을 규정하고 있습니다.
+					<ul>
+						<li>수집항목 : 연락처, 납입자번호,홈페이지 회원번호,세대번호</li>
+						<li>수집/이용 목적 
+							<ul>
+								<li>① App.을 통한 전자문서 및 Push형 메시지 수신 (검침/청구, 에너지 관련 정보제공/홍보)</li>
+								<li>② 검침, 안전점검, 요금 청구/수납/추심</li>
+								<li>③ 품질개선활동(고객만족도 조사, 해피콜 등)</li>
+								<li>④ 고객 혜택 제공을 위한 경품추첨/배송</li>
+								<li>⑤ App.을 통한 상업적 광고</li>
+								<li>⑥ 탈퇴 후 문자청구서(LMS) 발송</li>
+							</ul>
+						</li>
+						<li>보유 및 이용기간 : 서비스 이용목적 만료 시</li>
+					</ul>
+				</li>
+			</ol>
+			<p class="pt10">※ 개인정보처리와 관련한 상세 내역은 도시가스 홈페이지의 개인정보취급방침에 게시 합니다.</p>
+			<p class="pt10">※ 타인의 바코드 촬영 및 홈페이지번호, 납입자 번호의 도용 시엔 개인정보법 위반으로 인한 법적인 불이익을 받으실 수 있습니다.</p>
+		</div>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 제3자 정보제공 동의 -->
+<div id="popup" class="view_use_provide_info" style='height:230px;'>
+	<div class="pop_head">
+		<h4>제3자 제공 동의 (선택)</h4>
+	</div>
+	<div class="inner">
+		<div class="use">
+			<ol>
+				<li>1. 제공항목 : 주소, 이름, 연락처</li>
+				<li>2. 목 적 : 무료 도시가스화재보험가입</li>
+				<li>3. 제공업체 : KB손해보험</li>
+				<li>4. 제공기간 : 보험 가입조건 만료 시 까지</li>
+				<li></br></li>
+				<li>- 2015년 12월까지 주택용 가입자 대상 한정(단, 건축물대장기준, 아파트/다세대/단독에 한함)</li>
+			</ol>
+		</div>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

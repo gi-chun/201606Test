@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" href="../css/lib/alopex/alopex-ui.css" />
+<link rel="stylesheet" type="text/css" href="../css/lib/alopex/alopex-grid.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/reset.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/sub.css" />
+<link rel="stylesheet" type="text/css" href="../css/app/swiper.min.css" />
+
+<script type="text/javascript" src="../js/lib/jquery/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../js/lib/alopex/alopex-ui.js"></script>
+<script type="text/javascript" src="../js/lib/alopex/alopex-grid.js"></script>
+<script type="text/javascript" src="../js/app/common/common.js"></script>
+<script type="text/javascript" src="../js/app/common/swiper.min.js"></script>
+<script type="text/javascript" src="../js/app/common/easy-ticker.js"></script>
+<script type="text/javascript" src="../js/app/common/jquery.easing.min.js"></script>
+<script type="text/javascript" src="../js/app/common/jquery.bpopup.min.js"></script>
+
+<title>앱 이용가이드 &gt; 스마트 도시가스 3.0 | SK E&amp;S</title>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<div id="header">
+		<h1 class="title"><a href="#">앱 이용가이드</a></h1>
+		<p class="btn_home"><button id="button_home">홈으로</button></p>
+		<p class="btn_set"><button id="button_set">설정</button></p>
+	</div>
+	<div id="container" class="clearfix">
+	
+		<div class="swiper-bg">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide swipe1"><a href="javascript:void(0);"><img src="../images/tab_app1_off.png" alt="회원가입" /></a></div>
+					<div class="swiper-slide swipe2"><a href="javascript:void(0);"><img src="../images/tab_app2_off.png" alt="청구서" /></a></div>
+					<div class="swiper-slide swipe3"><a href="javascript:void(0);"><img src="../images/tab_app3_off.png" alt="자가검침" /></a></div>
+					<div class="swiper-slide swipe4"><a href="javascript:void(0);"><img src="../images/tab_app4_off.png" alt="고객센터" /></a></div>
+					<div class="swiper-slide swipe5"><a href="javascript:void(0);"><img src="../images/tab_app5_off.png" alt="기타" /></a></div>
+				</div>
+			</div>
+		</div>
+<script type="text/javascript">
+//<![CDATA[
+// 배너롤링/
+$('.swipe1').click(function(ss){
+	clearTab(1);
+	ss.target.src = '../images/tab_app1_on.png';
+	$('#tab1').show();
+});
+
+$('.swipe2').click(function(ss){
+	clearTab(2);
+	ss.target.src = '../images/tab_app2_on.png';
+	$('#tab2').show();
+});
+
+$('.swipe3').click(function(ss){
+	clearTab(3);
+	ss.target.src = '../images/tab_app3_on.png';
+	$('#tab3').show();
+});
+
+$('.swipe4').click(function(ss){
+	clearTab(4);
+	ss.target.src = '../images/tab_app4_on.png';
+	$('#tab4').show();
+});
+
+$('.swipe5').click(function(ss){
+	clearTab(5);
+	ss.target.src = '../images/tab_app5_on.png';
+	$('#tab5').show();
+});
+
+function clearTab(no){
+	for(var i=1;i<6;i++){
+		if(i==no){
+		}else{
+			$('.swipe'+i).children().children().attr('src','../images/tab_app'+i+'_off.png');
+			$('#tab'+i).hide();
+		}
+	}
+}
+
+$(function(){	
+	var swiper = new Swiper('.swiper-container', {
+		nextButton: '.swiper-button-next', 
+		prevButton: '.swiper-button-prev',
+		slidesPerView: 4,
+		paginationClickable: true,
+		spaceBetween: 0
+	});
+	
+});
+
+$a.page(function(e,a){
+	this.init = function(e){
+		$('.swipe1').children().children().attr('src','../images/tab_app1_on.png');
+		$('#tab1').show();
+	};
+});
+//]]>
+</script>
+
+	
+	
+		<div class="content">
+
+			<div id="tab1" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">회원 가입</a>
+						<div >
+							<ol>
+								<li>이용약관에 동의 <br/> - 앱 을 사용하기 위한 이용 약관을 읽은 후 동의 체크</li>
+								<li> 전화번호 자동입력(안드로이드 폰 전용) <br/> - 사용자의 휴대폰 번호를 기기에서 자동으로 호출하여 입력 됨</li>
+								<li>회원가입 <br/> - 회원가입 버튼 선택 시 ,사용자의 휴대폰 번호를 이용하여 고객인증 실시</li>
+							</ol>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">인증 성공</a>
+						<div >
+							<ol>
+								<li>납입자 번호 선택 <br/> - 해당 고객의 휴대폰 번호에 다수의 납입자번호가 등록되어 있는 경우, 가입하고자 하는 납입자 번호 선택하게 함
+								<br/> - 가입 가능한 납입자 번호 목록을 제공
+								<br/>  - 가입 하고자 하는 납입자 번호에  체크하여 선택함
+								<br/> - 가입신청 버튼 선택( 도시가스 앱 회원가입을 위해선 여러 납입자 번호 중 최소 1개는 선택해야 함)
+								</li>
+								<li> 모바일 청구서 신청  <br/> 청구서를  도시가스 앱으로 받아볼지 , 문자메시지 (MMS) 로  선택하는 화면 <br/></li>
+								<li> 납입자 번호 목록  <br/> - 신청 가능한 납입자 번호 목록을  제공하고, 사용자가 선택 함.<br/> - 가입완료 버튼을 선택하면, 회원 가입 완료되고 메인화면으로 이동
+								</li>
+							</ol>
+						</div>
+					</li>
+					
+					<li>
+						<a href="#" class="tit">인증 실패</a>
+						<div >
+							<ol>
+								<li>휴대폰 번호 인증 실패<br/> - 휴대폰 번호가 가입대상 번호에 존재하지 않는 경우</li>
+								<li> 보조인증  <br/> 휴대폰 번호 인증이 실패했을 경우, 다른 방식으로 인증을 진행하도록 기능 제공</li>
+								<li> 납입자 번호 인증  <br/> - 홈페이지 가입번호, 납입자 번호를 입력하여 인증
+								<li> 바코드 인증  <br/> - 계량기에 부착되는 안전점검용 바코드를 사진 촬영하여 인증
+
+								<li> 콜센터 문의
+  <br/> - 고객이 가입되어 있는 도시가스 회사의 콜센터(서비스센터)에 전화문의를 통해 인증(코원 – 서비스센터 / 이외 – 콜센터 전화번호 제공)
+
+								</li>
+							</ol>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">회원 탈퇴</a>
+						<div >
+							<ul>
+								<li>회원탈퇴는 앱 설정 > 앱 회원 탈퇴 화면을 통해서 하실 수 있습니다.</li>
+								<li>앱 회원 탈퇴 팝업
+									<br/> - 앱 설정 화면에서 앱 회원탈퇴를 선택하면,  앱 회원 탈퇴 팝업이 표시
+									
+								</li>
+								<li>동의 선택 
+								<br/> -전화번호삭제, 청구서 송달방식 변경, 푸시알림 중단 등 3가지 항목에 모두 동의해야 탈퇴 신청 진행 가능
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab2" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">자가검침</a>
+						<div >
+							<ol>
+								<li>납입자번호 선택 <br/> - 해당 납입자번호에 자가검침이 입력되지 않은 경우  미입력 아이콘 표시
+다수 납입자 번호 보유 시 + 기호 선택하여 납입자 번호 선택
+								</li>
+								<li>계량기 수치확인 샘플 <br/> - 실제 계량기 사진을 첨부 하여 입력해야 하는 수치에 대한 정보 제공</li>
+								<li> 당월지침 입력
+								<br/> - 지침 입력  창으로 처음 열릴
+땐 전월 지침 숫자가  세팅 되어 있음.
+( 전월 지침보다 낮은 값은 입력되지 않음  에러표시 )
+								<br/> - 각 자리수 별로 + 와
+ -  버튼을 이용하여 숫자를 변경 함
+								<br/> - 변경한 지침을 처음부터 다시 
+입력하고자 할 때  초기화 버튼을 선택하면  전월 검침 값으로 변경됨
+								<br/> - 확인 버튼 선택 시 수정한  값을   
+임시로 저장 함.
+								
+								</li>
+								<li>당월지침 입력 완료
+								<br/> - 자가검침  입력이 완료 된 경우 입력한 날짜를 아이콘 형태로 보여 줌
+								<br/> - 이전 화면에서 입력한 당월 지침이 출력되고 당월지침과 전월지침을 계산하여 해당 월의 사용량을 출력
+								<br/> - 계산된 당월 사용량과
+전년도 동월의 사용량을
+그래프로 한 화면에서 표현
+								<br/> - 입력한 값을 수정하고자 할 때, 다시 입력을 선택하면, 이전 자가
+검침 입력 화면으로  이동
+								<br/> - 저장 버튼 선택 시 , 당월지침 값 입력
+								
+								</li>
+							</ol>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">자가검침 유의사항</a>
+						<div >
+							<ul>
+								<li>옥내의 계량기만 자가검침이 가능합니다.</li>
+								<li>자가검침기간 내에만 검침값 입력이 가능합니다.</li>
+								<li>자가검침 입력은 전월 지침보다 낮은 수치를 입력하실 수 없습니다.</li>
+								<li>가입고객이 여러개의 납입자번호를 보유한 경우, 납입자번호(계량기)를 선택하여 입력이 가능합니다.</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab3" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">청구서 목록</a>
+						<div >
+							<ol>
+								<li>미납 아이콘 표시
+								<br/> - 해당 납입자 번호에 미납 금액이 있는 경우 미납아이콘 표시
+								<br/> - 월별 청구서 목록에서 미납사항이 있는 경우 가장 최근 청구서에 미납 여부 아이콘 표시								
+								</li>
+								<li>납부하기 버튼 선택 시 ,  요금 납부 화면으로<br/>
+								  - 이동 자동이체 고객 : 자동이체 정보 및 자동이체 변경 제공
+								 <br/> - 일반 고객 :  편의점 납부, 가상계좌 정보, 자동이체 신청 제공</li>
+								<li>청구서 리스트에서 
+해당 월 청구서 영역을 터치하면 청구서 상세로 이동</li>
+							</ol>
+						</div>
+					</li>
+					
+					<li>
+						<a href="#" class="tit">청구서 상세</a>
+						<div >
+							<ol>
+								<li>해당월 좌 우의 화살표를 선택하여
+이전 달, 다음 달 청구서로 바로 이동 가능</li>
+								<li>청구서  목록 바로 가기
+								<br/> - 날짜 옆 버튼을 선택하여 청구서 목록 화면으로 이동
+								</li>
+								<li>상세 이동 버튼 
+								<br/> - 좌우로 슬라이드하여 이동하는 스와이프 기능
+								<br/> - 기본정보, 청구내역, 상세내역, 미납내역, 납부정보, 고객안내 의 상세정보를 조회
+								</li>
+							</ol>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab4" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">자동이체</a>
+						<div >
+							<ul>
+								<li>자동이체 정보
+								<br/> - 자동이체 계좌정보 팝업 표시
+								<br/> - 예금주 명, 출금기관, 계좌번호, 이체 일자 등 표시
+								</li>
+								<li>자동이체 변경
+								<br/> - 자동이체 계좌변경 및 결재방식 변경을 위해 자동이체 상담전화 팝업 표시
+								<br/> - 고객이 가입한 도시가스의 콜센터(서비스센터)에 전화연결
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">입금계좌 확인</a>
+						<div >
+							<ul>
+								<li>입금계좌를 확인을 선택하시면, 도시가스 거래 은행별 가상계좌 번호를 확인하실 수 있습니다.</li>
+								<li>해당 계좌를 통해 계좌이체시 입금즉시 수납처리가 되며, 타행 이체시 수수료가 발생할 수 있습니다.</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			
+			<div id="tab5" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">FAQ</a>
+						<div >
+							<ul>
+								<li>FAQ 상세 분류
+								<br/> - 가스요금, 가스안전, 가스공급, 전출입, 가스기기, 기타 분류 정보 제공</li>
+								<li>질문, 답변
+								<br/> - 질문 선택 시, 하단에 답변내용 열림
+질문 재 선택 시 답변 내용 닫힘</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">공지사항</a>
+						<div >
+							<ul>
+								<li>공지사항 목록
+									<br/> - 공지사항 목록  화면으로 영역 선택 시 공지사항 상세내용 이동
+최근 공지사항에 ‘N’  아이콘 표시
+									
+								</li>
+								<li>공지사항 상세
+<br/> - 공지사항 상세보기 화면, 목록 아이콘 클릭시 목록으로 이동
+
+								</li>
+							</ul>
+						</div>
+					</li>
+					
+					<li>
+						<a href="#" class="tit">앱 설정</a>
+						<div >
+							<ul>
+								<li>서비스 관리 
+									<br/> - 청구서 신청관리, 푸시알림 신청관리 등 서비스 관리 화면  이동 
+최근 공지사항에 ‘N’  아이콘 표시
+<br/> - 모바일 청구서 신청 시 : 앱으로만  청구서 조회 가능
+<br/> - 모바일 청구서 미 신청시 : 문자 메시지 (MMS)로 청구서 발행
+
+									
+								</li>
+								<li>이용약관 (1개 CA 보유고객)
+
+<br/> - 이용약관 선택 시, 이용약관 전체보기 팝업 열림
+
+								</li>
+								<li>이용약관 (다수 CA 보유고객)
+<br/>  * 가입관리 
+<br/> &nbsp; - 다수의  납입자 번호를
+보유하고 있는 고객을 
+대상으로 한 메뉴로, 선택 시 납입자 번호 선택 화면 이동
+<br/> &nbsp; - 납입자 번호 선택은 
+고객의 휴대폰 번호를 기준
+<br/> &nbsp;
+- 가입 가능한 납입자번호 리스트를 제공 <br/>- 해당 리스트에서 가입희망 번호를 선택 <br/>- 선택/해지는 가입/탈퇴와 별도로 자유롭게 사용자가 선택가능
+<br/> &nbsp; - 변경 저장 선택 시 1~2일 후에 변경 적용  
+<br/> * 개인 맞춤 기능 설정(청구회사 관리)
+<br/> &nbsp;- 다수의  납입자 번호를
+보유하고 있는 고객을 
+대상으로 한 메뉴로,  맞춤기능을 적용할 기본 도시가스사를 선택.
+<br/> &nbsp; - 청구회사를 선택하면, 해당 회사 정보로 도시가스 로고 적용, 첫화면의 맞춤기능 (검침,청구서,콜센터 전화번호 등) 적용등 다양한 화면에 선택 회사 정보를 우선적으로 보여줌  
+<br/> &nbsp; - 청구회사 리스트는 앱 가입을 신청한 납입자 번호만 노출
+<br/> &nbsp; - 대표 청구회사 선택은
+하나의 납입자 번호만 
+선택할 수 있음.
+ 
+								</li>
+							</ul>
+						</div>
+					</li>
+					
+					
+					
+				</ul>
+			</div>
+			
+			
+			
+
+		</div>
+	</div>
+	<div id="footer" class="clearfix">
+		<ul class="foot">
+			<li class="foot1"><a href="#">모바일 청구서</a></li>
+			<li class="foot2"><a href="#">자가점검</a></li>
+			<li class="foot3"><a href="#">이용안내</a></li>
+			<li class="foot4"><a href="#">지인추천</a></li>
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>

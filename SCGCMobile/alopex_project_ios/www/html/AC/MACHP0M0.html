@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/AC/MACHP0M0.js"></script>
+	<script>TITLE('앱 회원 가입');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER_NONE('앱 회원 가입');	</script>
+	<div id="container" class="clearfix">
+		<div class="content pt20">
+			<div class="box_join">
+				<h2>휴대폰 인증 코드 요청</h2>
+				<div class="inner">
+					<p >도시가스 앱은 보안을 위해 휴대폰 번호 인증을 시행하고 있습니다. <br />
+					인증코드를 요청하시면, 고객님의 휴대폰 문자로 인증코드를 발송해 드립니다.</p>
+					<p class="pt10 pb10">꼭 보유하고 계신 휴대폰 번호를 입력해 주세요.<br />
+					<span class="col_red">※  타인의 휴대폰 번호를 입력하시면, 인증되지 않습니다.</span></p>
+					<div class="input_phone">
+						<p style="margin-bottom:10px">
+							<label style="margin-top:8px;">세대 지역</label>
+							<label for="ra1" style="position:relative; margin-right:10px"><input type="radio" id="ra1" name="lsctnRadio" value="15993366" class="Radio" checked/>서울/경기</label>
+							<label for="ra2" style="position:relative; margin-right:10px"><input type="radio" id="ra2" name="lsctnRadio" value="15440009" class="Radio" />부산</label>
+							<label for="ra3" style="position:relative; margin-right:10px"><input type="radio" id="ra3" name="lsctnRadio" value="15990009" class="Radio" />그 외</label>
+						</p>
+						<p><label for="pn" style="margin-top:4px;">휴대폰 번호 입력</label><span class="w100per"><input type="tel" id="pn" name="pn" value="" maxlength="15" class="input_txt" /></span></p>
+					</div>
+					<p class="pt10 tac"><span id="pop_certify_re"><a href="javascript:void(0);" class="Button red2 big">인증코드 요청</a></span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 	<script type="text/javascript" src="../../js/app/common/foot.js"></script> -->
+</div>
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
+<script type="text/javascript" src="../../js/app/common/android_exit.js"></script>
+<!-- 인증코드 발송 -->
+<!-- <div id="popup2" class="pop_certify_re">
+	<div class="pop_head">
+		<h4><span id="titleP2">인증코드 발송</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt" id="contP2">고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red pcrOk">확인</button></span>
+		</div>
+	</div>
+</div> -->
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/FX/MFXST0M0.js"></script>
+	<script>TITLE('푸시 알림 관리');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('푸시 알림 관리');	</script>
+	<div id="container" class="clearfix">
+		<div class='topLogoDiv'>
+			<h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2>
+		</div>
+		
+		<!-- <div class="Tabs">
+			<ul>
+				<li data-content="#tab1" class="bill">청구서 신청관리</li>
+				<li data-content="#tab2" class="bill">푸시 알림 관리</li>
+			</ul>
+		</div> -->
+		<div class="content">
+			<!-- 청구서 신청관리 -->
+			<!-- <div id="tab1">
+				<div class="box_type1">
+					<p class="tac">모바일 청구서 신청 상태</p>
+				</div>
+				<div class="bill_list bill_listUSE">
+				</div>
+				<p class="txt_red">청구서 변경 신청 후 반영은 1~2일 정도 소요됩니다.</p>
+				<p class="tac pt15"><button class="Button red big" id="bill_end">변경저장</button></p>
+			</div> -->
+			
+			<!-- 푸시 알림 관리 -->
+			<div id="tab2">
+				<div class="box_type1">
+					<p class="tac">푸시 알림 신청 상태</p>
+				</div>
+				<input type="hidden" id="smartUse" value="N"/>
+				<input type="hidden" id="selfUse" value="N"/>
+				<input type="hidden" id="notiUse" value="N"/>
+				<div class="bill_list">
+					<div class="box">
+						<dl style="padding: 0 0 0 0;margin: 10px 0 10px 15px;">스마트청구서</dl><dd style="padding: 0 0 0 0;margin: 5px 0 5px 15px;">*청구서가 발행되면 알려줍니다.</dd><p class="btn"><button class="Button check_circle smartUse off" id="ra1">해지</button></p>
+					</div>
+					<div class="box">
+						<dl style="padding: 0 0 0 0;margin: 10px 0 10px 15px;">자가검침</dl><dd style="padding: 0 0 0 0;margin: 5px 0 5px 15px;">*자가검침 기간이 되면 알려줍니다.</dd><p class="btn"><button class="Button check_circle selfUse off" id="ra2">해지</button></p>
+					</div>
+					<div class="box">
+						<dl style="padding: 0 0 0 0;margin: 10px 0 10px 15px;">공지/행사</dl><dd style="padding: 0 0 0 0;margin: 5px 0 5px 15px;">*공지사항, Q&A, 설문등의 정보를 수신합니다.</dd><p class="btn"><button class="Button check_circle notiUse off" id="ra3">해지</button></p>
+					</div>
+					<!-- 
+					<div class="box">
+						<dl>
+							<dt>납입자번호</dt>
+							<dd>123456789</dd>
+						</dl>
+						<dl>
+							<dt>주소</dt>
+							<dd>서울시 송파구 성내천로 37길 101</dd>
+						</dl>
+						<ul class="check_list">
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">스마트청구서</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check2">자가검침</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check3">공지/행사</label></li>
+						</ul>
+					</div>
+					<div class="box">
+						<dl>
+							<dt>납입자번호</dt>
+							<dd>123456789</dd>
+						</dl>
+						<dl>
+							<dt>주소</dt>
+							<dd>서울시 송파구 성내천로 37길 101</dd>
+						</dl>
+						<ul class="check_list">
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">스마트청구서</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check1">자가검침</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">공지/행사</label></li>
+						</ul>
+					</div>
+					<div class="box">
+						<dl>
+							<dt>납입자번호</dt>
+							<dd>123456789</dd>
+						</dl>
+						<dl>
+							<dt>주소</dt>
+							<dd>서울시 송파구 성내천로 37길 101</dd>
+						</dl>
+						<ul class="check_list">
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">스마트청구서</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">자가검침</label></li>
+							<li><label><input class="Checkbox" name="chk0" value = "check1" checked="checked">공지/행사</label></li>
+						</ul>
+					</div> -->
+				</div>
+				<p class="tac pt15"><button class="Button red big" id="bill_send">변경저장</button></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 모바일 청구서 해지 -->
+<div id="popup2" class="bill_cancle">
+	<div class="pop_head">
+		<h4><span class="warning">모바일 청구서 해지</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">모바일 청구서를 해지하시면 <br />
+		문자메시지로 청구서가 발송됩니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red2 bcNO">변경 취소</button></span>
+			<span class="small"><button class="Button red bcOK">해지 하기</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 모바일 청구서 신청 -->
+<div id="popup2" class="bill_apply">
+	<div class="pop_head">
+		<h4><span class="warning">모바일 청구서 신청</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">모바일 청구서를 신청하시면 <br />앱으로만 청구서를 보실 수 있습니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red2 baNO">변경 취소</button></span>
+			<span class="small"><button class="Button red baOK">신청 하기</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 청구서 수령 변경확인 -->
+<div id="popup2" class="bill_end">
+	<div class="pop_head">
+		<h4><span class="warning">청구서 수령 변경확인</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">수정하신 변경사항을 저장하시겠습니까?</p>
+		<div class="tac">
+			<span class="small"><button class="Button red2 beNO">변경 취소</button></span>
+			<span class="small"><button class="Button red beOK">변경 저장</button></span>
+			
+		</div>
+	</div>
+</div>
+
+<!-- 푸시알림 변경 확인 -->
+<div id="popup2" class="bill_send">
+	<div class="pop_head">
+		<h4><span class="warning">푸시 알림 변경확인</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">수정하신 변경사항을 저장하시겠습니까?</p>
+		<div class="tac">
+			<span class="small"><button class="Button red2 bsNO">변경 취소</button></span>
+			<span class="small"><button class="Button red bsOK">변경 저장</button></span>
+		</div>
+	</div>
+</div>
+</body>
+</html>

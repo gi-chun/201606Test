@@ -1,0 +1,13 @@
+{
+    "use_push_notification" : true,
+    "security" : {
+        "use_plugin" : true ,
+        "file_path_extension" : ["txt","DOC"]
+    },
+    "remote_contents" : {
+        "use_plugin" : true,
+        "plugin_class" : "RemoteContentManager",
+        "server_url" : "http://168.154.182.107:9082/apps",
+        "current_remote_content_version":"180"
+    }
+}

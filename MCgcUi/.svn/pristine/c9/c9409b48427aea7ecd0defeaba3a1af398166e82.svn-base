@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/BL/MBLMG1M1.js"></script>
+	<style>
+	html, body .sub{
+		height:100%;
+		min-height:100%;
+	}
+	</style>
+	<script>TITLE('편의점 납부');	</script>
+</head>
+<body style="height:100%;">
+<div id="wrap" class="sub">
+	<script>HEADER_BACK('편의점 납부');	</script>
+	<div id="container" class="clearfix" style="height:100%;">
+		<div class="content contentHTML">
+			
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot_combini.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 납입자번호 선택 -->
+</body>
+</html>

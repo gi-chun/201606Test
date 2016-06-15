@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/BL/MBLMG0M0.js"></script>
+	<script>TITLE('모바일 청구서');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('모바일 청구서');	</script>
+	<div id="container" class="clearfix">
+		<div class='topLogoDiv'>
+			<!-- <h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2> -->
+		</div>
+		<div class="content">
+		<div class="box_type1 ">
+			<h3>납입자번호</h3>
+			<span class="col_red topBoxCaList"></span>
+			<!-- <span class="input input_no">미납</span> -->
+			<!--
+			<span class="input input_date">03.07</span>
+			<span class="input input_closed">마감</span>
+			-->
+			<p class="small btn_input_num showPlus"><button id="button_input_num">납입자번호 선택하기</button></p>
+		</div>
+		<div class="box_form">
+			<ul class='boxList'>
+				<!-- <li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2015년 03월 청구서</p>
+							<p class="form_view">미열람</p>
+						</div>
+						<div class="pt10">
+							<p class="form_closed"><span class="bg_green">미납</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+					<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>
+				</li>
+				<li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2015년 02월 청구서</p>
+							<p class="form_view">미열람</p>
+						</div>
+						<div class="pt10">
+							<p class="form_closed"><span class="bg_gray">자동이체</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+				</li>
+				<li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2015년 01월 청구서</p>
+						</div>
+						<div class="pt10">
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+				</li>
+				<li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2014년 12월 청구서</p>
+						</div>
+						<div class="pt10">
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+				</li>
+				<li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2014년 11월 청구서</p>
+						</div>
+						<div class="pt10">
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+				</li>
+				<li class="view_cont">
+					<a href="javascript:void(0);">
+						<div>
+							<p class="form_title">2014년 10월 청구서</p>
+						</div>
+						<div class="pt10">
+							<p class="form_price">81,510원</p>
+						</div>
+					</a>
+				</li> -->
+			</ul>
+		</div>
+		<p class="txt_red">청구서는 최근 12개월 까지만 조회 가능합니다.</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+<!-- 납입자번호 선택 -->
+<div id="popup" class="pop_input_num">
+	<div class="pop_head">
+		<h4>납입자번호 선택</h4>
+	</div>
+	<div class="inner">
+		<ul class="list_num popCaList">
+			<li class="key_num"><a href="#">12345678</a><span class="input long input_no">미납</span></li>
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+<!-- 			<li class="closed_num">12345677<span class="input long2 input_closed">청구서신청</span></li> -->
+			<li class="num"><a href="#">12345677</a><span class="input long input_date">납부완료</span></li>
+		</ul>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+<!-- 당월지침 입력 -->
+<div id="popup" class="pop_input_save">
+	<div class="pop_head">
+		<h4>당월지침 입력</h4>
+	</div>
+	<div class="inner">
+		<div class="regist_num">
+			<ul>
+				<li>
+					<button class="Button plus" id="btn_plus">당월 계량기 앞 첫번째자리 숫자 더하기</button>
+					<span class="num first">0</span>
+					<button class="Button minus" id="btn_minus">당월 계량기 앞 첫번째자리 숫자 빼기</button>
+				</li>
+				<li>
+					<button class="Button plus" id="btn_plus">당월 계량기 앞 두번째자리 숫자 더하기</button>
+					<span class="num">2</span>
+					<button class="Button minus" id="btn_minus">당월 계량기 앞 두번째자리 숫자 빼기</button>
+				</li>
+				<li>
+					<button class="Button plus" id="btn_plus">당월 계량기 앞 세번째자리 숫자 더하기</button>
+					<span class="num">8</span>
+					<button class="Button minus" id="btn_minus">당월 계량기 앞 세번째자리 숫자 빼기</button>
+				</li>
+				<li>
+					<button class="Button plus" id="btn_plus">당월 계량기 앞 네번째자리 숫자 더하기</button>
+					<span class="num">5</span>
+					<button class="Button minus" id="btn_minus">당월 계량기 앞 네번째자리 숫자 빼기</button>
+				</li>
+				<li>
+					<button class="Button plus" id="btn_plus">당월 계량기 앞 다섯번째자리 숫자 더하기</button>
+					<span class="num last">3</span>
+					<button class="Button minus" id="btn_minus">당월 계량기 앞 다섯번째자리 숫자 빼기</button>
+				</li>
+			</ul>
+		</div>
+		<div class="btSet">
+			<button class="Button red2" id="btn_save">초기화</button><button class="Button red" id="btn_save">확인</button>
+		</div>
+		<div class="btClose">
+			<button class="b-close">닫기</button>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

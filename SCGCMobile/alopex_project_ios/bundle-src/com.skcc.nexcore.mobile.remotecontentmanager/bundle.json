@@ -1,0 +1,8 @@
+manifestVersion=1.0
+lastUpdate=20140124
+bundleID=com.skcc.nexcore.mobile.remotecontentmanager
+bundleName=RemoteContentManager
+bundleVersion=1.0.0
+bundleProvider=SK C&C
+availability=Alopex Runtime(3.0 and later)
+requireClass=NSString+SBJSON, NSObject+SBJSON, AlopexUtil, NavigationManager, AESUtil, ZipArchive, ARCEFile

@@ -1,0 +1,30 @@
+{
+    "application" : [
+        "/Applications/blackra1n.app",
+        "/Applications/Cydia.app",
+        "/Applications/FakeCarrier.app",
+        "/Applications/Icy.app",
+        "/Applications/IntelliScreen.app",
+        "/Applications/MxTube.app",
+        "/Applications/RockApp.app",
+        "/Applications/SBSettings.app",
+        "/Applications/WinterBoard.app"
+    ],
+    "path" : [
+        "/bin/ps",
+        "/etc/fstab",
+        "/etc/master.passwd",
+        "/Library/MobileSubstrate/DynamicLibraries/LiveClock.plist",
+        "/Library/MobileSubstrate/DynamicLibraries/Veency.plist",
+        "/private/var/lib/apt",
+        "/private/var/stash",
+        "/private/var/mobile/Library/SBSettings/Themes",
+        "/private/var/tmp/cydia.log",
+        "/private/var/lib/cydia",
+        "/System/Library/LaunchDaemons/com.ikey.bbot.plist",
+        "/System/Library/LaunchDaemons/com.saurik.Cydia.Startup.plist",
+        "/usr/sbin/sshd",
+        "/usr/bin/sshd",
+        "/usr/libexec/sftp-server"
+    ]
+}

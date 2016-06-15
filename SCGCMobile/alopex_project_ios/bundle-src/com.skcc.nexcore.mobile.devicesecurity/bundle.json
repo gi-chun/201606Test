@@ -1,0 +1,8 @@
+manifestVersion=1.1
+lastUpdate=20140124
+bundleID=com.skcc.nexcore.mobile.devicesecurity
+bundleName=DeviceSecurity
+bundleVersion=1.0.1
+bundleProvider=SK C&C
+availability=Alopex Runtime(3.0 and later)
+requireClass=NSString+SBJSON.h

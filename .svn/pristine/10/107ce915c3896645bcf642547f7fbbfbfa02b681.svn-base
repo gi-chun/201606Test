@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/app/swiper.min.css" />
+	<script type="text/javascript" src="../../js/app/common/swiper.jquery.js"></script>
+	<script type="text/javascript" src="../../js/app/NT/MNTFQ0M1.js"></script>
+	<style>
+	.swiper-slide img {
+	  width: 100%;
+	  height: 51px;
+	}
+	</style>
+	<script>TITLE('FAQ');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER('FAQ');	</script>
+	<div id="container" class="clearfix dispNone">
+		<div class="search">
+			<input type="text" id="searchText" name="" value="" class="input_txt" placeholder="검색어를 입력하세요" title="검색어 입력" />
+			<input type="image" src="../../images/btn_search.png" alt="찾기" class="input_img btnFaqSearch" />			
+		</div>
+		<div class="swiper-bg">
+			<div class="swiper-container">
+				<div class="swiper-wrapper swList">
+					<!-- <div class="swiper-slide swipe1"><a href="javascript:void(0);"><img src="../../images/tab_faqs1_on.png" alt="가스요금" /></a></div>
+					<div class="swiper-slide swipe2"><a href="javascript:void(0);"><img src="../../images/tab_faqs2_off.png" alt="가스안전" /></a></div>
+					<div class="swiper-slide swipe3"><a href="javascript:void(0);"><img src="../../images/tab_faqs3_off.png" alt="가스공급" /></a></div>
+					<div class="swiper-slide swipe4"><a href="javascript:void(0);"><img src="../../images/tab_faqs4_off.png" alt="가스검침" /></a></div>
+					<div class="swiper-slide swipe5"><a href="javascript:void(0);"><img src="../../images/tab_faqs5_off.png" alt="전출입" /></a></div>
+					<div class="swiper-slide swipe6"><a href="javascript:void(0);"><img src="../../images/tab_faqs6_off.png" alt="가스기기" /></a></div>
+					<div class="swiper-slide swipe7"><a href="javascript:void(0);"><img src="../../images/tab_faqs7_off.png" alt="기타" /></a></div> -->
+				</div>
+			</div>
+			<div class="swiper-button-next"><a href="#"><span style="display: none;">다음버튼보기</span></a></div>
+			<div class="swiper-button-prev"><a href="#"><span style="display: none;">이전버튼보기</span></a></div>
+		</div>
+<script type="text/javascript">
+//<![CDATA[
+// 배너롤링/
+function clearTab(no){
+	for(var i=1;i<8;i++){
+		if(i==no){
+		}else{
+			$('.swipe'+i).children().children().attr('src','../../images/tab_faqs'+i+'_off.png');
+			$('#tab'+i).hide();
+		}
+	}
+}
+
+$(function(){	
+	var swiper = new Swiper('.swiper-container', {
+		nextButton: '.swiper-button-next', 
+		prevButton: '.swiper-button-prev',
+		slidesPerView: 4,
+		paginationClickable: true,
+		spaceBetween: 0
+	});
+});
+
+$a.page(function(e,a){
+	this.init = function(e){
+		$('.swipe1').children().children().attr('src','../../images/tab_faqs1_on.png');
+		$('#tab1').show();
+	};
+});
+//]]>
+</script>
+
+		<div class="content">
+			<!-- 가스요금 -->
+			<div id="tab1" class="dispNone">
+				<ul class="Accordion_menu tab1List">
+					
+				</ul>
+			</div>
+			<!-- 가스안전 -->
+			<div id="tab2" class="dispNone">
+				<ul class="Accordion_menu tab2List">
+					
+				</ul>
+			</div>
+			<!-- 가스공급 -->
+			<div id="tab3" class="dispNone">
+				<ul class="Accordion_menu tab3List">
+					
+				</ul>
+			</div>
+			<!-- 가스검침 -->
+			<div id="tab4" class="dispNone">
+				<ul class="Accordion_menu tab4List">
+					
+				</ul>
+			</div>
+			<!-- 전출입 -->
+			<div id="tab5" class="dispNone">
+				<ul class="Accordion_menu tab5List">
+					
+				</ul>
+			</div>
+			<!-- 가스기기 -->
+			<div id="tab6" class="dispNone">
+				<ul class="Accordion_menu tab6List">
+					
+				</ul>
+			</div>
+			<!-- 기타 -->
+			<div id="tab7" class="dispNone">
+				<ul class="Accordion_menu tab7List">
+					
+				</ul>
+			</div>
+
+
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
+</div>
+<script type="text/javascript" src="../../js/app/common/android.js"></script>
+</body>
+</html>

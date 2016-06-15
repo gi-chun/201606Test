@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/AC/MACHP2M3.js"></script>
+	<script>TITLE('앱 회원 가입');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER_NONE('앱 회원 가입');	</script>
+	<div id="container" class="clearfix">
+		<div class="content pt20">
+			<div class="box_join">
+				<h2>고객 번호 인증 안내</h2>
+				<div class="inner">
+					<p class="bg_info">청구서에 있는 홈페이지 가입번호와 <br />납입자 번호를 입력하여 회원 가입을 <br />하실 수 있습니다.</p>
+					<p class="tac pt10"><span id="num_home"><a href="#num_home" class="Button red letter-1">홈페이지 가입번호 확인</a></span><span id="num_paid"><a href="#" class="Button red2 letter-1">납입자번호 확인</a></span></p>
+				</div>
+			</div>
+			<div class="box_join">
+				<h2>고객 번호 입력</h2>
+				<div class="inner">
+					<div class="input_phone border0">
+						<p><label for="bpid">홈페이지 가입번호</label><span class="w100per"><input type="tel" id="bpid" name="bpid" value="" class="input_txt" maxlength="8" title="홈페이지 가입번호 8자리 입력"/></span></p>
+						<p class="tar col_red">홈페이지 가입번호는 총 8자리입니다.</p>
+					</div>
+					<div class="input_phone bordertn">
+						<p><label for="caid">납입자 번호</label><span class="w100per"><input type="tel" id="caid" name="caid" value="" class="input_txt" maxlength="8" title="납입자 번호 8자리 입력"/></span></p>
+						<p class="tar col_red">납입자 번호는 총 8자리입니다.</p>
+					</div>
+					<p class="tac pt10"><span><a href="javascript:void(0);" class="Button red2 big doBack">다른 인증시도</a></span><span class='doComp'><a href="javascript:void(0);" class="Button red big">입력 저장</a></span> </p>
+				</div>
+			</div>
+			<p class="join_txt col_red" style="text-align:-webkit-center;">타인의 바코드 촬영 및 홈페이지번호,<br/> 납입자 번호의 도용 시엔<br/> 개인정보법 위반으로 인한 <br/>법적인 불이익을 받으실 수 있습니다.</p>
+		</div>
+	</div>
+ 	<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
+</div>
+<script type="text/javascript" src="../../js/app/common/android_exit.js"></script>
+<!-- 홈페이지 가입번호 -->
+<div id="popup2" class="num_home">
+	<div class="pop_head">
+		<h4><span class="warning">홈페이지 가입번호</span></h4>
+	</div>
+	<div class="inner">
+		<p class="img"><img src="../../images/hom_resize.png" alt="홈페이지 가입번호 이미지" /></p>
+		<div class="tac">
+			<span class="small"><button class="Button red closeNH">확인</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 납입자 번호 -->
+<div id="popup2" class="num_paid">
+	<div class="pop_head">
+		<h4><span class="warning">납입자 번호</span></h4>
+	</div>
+	<div class="inner">
+		<p class="img"><img src="../../images/CANO_resize.png" alt="납입자 번호 이미지" /></p>
+		<div class="tac">
+			<span class="small"><button class="Button red closeNP">확인</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 홈페이지 가입번호 입력 오류 -->
+<div id="popup2" class="error_home">
+	<div class="pop_head">
+		<h4><span class="warning">입력 오류</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">홈페이지 가입번호는 숫자만 입력가능하며, <br /><span class="col_red">총 8자리 숫자로 되어 있습니다.</span></p>
+		<div class="tac">
+			<span class="small"><button class="Button red closeEH">확인</button></span>
+		</div>
+	</div>
+</div>
+
+<!-- 납입자번호 입력 오류 -->
+<div id="popup2" class="error_paid">
+	<div class="pop_head">
+		<h4><span class="warning">입력 오류</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">납입자 번호는 숫자만 입력가능하며,<br /><span class="col_red">총 8자리 숫자로 되어 있습니다.</span></p>
+		<div class="tac">
+			<span class="small"><button class="Button red closeEP">확인</button></span>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
