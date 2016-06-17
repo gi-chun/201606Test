@@ -6,11 +6,11 @@
  * only in accordance with the terms of the license agreement you entered into 
  * with SK C&C. 
  *
- * @version Alopex Runtime : 3.0.12
+ * @version Alopex Runtime : 3.0.15
  *   Change Log:
 * */
 
-#define		Alopex_Runtime_Version				@"3.0.12"
+#define		Alopex_Runtime_Version				@"3.0.15"
 
 #define     IS_TRIALVERSION                     0   //trial version 아님
 //#define     IS_TRIALVERSION                   1   //trial version 임

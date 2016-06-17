@@ -104,6 +104,9 @@ $a.page(function(){
     	    	
     	var box3List = [];
     	
+    	//gclee lscp	
+    	var lscDB = JSON.parse(getAlopexCookie('lscDB'));
+    	
     	$.each(lscDB, function(i,el){
     		if(el.sigungu == box2){
     			box3List.push(el);

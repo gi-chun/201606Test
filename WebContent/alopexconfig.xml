@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alopexconfig>
+  <project-info>
+    <appName><![CDATA[MyApplication]]></appName>
+    <vendor><![CDATA[Company Name]]></vendor>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Enter descriptions.]]></description>
+  </project-info>
+  <pageList start="index">
+    <page id="index" type="local" uri="/html/MN/MMNST0M0.html" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNPG0M0" uri="/html/MN/MMNPG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MMNHM0M0" uri="/html/MN/MMNHM0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNMP0M0" uri="/html/MN/MMNMP0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP0M0" uri="/html/AC/MACHP0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP0M1" uri="/html/AC/MACHP0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP1M0" uri="/html/AC/MACHP1M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP1S0" uri="/html/AC/MACHP1S0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP1M1" uri="/html/AC/MACHP1M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP2M0" uri="/html/AC/MACHP2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP2M1" uri="/html/AC/MACHP2M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP2M2" uri="/html/AC/MACHP2M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MACHP2M3" uri="/html/AC/MACHP2M3.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MBLMG0M0" uri="/html/BL/MBLMG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MBLMG0M2" uri="/html/BL/MBLMG0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MBLMG1M0" uri="/html/BL/MBLMG1M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MBLMG2M0" uri="/html/BL/MBLMG2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>  
+    <page id="MBLMG1M1" uri="/html/BL/MBLMG1M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MFXST0M0" uri="/html/FX/MFXST0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MFXUS0M0" uri="/html/FX/MFXUS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MFXUS0M1" uri="/html/FX/MFXUS0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MFXUS0C0" uri="/html/FX/MFXUS0C0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMETR0M0" uri="/html/ME/MMETR0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMETR0M1" uri="/html/ME/MMETR0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNPG1M0" uri="/html/MN/MMNPG1M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MMNPG1S1" uri="/html/MN/MMNPG1S1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNPG1S2" uri="/html/MN/MMNPG1S2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNPG1S3" uri="/html/MN/MMNPG1S3.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MMNPG1S4" uri="/html/MN/MMNPG1S4.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MNTMA0M0" uri="/html/NT/MNTMA0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTMA0M1" uri="/html/NT/MNTMA0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTFQ0M1" uri="/html/NT/MNTFQ0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTGD0M1" uri="/html/NT/MNTGD0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTGD0M2" uri="/html/NT/MNTGD0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTSV0M1" uri="/html/NT/MNTSV0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTSV0M2" uri="/html/NT/MNTSV0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTQA0M1" uri="/html/NT/MNTQA0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MNTQA0M2" uri="/html/NT/MNTQA0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MINRE0M0" uri="/html/IN/MINRE0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="pushstart" uri="/html/MN/MMNPS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="PAYMENT" uri="/html/MN/MMNPS0M0.html" type="local" container="PaymentViewController" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+  </pageList>
+  <userDefinedJSNIList>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.GetPhoneNumber"></userDefinedJSNI>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.SocialSharing"></userDefinedJSNI>
+      <userDefinedJSNI class="com.skcc.nexcore.mobile.barcodereader.BarcodeReaderJSNI"></userDefinedJSNI>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentPg"></userDefinedJSNI>
+  </userDefinedJSNIList>
+</alopexconfig>

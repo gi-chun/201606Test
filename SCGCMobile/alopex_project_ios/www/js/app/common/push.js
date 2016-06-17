@@ -56,11 +56,11 @@ function savePushId(flag){
 				if(dType=='Android'){
 					pushRegister(pn,'A',pushID, flag);
 				}else if(dType=='iOS'){
-//					pushRegister(pn,'I',pushID, flag);
-                    //gclee ios
-                                       if(flag == 'Main'){
-                                       runMain();
-                                       }
+					//gclee ios
+					//pushRegister(pn,'I',pushID, flag);
+					if(flag == 'Main'){
+						runMain();
+					}
 				}else{
 					logf('###기타');
 				}

@@ -16,16 +16,41 @@ var ss = '';
 var currentCa = '';
 var paramBpCa = {'list' : [{'bpCaList' : [] }]};
 
-var CDATE = '';
+//gclee card
+var cardFee = ''; //ZBTRANZ
 
 function setEventListner(){
 	
-	//gclee
+	//gclee card
 	$('.goPayPage').click(function(){
-		$('.pop_bank').bPopup({
-			opacity: 0.6,
-			speed: 300,
-		});
+		
+      var option = {
+      "width" : 500,
+      "height" : 400,
+      "x" : window.event.x,
+      "y" : window.event.y
+      };
+      
+      jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popBarcode");
+                          
+                          
+//		var param = {
+//				bp : '1111111',
+//				ca : '1111111'),
+//				DOC_HEADER_OPBEL : '111111'
+//			};
+//		
+//		if(device.osName != 'iOS'){
+//				navigateGo('PAYMENT',param);
+//		}else{
+//                navigateGo('PAYMENT', param);
+//		}
+		
+//		$('.,').bPopup({
+//			opacity: 0.6,
+//			speed: 300,
+//		});
+		
 	});
 	
 };
@@ -182,6 +207,7 @@ function showPayInfo(pr){
 					cgInfoStr += '<li><strong>'+s1[0]+'</strong> <span class="floatR">'+s1[s1.length-1]+'원</span></li>';
 				}
 			}
+			//gclee card
 			var s2 = cbq.list.billDetailResult[0].ZBTRANS_99.split(' ');
 			cgInfoStr += '<li class="total"><strong>'+s2[0]+'</strong> <span class="floatR">'+s2[s2.length-1]+'원</span></li>';
 

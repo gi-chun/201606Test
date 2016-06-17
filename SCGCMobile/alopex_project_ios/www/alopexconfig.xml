@@ -47,12 +47,13 @@
     <page id="MNTQA0M2" uri="/html/NT/MNTQA0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MINRE0M0" uri="/html/IN/MINRE0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="pushstart" uri="/html/MN/MMNPS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
-    <page id="PAYMENT" uri="/html/MN/MMNPS0M0.html" type="local" container="PaymentViewController" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="PAYMENT" type="native" uri="AbstractScreen_tViewController" ></page>
   </pageList>
   <userDefinedJSNIList>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.GetPhoneNumber"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.SocialSharing"></userDefinedJSNI>
       <userDefinedJSNI class="com.skcc.nexcore.mobile.barcodereader.BarcodeReaderJSNI"></userDefinedJSNI>
+      <userDefinedJSNI class="com.skcc.nexcore.mobile.payment.PaymentJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentPg"></userDefinedJSNI>
   </userDefinedJSNIList>

@@ -5,9 +5,9 @@
         "file_path_extension" : ["txt","DOC"]
     },
     "remote_contents" : {
-        "use_plugin" : true,
+        "use_plugin" : false,
         "plugin_class" : "RemoteContentManager",
-        "server_url" : "http://168.154.182.107:9082/apps",
+        "server_url" : "http://market.skens.com/apps",
         "current_remote_content_version":"180"
     }
 }

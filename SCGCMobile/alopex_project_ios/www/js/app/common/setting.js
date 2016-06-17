@@ -1904,19 +1904,7 @@
 	 */
 	function logf(conV){
 //		logfV('SCGC_Mobile',conV);
-        //gclee ios
-//		console.log(conV);
-        try{
-            if(device.osName == 'iOS'){
-                log.log(conV);
-            }else{
-                console.log(conV);
-            }
-        }catch(e){
-            console.log(conV);
-        }
-        
-        
+		console.log(conV);
 	}
 	function logfV(ti, conV){
 		try{

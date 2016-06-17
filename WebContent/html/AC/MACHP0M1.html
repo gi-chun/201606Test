@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<script type="text/javascript" src="../../js/app/AC/MACHP0M1.js"></script>
+	<script>TITLE('앱 회원 가입');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER_NONE('앱 회원 가입');	</script>
+	<div id="container" class="clearfix">
+		<div class="content pt20">
+			<div class="box_join">
+				<h2>휴대폰 인증 코드 요청</h2>
+				<div class="inner">
+					<p >휴대폰 문자로 받으신 인증코드를 입력하시고,  인증코드 확인을 눌러주세요. 인증코드는 총 6자리 입니다.</p>
+					<p class="pt10 pb10"><span class="col_red">※ 인증코드는 App을 종료하시면 재사용하실수 없습니다.</span></p>
+					<div class="input_phone">
+						<p class="pb10"><!-- 접근성 strong태그 삭제 후 label태그로, for, id값 입력 --><label for="hp">휴대폰 번호</label><span class="w100per"><input type="text" id="hp" name="" value="010-5031-2325" class="input_txt" readonly="readonly"/></span></p>
+						<p ><!-- 접근성 strong태그 삭제 후 label태그로, for, id값 입력 --><label for="code">인증코드 입력</label><span class="w100per"><input type="tel" id="code" name="" value="" maxlength="6" class="input_txt" /></span></p>
+					</div>
+					<p class="pt10 tac"><span id="pop_certify_ok"><a href="javascript:void(0);" class="Button red letter-1">인증코드 확인</a></span><span id="pop_certify_re"><a href="javascript:void(0);" class="Button red2 letter-1">인증코드 재 요청</a></span></p>
+					<!-- <span id="pop_certify_error"><a href="#pop_certify_error" class="Button red big">인증코드 오류</a></span> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 	<script type="text/javascript" src="../../js/app/common/foot.js"></script> -->
+</div>
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
+<script type="text/javascript" src="../../js/app/common/android_exit.js"></script>
+<!-- 인증코드 오류 -->
+<div id="popup2" class="pop_certify_error">
+	<div class="pop_head">
+		<h4><span class="warning">인증코드 오류</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">입력하신 인증코드가 맞지 않습니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red">인증코드 재요청</button></span>
+			<span class="small"><button class="Button red2">다시입력</button></span>
+		</div>
+	</div>
+</div>
+<!-- 
+인증코드 확인
+<div id="popup2" class="pop_certify_ok">
+	<div class="pop_head">
+		<h4><span class="warning">인증코드 확인</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">정확한 인증코드가 입력되었습니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red">회원가입 계속</button></span>
+		</div>
+	</div>
+</div>
+
+인증코드 발송
+<div id="popup2" class="pop_certify_re">
+	<div class="pop_head">
+		<h4><span class="warning">인증코드 발송</span></h4>
+	</div>
+	<div class="inner">
+		<p class="txt">고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.</p>
+		<div class="tac">
+			<span class="small"><button class="Button red">확인</button></span>
+		</div>
+	</div>
+</div> -->
+
+
+</body>
+</html>

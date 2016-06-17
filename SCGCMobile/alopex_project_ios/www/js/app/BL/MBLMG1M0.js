@@ -70,9 +70,9 @@ function setEventListner(){
 		});
 	});
 	
-	//gclee
+	//gclee card
 	$('.btn_account_card').click(function(){
-		navigateBackToNaviGo('MBLMG2M0');
+		navigateGo('MBLMG2M0');
 	});
 	
 };
@@ -234,6 +234,9 @@ function showPayInfo(pr){
 
 			$('.cgInfo').html(cgInfoStr);
 			
+			//gclee card
+			cbq.list.billDetailResult[0].BANKA = '';
+			//gclee
 			// 납부방식 화면 헨들링
 			if(cbq.list.billDetailResult[0].BANKA == ''){
 				//일반

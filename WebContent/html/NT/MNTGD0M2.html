@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../js/app/common/head.js"></script>
+	<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
+	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/app/swiper.min.css" />
+	<script type="text/javascript" src="../../js/app/common/swiper.jquery.js"></script>
+	<script type="text/javascript" src="../../js/app/NT/MNTGD0M1.js"></script>
+	<style>
+	.swiper-slide img {
+	  width: 100%;
+	  height: 51px;
+	}
+	</style>
+	
+	<script>TITLE('앱 이용가이드');	</script>
+</head>
+<body>
+<div id="wrap" class="sub">
+	<script>HEADER_NO_MEMBER('앱 이용가이드');	</script>
+	<div id="container" class="clearfix dispNone">
+	
+		<div class="swiper-bg">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide swipe1"><a href="javascript:void(0);"><img src="../../images/tab_app1_off.png" alt="회원가입" /></a></div>
+					<div class="swiper-slide swipe2"><a href="javascript:void(0);"><img src="../../images/tab_app2_off.png" alt="청구서" /></a></div>
+					<div class="swiper-slide swipe3"><a href="javascript:void(0);"><img src="../../images/tab_app3_off.png" alt="자가검침" /></a></div>
+					<div class="swiper-slide swipe4"><a href="javascript:void(0);"><img src="../../images/tab_app5_off.png" alt="고객센터" /></a></div>
+				</div>
+			</div>
+			<!-- <div class="swiper-button-next"><a href="#"><span>다음버튼보기</span></a></div>
+			<div class="swiper-button-prev"><a href="#"><span>이전버튼보기</span></a></div> -->
+		</div>
+<script type="text/javascript">
+//<![CDATA[
+// 배너롤링/
+$('.swipe1').click(function(ss){
+	clearTab(1);
+	ss.target.src = '../../images/tab_app1_on.png';
+	$('#tab1').show();
+});
+
+$('.swipe2').click(function(ss){
+	clearTab(2);
+	ss.target.src = '../../images/tab_app2_on.png';
+	$('#tab2').show();
+});
+
+$('.swipe3').click(function(ss){
+	clearTab(3);
+	ss.target.src = '../../images/tab_app3_on.png';
+	$('#tab3').show();
+});
+
+$('.swipe4').click(function(ss){
+	clearTab(4);
+	ss.target.src = '../../images/tab_app4_on.png';
+	$('#tab4').show();
+});
+
+function clearTab(no){
+	for(var i=1;i<6;i++){
+		if(i==no){
+		}else{
+
+			$('.swipe'+i).children().children().attr('src','../../images/tab_app'+i+'_off.png');
+			$('#tab'+i).hide();
+
+			
+		}
+	}
+}
+
+$(function(){	
+	var swiper = new Swiper('.swiper-container', {
+		nextButton: '.swiper-button-next', 
+		prevButton: '.swiper-button-prev',
+		slidesPerView: 4,
+		paginationClickable: true,
+		spaceBetween: 0
+	});
+	
+});
+
+$a.page(function(e,a){
+	this.init = function(e){
+		$('.swipe1').children().children().attr('src','../../images/tab_app1_on.png');
+		$('#tab1').show();
+	};
+});
+//]]>
+</script>
+
+	
+	
+		<div class="content">
+
+			<div id="tab1" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">App설치</a>
+						<div >
+							<img src='../../images/manual/001/01000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/01001.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/01002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">회원 가입</a>
+						<div >
+							<img src='../../images/manual/001/02000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02001.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02002.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02003.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02004.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02005.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/02006.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">가입 실패(보조인증)</a>
+						<div >
+							<img src='../../images/manual/001/03000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/03001.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">보조인증 - 납입자번호 인증</a>
+						<div >
+							<img src='../../images/manual/001/04000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/04001.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">보조인증 - 바코드 인증</a>
+						<div >
+							<img src='../../images/manual/001/05000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/05001.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">보조인증 - 콜센터문의</a>
+						<div >
+							<img src='../../images/manual/001/06000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/06001.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/06002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">사전가입자용 화면</a>
+						<div >
+							<img src='../../images/manual/001/07000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/07001.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">사전가입자용 - 가입신청</a>
+						<div >
+							<img src='../../images/manual/001/08000.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/08001.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/08002.PNG' width="100%"><br/>
+							<img src='../../images/manual/001/08003.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">앱 탈퇴 신청</a>
+						<div >
+							<img src='../../images/manual/004/15000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/15001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/15002.PNG' width="100%">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab2" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">자가검침 입력</a>
+						<div >
+							<img src='../../images/manual/003/01000.PNG' width="100%"><br/>
+							<img src='../../images/manual/003/01001.PNG' width="100%"><br/>
+							<img src='../../images/manual/003/01002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">자가검침 확인</a>
+						<div >
+							<img src='../../images/manual/003/02000.PNG' width="100%"><br/>
+							<img src='../../images/manual/003/02001.PNG' width="100%">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab3" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">모바일 청구서</a>
+						<div >
+							<img src='../../images/manual/002/01000.PNG' width="100%"><br/>
+							<img src='../../images/manual/002/01001.PNG' width="100%"><br/>
+							<img src='../../images/manual/002/01002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">요금납부</a>
+						<div >
+							<img src='../../images/manual/002/02000.PNG' width="100%"><br/>
+							<img src='../../images/manual/002/02001.PNG' width="100%"><br/>
+							<img src='../../images/manual/002/02002.PNG' width="100%">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="tab4" class="dispNone">
+				<ul class="Accordion_menu guide">
+					<li>
+						<a href="#" class="tit">메인화면</a>
+						<div >
+							<img src='../../images/manual/004/01000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/01001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/01002.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/01004.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">콜센터 전화걸기</a>
+						<div >
+							<img src='../../images/manual/004/02000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/02001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/02002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">요금납부</a>
+						<div >
+							<img src='../../images/manual/004/03000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/03001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/03002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">경동나비엔 스마트톡 원격제어</a>
+						<div >
+							<img src='../../images/manual/004/04000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/04001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/04002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">알려드립니다.</a>
+						<div >
+							<img src='../../images/manual/004/05000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/05001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/05002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">FAQ</a>
+						<div >
+							<img src='../../images/manual/004/06000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/06001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/06002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">공지사항</a>
+						<div >
+							<img src='../../images/manual/004/07000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/07001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/07002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">고객센터 위치조회</a>
+						<div >
+							<img src='../../images/manual/004/08000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/08001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/08002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">전출신청</a>
+						<div >
+							<img src='../../images/manual/004/09000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/09001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/09002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">가스와 안전</a>
+						<div >
+							<img src='../../images/manual/004/10000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/10001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/10002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">요금안내</a>
+						<div >
+							<img src='../../images/manual/004/11000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/11001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/11002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">설정 (단일CA고객)</a>
+						<div >
+							<img src='../../images/manual/004/12000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/12001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/12002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">설정 (다수CA고객)</a>
+						<div >
+							<img src='../../images/manual/004/13000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/13001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/13002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">설정 (다수CA고객)- 개인 맞춤기능</a>
+						<div >
+							<img src='../../images/manual/004/14000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/14001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/14002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">서비스관리</a>
+						<div >
+							<img src='../../images/manual/004/16000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/16001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/16002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">부가기능</a>
+						<div >
+							<img src='../../images/manual/004/18000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/18001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/18002.PNG' width="100%">
+						</div>
+					</li>
+					<li>
+						<a href="#" class="tit">지인추천(Share)</a>
+						<div >
+							<img src='../../images/manual/004/19000.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/19001.PNG' width="100%"><br/>
+							<img src='../../images/manual/004/19002.PNG' width="100%">
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/app/common/android_noMem.js"></script>
+</body>
+</html>
