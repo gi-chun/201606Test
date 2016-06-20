@@ -25,6 +25,7 @@
         self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
         
         [self.webView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.webView.scrollView setBounces:NO];
         [self.webView setDelegate:self];
         [self.view addSubview:self.webView];
         
