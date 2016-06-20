@@ -59,6 +59,8 @@
     UIViewController *topViewController = [AlopexUtil appDelegate].mNavigationManager.mNavController.topViewController;
     
     [topViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    [self performSelector:@selector(injection:) withObject:@"test" afterDelay:0.1];
 }
 
 - (void)dealloc{

@@ -131,6 +131,16 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
     NSString *reqUrl=[[request URL] absoluteString];
     NSLog(@"webview에 요청된 url==>%@",reqUrl);
     
+    if([reqUrl rangeOfString:@"scgcmobile://before"].location != NSNotFound)
+    {
+        
+        NSLog(@"navigate before page.==>%@",reqUrl);
+        
+        [self.delegate touchCloseButton];
+        
+        return NO;
+    }
+    
     if([reqUrl rangeOfString:@"ansimclick.hyundaicard.com"].location != NSNotFound)
     {
         return YES;

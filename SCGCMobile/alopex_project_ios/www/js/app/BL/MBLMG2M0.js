@@ -39,7 +39,7 @@ function setEventListner(){
       "phoneno" : vPhoneNo
       };
       
-      jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popBarcode");
+      jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
                           
                           
 //		var param = {
@@ -308,3 +308,21 @@ $a.page(function(){
        
     
 });
+
+//gclee card
+function popCardResult(ss){
+    logf('popCardResult ok');
+    
+    $('.pop_prepare').bPopup({
+                             opacity: 0.6,
+                             speed: 300,
+                             });
+    
+    if(ss.length==11){
+        
+        
+    }else{
+        
+    }
+    
+}
