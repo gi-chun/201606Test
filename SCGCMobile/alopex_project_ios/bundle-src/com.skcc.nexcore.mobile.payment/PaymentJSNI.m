@@ -26,9 +26,18 @@
 - (void)showPaymentCtl:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     UIViewController *topViewController = [AlopexUtil appDelegate].mNavigationManager.mNavController.topViewController;
     
-    NSMutableDictionary *userFrame = nil;
+    NSMutableDictionary *userParam = nil;
     
-    self.successCallback = [arguments objectAtIndex:0];
+    //Use popover view
+    if (arguments.count==2) {
+        userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
+        
+        NSLog(@"from script userParam values ==>%@", userParam);
+        
+        self.successCallback = [arguments objectAtIndex:1];
+        
+        NSLog(@"from script successCallback values ==>%@", [arguments objectAtIndex:1]);
+    }
     
     self.paymentCtl = [[[paymentCtl alloc] init] autorelease];
     ((paymentCtl*)self.paymentCtl).delegate = self;

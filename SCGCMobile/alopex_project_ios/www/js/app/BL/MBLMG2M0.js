@@ -17,6 +17,13 @@ var currentCa = '';
 var paramBpCa = {'list' : [{'bpCaList' : [] }]};
 
 //gclee card
+var vOrderName;
+var vOrderNumber;
+var vAmount;
+var vGoodName;
+var vPhoneNo;
+
+//gclee card
 var cardFee = ''; //ZBTRANZ
 
 function setEventListner(){
@@ -25,10 +32,11 @@ function setEventListner(){
 	$('.goPayPage').click(function(){
 		
       var option = {
-      "width" : 500,
-      "height" : 400,
-      "x" : window.event.x,
-      "y" : window.event.y
+      "ordername" : vOrderName,
+      "ordernumber" : vOrderNumber,
+      "amount" : vAmount,
+      "goodname" : vGoodName,
+      "phoneno" : vPhoneNo
       };
       
       jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popBarcode");
@@ -208,6 +216,19 @@ function showPayInfo(pr){
 				}
 			}
 			//gclee card
+             vPhoneNo = getAlopexCookie('uPhone');
+             vOrderName = cbq.list.billDetailResult[0].BUS_PART_NAME;
+             vOrderNumber = param.doc_header_opbel;
+             vAmount = cbq.list.billDetailResult[0].ZBTRANS_99;
+             vGoodName = "도시가스 " + cbq.list.billDetailResult[0].BUDAT_YEAR + "년 " + cbq.list.billDetailResult[0].BUDAT_MONTH + "월 청구서";
+             
+             logf("vPhoneNo : "+vPhoneNo);
+             logf("vOrderName : "+vOrderName);
+             logf("vOrderNumber : "+vOrderNumber);
+             logf("vAmount : "+vAmount);
+             logf("vGoodName : "+vGoodName);
+             
+            //gclee card
 			var s2 = cbq.list.billDetailResult[0].ZBTRANS_99.split(' ');
 			cgInfoStr += '<li class="total"><strong>'+s2[0]+'</strong> <span class="floatR">'+s2[s2.length-1]+'원</span></li>';
 

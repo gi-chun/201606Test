@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ViewController.h"
 
 
 @protocol paymentCtlDelegate <NSObject>
@@ -23,5 +22,8 @@
 
 @property(nonatomic, assign) id<paymentCtlDelegate> delegate;
 @property (nonatomic, strong) UIWebView *webView;
+
+- (void)setParam:(NSMutableDictionary *)pUserParam;
+
 
 @end

@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28DE7F1F1D11539D00F07B17 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */; };
-		28DE7F221D115D2C00F07B17 /* PaymentViewClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */; };
-		28ECC47D1D138D4200E68EB6 /* PaymentWebviewCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC47C1D138D4200E68EB6 /* PaymentWebviewCtl.m */; };
-		28ECC4801D1391EF00E68EB6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC47F1D1391EF00E68EB6 /* ViewController.m */; };
 		28ECC4861D13A15E00E68EB6 /* NativeExtensionSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC4851D13A15E00E68EB6 /* NativeExtensionSample.m */; };
 		28ECC48B1D13B93400E68EB6 /* PaymentJSNI.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48A1D13B93400E68EB6 /* PaymentJSNI.m */; };
 		28ECC48E1D13BA3900E68EB6 /* paymentCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48D1D13BA3900E68EB6 /* paymentCtl.m */; };
@@ -66,14 +62,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		28DE7F1D1D11539D00F07B17 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
-		28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
-		28DE7F201D115D2C00F07B17 /* PaymentViewClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewClient.h; sourceTree = "<group>"; };
-		28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewClient.m; sourceTree = "<group>"; };
-		28ECC47B1D138D4200E68EB6 /* PaymentWebviewCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentWebviewCtl.h; path = ../PaymentWebviewCtl.h; sourceTree = "<group>"; };
-		28ECC47C1D138D4200E68EB6 /* PaymentWebviewCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentWebviewCtl.m; path = ../PaymentWebviewCtl.m; sourceTree = "<group>"; };
-		28ECC47E1D1391EF00E68EB6 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		28ECC47F1D1391EF00E68EB6 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		28ECC4811D139D8800E68EB6 /* AbstractScreen_tViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractScreen_tViewController.h; sourceTree = "<group>"; };
 		28ECC4831D139E4100E68EB6 /* AbstractScreen_tViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractScreen_tViewController.m; sourceTree = "<group>"; };
 		28ECC4841D13A15E00E68EB6 /* NativeExtensionSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeExtensionSample.h; sourceTree = "<group>"; };
@@ -692,14 +680,6 @@
 				A8D10A711B042C0200E91B10 /* SocialSharing.h */,
 				A8D10A721B042C1500E91B10 /* SocialSharing.m */,
 				BF228C5B1B30079400051D01 /* PushService.h */,
-				28ECC47B1D138D4200E68EB6 /* PaymentWebviewCtl.h */,
-				28ECC47E1D1391EF00E68EB6 /* ViewController.h */,
-				28ECC47F1D1391EF00E68EB6 /* ViewController.m */,
-				28ECC47C1D138D4200E68EB6 /* PaymentWebviewCtl.m */,
-				28DE7F1D1D11539D00F07B17 /* PaymentViewController.h */,
-				28DE7F1E1D11539D00F07B17 /* PaymentViewController.m */,
-				28DE7F201D115D2C00F07B17 /* PaymentViewClient.h */,
-				28DE7F211D115D2C00F07B17 /* PaymentViewClient.m */,
 				BF228C5C1B3007CF00051D01 /* PushService.m */,
 				BFE734FF1B4E4A1F0067D603 /* Images.xcassets */,
 			);
@@ -1365,14 +1345,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28DE7F221D115D2C00F07B17 /* PaymentViewClient.m in Sources */,
-				28DE7F1F1D11539D00F07B17 /* PaymentViewController.m in Sources */,
-				28ECC47D1D138D4200E68EB6 /* PaymentWebviewCtl.m in Sources */,
 				B060163C14679620006D320F /* main.m in Sources */,
 				28ECC48B1D13B93400E68EB6 /* PaymentJSNI.m in Sources */,
 				BF228C4B1B2FFAD200051D01 /* BarcodeReaderViewController.m in Sources */,
 				BF228C591B2FFD4A00051D01 /* DeviceSecurityPlugin.m in Sources */,
-				28ECC4801D1391EF00E68EB6 /* ViewController.m in Sources */,
 				BFE734FB1B4E11520067D603 /* RemoteContentManager.m in Sources */,
 				28ECC4861D13A15E00E68EB6 /* NativeExtensionSample.m in Sources */,
 				BF228C4A1B2FFAD200051D01 /* BarcodeReaderJSNI.m in Sources */,

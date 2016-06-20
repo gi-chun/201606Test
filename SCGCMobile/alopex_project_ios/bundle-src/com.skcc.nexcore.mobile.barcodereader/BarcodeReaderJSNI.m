@@ -33,6 +33,7 @@
 @implementation BarcodeReaderJSNI
 
 - (void)showBarcodeReader:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+    
     UIViewController *topViewController = [AlopexUtil appDelegate].mNavigationManager.mNavController.topViewController;
     
     NSMutableDictionary *userFrame = nil;
