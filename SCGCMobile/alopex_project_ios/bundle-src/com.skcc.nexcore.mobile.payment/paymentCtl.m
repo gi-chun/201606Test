@@ -39,25 +39,30 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         [self.webView.scrollView setBounces:NO];
         [self.webView setDelegate:self];
         [self.view addSubview:self.webView];
-      
-        NSURL *url = [NSURL URLWithString: mpi_url];
-
         
+        NSLog(@"in userParam values ==>%@", userParam);
+      
+        NSURL *url = [NSURL URLWithString: [userParam objectForKey:@"connectURL"]];
+
 //        var option = {
 //            "ordername" : vOrderName,
 //            "ordernumber" : vOrderNumber,
 //            "amount" : vAmount,
 //            "goodname" : vGoodName,
-//            "phoneno" : vPhoneNo
+//            "phoneno" : vPhoneNo,
+//            "cardCode" : vCardCode,
+//            "BPCode" : vBPCode,
+//            "connectURL" : vConnectURL
 //        };
-
         
-        NSString *body = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@",
-                          [userParam objectForKey:@"vOrderName"],
-                          [userParam objectForKey:@"vOrderNumber"],
-                          [userParam objectForKey:@"vAmount"],
-                          [userParam objectForKey:@"vGoodName"],
-                          [userParam objectForKey:@"vPhoneNo"]
+        NSString *body = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@",
+                          [userParam objectForKey:@"ordername"],
+                          [userParam objectForKey:@"ordernumber"],
+                          [userParam objectForKey:@"amount"],
+                          [userParam objectForKey:@"goodname"],
+                          [userParam objectForKey:@"phoneno"],
+                          [userParam objectForKey:@"cardCode"],
+                          [userParam objectForKey:@"BPCode"]
                           ];
         
         NSLog(@"url parameter values ==>%@", body);
