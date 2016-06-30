@@ -191,7 +191,7 @@ function chkUSER(){
 		setAlopexCookie('recomendrCookie',$('.recomendr').val());
 		setAlopexSession('agreeProvideInfoYn',$('#agree_provide_info').is(':checked') ? "Y" : "N");
 		setAlopexCookie('agreeProvideInfoYnCookie',$('#agree_provide_info').is(':checked') ? "Y" : "N");
-		getChkUser(pn);
+		getCh,kUser(pn);
 //	}
 }
 

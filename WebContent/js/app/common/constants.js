@@ -28,8 +28,8 @@ CONSTANTS = {
 	//TEST
 	CIP_TEST_URL :_0xd8e0[0],
 	//TEST local - 백지훈대리님 로컬PC
-	CIP_TEST_URL : "http://192.9.112.128:8090/scgc/services/nmp",
-//	CIP_TEST_URL : "http://168.154.182.107:19681/cip/services/nmp",	
+//	CIP_TEST_URL : "http://192.9.112.128:8090/scgc/services/nmp",
+	CIP_TEST_URL : "http://168.154.182.107:19681/cip/services/nmp",
 
 	//운영
 	CIP_URL : "http://scgc.skens.com:9090/services/nmp",

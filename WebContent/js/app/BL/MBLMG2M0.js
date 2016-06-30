@@ -17,6 +17,16 @@ var currentCa = '';
 var paramBpCa = {'list' : [{'bpCaList' : [] }]};
 
 //gclee card
+var vOrderName;
+var vOrderNumber;
+var vAmount;
+var vGoodName;
+var vPhoneNo;
+var vCardCode;
+var vBPCode;
+var vConnectURL;
+
+//gclee card
 var cardFee = ''; //ZBTRANZ
 
 function setEventListner(){
@@ -24,17 +34,48 @@ function setEventListner(){
 	//gclee card
 	$('.goPayPage').click(function(){
 		
-		var param = {
-				bp : String(Number(params.bp)),
-				ca : String(Number(params.ca)),
-				DOC_HEADER_OPBEL : cb.list.billDetailResult[0].PREV_DOC_HEADER_OPBEL
-			};
-		
-		if(device.osName != 'iOS'){
-				navigateGo('MBLMG0M2',param);
-		}else{
-				navigateGo('MBLMG0M2',param);
-		}
+	  vCardCode = $("#cardSelect option:selected").val();
+	  vConnectURL = getCardPayURL(vCardCode);
+
+	  var chkBPCA = getMainBPCA();
+	  var useBPCA = JSON.parse(chkBPCA);
+	  vBPCode = useBPCA.regiogroup;
+	  
+      var option = {
+      "ordername" : vOrderName,
+      "ordernumber" : vOrderNumber,
+      "amount" : vAmount,
+      "goodname" : vGoodName,
+      "phoneno" : vPhoneNo,
+      "cardCode" : vCardCode,
+      "BPCode" : vBPCode,
+      "connectURL" : vConnectURL
+      };
+      
+      
+      
+      logf("vPhoneNo : "+vPhoneNo);
+      logf("vOrderName : "+vOrderName);
+      logf("vOrderNumber : "+vOrderNumber);
+      logf("vAmount : "+vAmount);
+      logf("vGoodName : "+vGoodName);
+      logf("vCardCode : "+vCardCode);
+      logf("vBPCode : "+vBPCode);
+      logf("vConnectURL : "+vConnectURL);
+      
+	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+                          
+//		var param = {
+//				bp : '1111111',
+//				ca : '1111111'),
+//				DOC_HEADER_OPBEL : '111111'
+//			};
+//		
+//		if(device.osName != 'iOS'){
+//				navigateGo('PAYMENT',param);
+//		}else{
+//                navigateGo('PAYMENT', param);
+//		}
 		
 //		$('.,').bPopup({
 //			opacity: 0.6,
@@ -198,6 +239,21 @@ function showPayInfo(pr){
 				}
 			}
 			//gclee card
+             vPhoneNo = getAlopexCookie('uPhone');
+             vOrderName = cbq.list.billDetailResult[0].BUS_PART_NAME;
+             vOrderNumber = pr.doc_header_opbel;
+             vAmount = cbq.list.billDetailResult[0].ZBTRANS_99;
+             vGoodName = "도시가스 " + cbq.list.billDetailResult[0].BUDAT_YEAR + "년 " + cbq.list.billDetailResult[0].BUDAT_MONTH + "월 청구서";
+             //vBPName = cbq.list.billDetailResult[0].ZCOUNT_NAME;
+             
+             logf("vPhoneNo : "+vPhoneNo);
+             logf("vOrderName : "+vOrderName);
+             logf("vOrderNumber : "+vOrderNumber);
+             logf("vAmount : "+vAmount);
+             logf("vGoodName : "+vGoodName);
+             //logf("vBPName : "+vBPName);	
+             
+            //gclee card
 			var s2 = cbq.list.billDetailResult[0].ZBTRANS_99.split(' ');
 			cgInfoStr += '<li class="total"><strong>'+s2[0]+'</strong> <span class="floatR">'+s2[s2.length-1]+'원</span></li>';
 
@@ -277,3 +333,21 @@ $a.page(function(){
        
     
 });
+
+//gclee card
+function popCardResult(ss){
+    logf('popCardResult ok');
+    
+    $('.pop_prepare').bPopup({
+                             opacity: 0.6,
+                             speed: 300,
+                             });
+    
+    if(ss.length==11){
+        
+        
+    }else{
+        
+    }
+    
+}

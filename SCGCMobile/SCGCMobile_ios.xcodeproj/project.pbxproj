@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28ECC4861D13A15E00E68EB6 /* NativeExtensionSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC4851D13A15E00E68EB6 /* NativeExtensionSample.m */; };
 		28ECC48B1D13B93400E68EB6 /* PaymentJSNI.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48A1D13B93400E68EB6 /* PaymentJSNI.m */; };
 		28ECC48E1D13BA3900E68EB6 /* paymentCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48D1D13BA3900E68EB6 /* paymentCtl.m */; };
 		36751DF1183C7A2C00E7E68D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 36751DF0183C7A2C00E7E68D /* config.json */; };
@@ -62,10 +61,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		28ECC4811D139D8800E68EB6 /* AbstractScreen_tViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractScreen_tViewController.h; sourceTree = "<group>"; };
-		28ECC4831D139E4100E68EB6 /* AbstractScreen_tViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractScreen_tViewController.m; sourceTree = "<group>"; };
-		28ECC4841D13A15E00E68EB6 /* NativeExtensionSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeExtensionSample.h; sourceTree = "<group>"; };
-		28ECC4851D13A15E00E68EB6 /* NativeExtensionSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeExtensionSample.m; sourceTree = "<group>"; };
 		28ECC4891D13B93400E68EB6 /* PaymentJSNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentJSNI.h; sourceTree = "<group>"; };
 		28ECC48A1D13B93400E68EB6 /* PaymentJSNI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentJSNI.m; sourceTree = "<group>"; };
 		28ECC48C1D13BA3900E68EB6 /* paymentCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paymentCtl.h; sourceTree = "<group>"; };
@@ -689,12 +684,8 @@
 		B060163614679620006D320F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				28ECC4841D13A15E00E68EB6 /* NativeExtensionSample.h */,
-				28ECC4851D13A15E00E68EB6 /* NativeExtensionSample.m */,
 				B060163714679620006D320F /* alopex_iphone-Info.plist */,
 				B060163B14679620006D320F /* main.m */,
-				28ECC4811D139D8800E68EB6 /* AbstractScreen_tViewController.h */,
-				28ECC4831D139E4100E68EB6 /* AbstractScreen_tViewController.m */,
 				B060163D14679620006D320F /* alopex_iphone-Prefix.pch */,
 				36751DF0183C7A2C00E7E68D /* config.json */,
 				36751DF3183C7BDD00E7E68D /* NEWALOPEX */,
@@ -1350,7 +1341,6 @@
 				BF228C4B1B2FFAD200051D01 /* BarcodeReaderViewController.m in Sources */,
 				BF228C591B2FFD4A00051D01 /* DeviceSecurityPlugin.m in Sources */,
 				BFE734FB1B4E11520067D603 /* RemoteContentManager.m in Sources */,
-				28ECC4861D13A15E00E68EB6 /* NativeExtensionSample.m in Sources */,
 				BF228C4A1B2FFAD200051D01 /* BarcodeReaderJSNI.m in Sources */,
 				28ECC48E1D13BA3900E68EB6 /* paymentCtl.m in Sources */,
 				B060164D146797AE006D320F /* AlopexAppDelegate.m in Sources */,

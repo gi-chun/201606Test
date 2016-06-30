@@ -85,6 +85,7 @@ function savePushId(flag){
  * @param os
  * @param pushId
  */
+//gclee pushRegister(pn,'A',pushID, flag);
 function pushRegister(deviceId, os, pushId, flag) {	
 	var param = {
 		"appIdentifier" : CONSTANTS.APP_IDENTIFIER,

@@ -106,70 +106,119 @@ function popPhone(pn){
 //	pn = '01037625935'; //TST 청구서
 //	pn = "01066103573"; 
 	
-	// test
-	if(isTest){
-		//	console.log('1212121212#####################################ok');
-		//	getRegistrationId('Main');
-		var pnChk = getAlopexCookie('uPhone');
-		if(pnChk == 'undefined'){
-			//navigateGo('MACHP1M0');
-			navigateGo('MACHP0M0');
-			//console.log('111');
-		}else{
-			logf('222');
-			getRegistrationId('Main');
-		}
+	//gclee login #################################################################################################
+	
+	//인증된 전화번호로 가입여부를 확인한다.
+	//처음 CIP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자)
+	//API 호출은 getIsMemberChk 하나로 앱가입자, SAP가입자, 미가입자 서버에서 판단하여 보내줌
+	//아래 사항은 서버처리 사항 참고
+	//CIP에 요청결과 가입자면 아래 로그인프로세스 진행
+	//CIP에 요청결과 미가입자면 다시 SAP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자) 
+	//SAP에 요청결과 가입자면 아래 로그인프로세스 진행
+	//SAP에 요청결과 미가입자면 앱 회원가입 화면으로 이동 (MACHP1M0)
+	
+	var param = {
+    		"mbtlnum" : pn
+    	};
 		
-	}else{
-		if(device.osName == 'Android'){
-			pnLog = pn;
-			jsniCaller.invoke("MarketVersionCheck.check","popVersionCheck");
-			//popVersionCheckNo();
-		}else if(device.osName == 'iOS'){
-			if(pn == 1){
-				var pnChk = getAlopexCookie('uPhone');
-				if(pnChk == 'undefined'){
-					navigateGo('MACHP0M0');
-				}else{
-					if(pnChk == '1' || pnChk == '' || pnChk == 'undefined' || pnChk == 'null' || pnChk.indexOf('01') != 0){
-						contiLogin();
-					}else{
-						getRegistrationId('Main');
-						//gclee lsc
-						contiLogin();
-					}
-				}
-			}else{
-				pnLog = pn;
-				if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
-					contiLogin();
-					// 번호 인증페이지
-				}else if(pn){
-					setAlopexCookie('uPhone',codePhoneNM(pn));
-					getRegistrationId('Main');
-					//gclee lsc
-					contiLogin();
-				}else{
-					
-				}
-			}
-			
-		}else{
-			//console.log('1212121212#####################################no');
-			pnLog = pn;
-			if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
-				contiLogin();
-				// 번호 인증페이지
-			}else if(pn){
-				setAlopexCookie('uPhone',codePhoneNM(pn));
-				//? test
-				getRegistrationId('Main');
-				contiLogin();
-			}else{
-				
-			}
-		}
-	}
+	//gclee login 우선 주석처리 서버완료되면 테스트
+//    	httpSend("getIsMemberChk", param, function(result){
+//    		
+//    		logf("getIsMemberChk: " + result);
+//    		logf("getIsMemberChk:joinCode: " + result.joinCode);
+//    		
+//    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자
+//    		if(result.joinCode == '3'){
+//    			navigateGo('MACHP1M0');
+//    		}else{
+    			
+    			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    			//기존로직 로그인
+    			
+    			// test
+    			if(isTest){
+    				//	console.log('1212121212#####################################ok');
+    				//	getRegistrationId('Main');
+    				var pnChk = getAlopexCookie('uPhone');
+    				if(pnChk == 'undefined'){
+    					//navigateGo('MACHP1M0');
+    					navigateGo('MACHP0M0');
+    					//console.log('111');
+    				}else{
+    					logf('222');
+    					getRegistrationId('Main');
+    				}
+    				
+    			}else{
+    				if(device.osName == 'Android'){
+    					pnLog = pn;
+    					jsniCaller.invoke("MarketVersionCheck.check","popVersionCheck");
+    					//popVersionCheckNo();
+    				}else if(device.osName == 'iOS'){
+    					if(pn == 1){
+    						var pnChk = getAlopexCookie('uPhone');
+    						if(pnChk == 'undefined'){
+    							navigateGo('MACHP0M0');
+    						}else{
+    							if(pnChk == '1' || pnChk == '' || pnChk == 'undefined' || pnChk == 'null' || pnChk.indexOf('01') != 0){
+    								contiLogin();
+    							}else{
+    								getRegistrationId('Main');
+    								//gclee lsc
+    								contiLogin();
+    							}
+    						}
+    					}else{
+    						pnLog = pn;
+    						if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
+    							contiLogin();
+    							// 번호 인증페이지
+    						}else if(pn){
+    							setAlopexCookie('uPhone',codePhoneNM(pn));
+    							getRegistrationId('Main');
+    							//gclee lsc
+    							contiLogin();
+    						}else{
+    							
+    						}
+    					}
+    					
+    				}else{
+    					//console.log('1212121212#####################################no');
+    					pnLog = pn;
+    					if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
+    						contiLogin();
+    						// 번호 인증페이지
+    					}else if(pn){
+    						setAlopexCookie('uPhone',codePhoneNM(pn));
+    						//? test
+    						getRegistrationId('Main');
+    						contiLogin();
+    					}else{
+    						
+    					}
+    				}
+    			}
+    			
+    			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    			//기존로직 로그인
+    			
+//    		}
+//    		
+//    		
+//    	}, function(errorCode, errorMessage){
+//    		
+//    		if (errorCode == "9999") {
+//    			loge('error :: 9999 :: getIsMemberChk');
+//    		} else {
+//    			loge('error :: other :: getIsMemberChk');
+//    		}
+//		});
+	
+	
+	//gclee login end ############################################################################################## 
+    	
+
 	//$('#uPhones').val(pn);
 //	var pushID = getAlopexCookie("pushID");
 //	if(isNullCheck(pushID)){

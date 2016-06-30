@@ -14,6 +14,7 @@
 @interface PaymentJSNI(){
     paymentCtl *_paymentCtl;
     NSString *_successCallback;
+    NSMutableDictionary *userParam;
 }
 
 @property (nonatomic, retain) UIViewController *paymentCtl;
@@ -26,7 +27,7 @@
 - (void)showPaymentCtl:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     UIViewController *topViewController = [AlopexUtil appDelegate].mNavigationManager.mNavController.topViewController;
     
-    NSMutableDictionary *userParam = nil;
+//    NSMutableDictionary *userParam = nil;
     
     //Use popover view
     if (arguments.count==2) {
@@ -41,6 +42,7 @@
     
     self.paymentCtl = [[[paymentCtl alloc] init] autorelease];
     ((paymentCtl*)self.paymentCtl).delegate = self;
+    [((paymentCtl*)self.paymentCtl) setParam:userParam];
     [topViewController presentViewController:self.paymentCtl animated:YES completion:nil];
     
 }

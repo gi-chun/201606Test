@@ -24,6 +24,9 @@ var ca = '';
 var call_pop_id = '';
 var bp_pop_id = '';
 
+var popBillCerti = ''; //gclee bill
+var popBillCertiSave = ''; //gclee bill
+
 var selfChk = false;		// 자가검침 가능여부 : 최종
 var selfChkMulti = false;	// 자가검침 가능여부 : 다중 계량기
 var selfChkSide = false;	// 자가검침 가능여부 : 외부 계량기
@@ -309,19 +312,149 @@ function setEventListner(){
 	
 	$('#goBill').click(function(){   		
 		//$a.navigate('BL/MBLMG0M2');   
-		if(billNo == ''){
-			navigateBackToNaviGo('MBLMG0M0');
+		//gclee bill
+		var vBillCertiNo = getAlopexCookie('billCertiNo');
+		
+		if(vBillCertiNo == 'undefined' || vBillCertiNo == '' ){ //미저장
+			
+			popBillCertiSave = $('.bill_certi_save').bPopup({
+				opacity: 0.6,
+				speed: 300,
+			});
+			
 		}else{
-			var rtMsg = {
-					'bp' : bp,
-					'ca' : ca,
-					'DOC_HEADER_OPBEL' : billNo
-			};
-//			navigateGo('MBLMG0M2',rtMsg);
-			navigateBackToNaviParamGo('MBLMG0M2',rtMsg);
+			
+			popBillCerti = $('.bill_certi').bPopup({
+				opacity: 0.6,
+				speed: 300,
+			});
 		}
 		
+		//gclee bill end
+		
 	});	//	청구서 상세
+	
+	//gclee bill
+	$('#closeBtnExit').click(function(){
+		popBillCerti.close();
+	});
+	
+	$('#closeBtnExitSave').click(function(){
+		popBillCertiSave.close();
+	});
+	
+	//청구서 인증번호 저장클릭 후 처리
+	$('#bill_certi_save_ok').click(function(){
+		var vNo = $('#no').val();
+		var vNo_re = $('#no_re').val();
+		
+		if(vNo.length < 1){
+			notiPop('청구서보기 인증번호 저장 오류','인증번호를 입력하세요.',true,false,null);
+			
+		}else if(vNo_re.length < 1){
+			notiPop('청구서보기 인증번호 저장 오류','인증번호 확인번호를 입력하세요.',true,false,null);
+			
+		}else if(vNo != vNo_re){
+			
+			notiPop('청구서보기 인증번호 저장 오류','입력하신 청구서보기 인증번호가 맞지 않습니다.',true,false,null);
+			
+		}else{
+			//alert(vNo);
+			setAlopexCookie('billCertiNo', vNo);
+			
+//			notiPop('청구서보기 인증번호 저장 성공','인증번호가 저장되었습니다.',true,false,null);
+			
+			popBillCertiSave.close();
+			
+//			notiPop('청구서보기 인증번호 저장 성공', '인증번호가 저장되었습니다.', false, false, {
+//				list : [ {
+//					name : '청구서보기 인증 계속',
+//					id : 'pViewBill',
+//					type : ''
+//				} ]
+//			});
+//			// 청구서보기 인증 및 청구서보기 페이지 이어 하기
+//			$('.pViewBill').click(function() {
+//				
+//				popBillCerti = $('.bill_certi').bPopup({
+//					opacity: 0.6,
+//					speed: 300,
+//				});
+//				
+//			});
+			
+		}
+	});
+	
+	//청구서 인증 확인클릭 후 처리
+	$('#bill_certi_ok').click(function(){
+		var certiNo = $('#certiNo').val();
+		var saveCertiNo = getAlopexCookie('billCertiNo');
+		if(certiNo.length < 1){
+			notiPop('청구서보기 인증 오류','인증번호를 입력하세요.',true,false,null);
+			
+		}else if(saveCertiNo != certiNo){
+			
+			var vBillCertiFailCnt = getAlopexCookie('billCertiFailCnt');
+			
+			if(vBillCertiFailCnt == 'undefined'){
+				vBillCertiFailCnt = 0;
+			}
+			
+			if(vBillCertiFailCnt == ''){
+				vBillCertiFailCnt = 0;
+			}
+			
+			vBillCertiFailCnt = Number(vBillCertiFailCnt);
+			vBillCertiFailCnt = vBillCertiFailCnt + 1;
+			
+			if(vBillCertiFailCnt > 2 ){
+				setAlopexCookie('billCertiNo', '');
+				setAlopexCookie('billCertiFailCnt', '');
+			}else{
+				setAlopexCookie('billCertiFailCnt', String(vBillCertiFailCnt));
+			}
+			
+			var vMessage = '실패 횟수 ' + vBillCertiFailCnt + '<br/>\n' 
+			+ '입력하신 청구서보기 인증번호가 맞지 않습니다.'
+			+ '3회 실패시 신규 인증번호 설정화면이 나옵니다.' + '<br/>\n';
+			
+			popBillCerti.close();
+			notiPop('청구서보기 인증 오류',vMessage,true,false,null);
+			
+		}else{
+			
+			notiPop('청구서보기 인증 성공', '청구서보기 인증되었습니다.', false, false, {
+				list : [ {
+					name : '청구서보기 계속',
+					id : 'pViewBill',
+					type : ''
+				} ]
+			});
+			// 청구서보기 인증 및 청구서보기 페이지 이어 하기
+			$('.pViewBill').click(function() {
+				
+				////////////////////////////////
+				if(billNo == ''){
+					navigateBackToNaviGo('MBLMG0M0');
+				}else{
+					var rtMsg = {
+							'bp' : bp,
+							'ca' : ca,
+							'DOC_HEADER_OPBEL' : billNo
+					};
+//					navigateGo('MBLMG0M2',rtMsg);
+					navigateBackToNaviParamGo('MBLMG0M2',rtMsg);
+				}
+				////////////////////////////////
+				
+			});
+			
+		}
+	});
+	
+	//gclee biil end
+	
 	$('#phoneSVC').click(function(event){   
 		//console.log(event.currentTarget.children[0].children[1].children[0].innerHTML);
 //		var callNo = event.currentTarget.children[0].children[1].children[0].innerHTML;

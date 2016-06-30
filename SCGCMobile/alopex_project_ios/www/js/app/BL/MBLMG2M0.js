@@ -22,6 +22,9 @@ var vOrderNumber;
 var vAmount;
 var vGoodName;
 var vPhoneNo;
+var vCardCode;
+var vBPCode;
+var vConnectURL;
 
 //gclee card
 var cardFee = ''; //ZBTRANZ
@@ -31,16 +34,40 @@ function setEventListner(){
 	//gclee card
 	$('.goPayPage').click(function(){
 		
+	  vCardCode = $("#cardSelect option:selected").val();
+	  vConnectURL = getCardPayURL(vCardCode);
+
+	  var chkBPCA = getMainBPCA();
+	  var useBPCA = JSON.parse(chkBPCA);
+	  vBPCode = useBPCA.regiogroup;
+	  
       var option = {
       "ordername" : vOrderName,
       "ordernumber" : vOrderNumber,
       "amount" : vAmount,
       "goodname" : vGoodName,
-      "phoneno" : vPhoneNo
+      "phoneno" : vPhoneNo,
+      "cardCode" : vCardCode,
+      "BPCode" : vBPCode,
+      "connectURL" : vConnectURL
       };
       
-      jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-                          
+      
+      
+      logf("vPhoneNo : "+vPhoneNo);
+      logf("vOrderName : "+vOrderName);
+      logf("vOrderNumber : "+vOrderNumber);
+      logf("vAmount : "+vAmount);
+      logf("vGoodName : "+vGoodName);
+      logf("vCardCode : "+vCardCode);
+      logf("vBPCode : "+vBPCode);
+      logf("vConnectURL : "+vConnectURL);
+      
+      if(device.osName != 'iOS'){
+    	  jsniCaller.invoke("PaymentPg.startPayment");
+      }else{
+    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+      }                    
                           
 //		var param = {
 //				bp : '1111111',
@@ -218,15 +245,17 @@ function showPayInfo(pr){
 			//gclee card
              vPhoneNo = getAlopexCookie('uPhone');
              vOrderName = cbq.list.billDetailResult[0].BUS_PART_NAME;
-             vOrderNumber = param.doc_header_opbel;
+             vOrderNumber = pr.doc_header_opbel;
              vAmount = cbq.list.billDetailResult[0].ZBTRANS_99;
              vGoodName = "도시가스 " + cbq.list.billDetailResult[0].BUDAT_YEAR + "년 " + cbq.list.billDetailResult[0].BUDAT_MONTH + "월 청구서";
+             //vBPName = cbq.list.billDetailResult[0].ZCOUNT_NAME;
              
              logf("vPhoneNo : "+vPhoneNo);
              logf("vOrderName : "+vOrderName);
              logf("vOrderNumber : "+vOrderNumber);
              logf("vAmount : "+vAmount);
              logf("vGoodName : "+vGoodName);
+             //logf("vBPName : "+vBPName);	
              
             //gclee card
 			var s2 = cbq.list.billDetailResult[0].ZBTRANS_99.split(' ');

@@ -1034,6 +1034,28 @@
 		
 	}
 	
+	//gclee card
+	/**
+	 * 카드결제시 정해진 카드코드로 MPI vs ISP 구분 해당URL 세팅
+	 * @param nm
+	 * @returns {String}
+	 */
+	function getCardPayURL(nm){
+		 //test
+		 var MPI_TEST_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
+		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+		 //real
+		 var MPI_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
+		 var ISP_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+			 
+		//console.log('nm.length',nm.length);
+		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
+			return ISP_TEST_URL;
+		}else{	           // 2자리 코드
+			return MPI_TEST_URL;
+		}
+	}
+	
 	/**
 	 * 상단 BP로고 가져오기
 	 * @returns
@@ -1071,7 +1093,7 @@
     	}
     	 
 	}
-	
+		
 	/**
 	 * 메인, 청구서 그래프 그리기시 카테고리 수집용
 	 * @param fuqr
