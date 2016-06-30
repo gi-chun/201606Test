@@ -37,8 +37,8 @@ function httpSend(serviceId, jsonParam, _successCallback, _errorCallback){
 	user_errorCallback = _errorCallback;
 	
 	var entity = {
-//		"url" : CONSTANTS.CIP_URL,	
-		"url" : CONSTANTS.CIP_TEST_URL,
+		"url" : CONSTANTS.CIP_URL,	
+//		"url" : CONSTANTS.CIP_TEST_URL,
 //		"url" : "http://192.9.112.127:8090/scgc/services/nmp",
 		"method" : "POST",
 		"onBody" : true,
