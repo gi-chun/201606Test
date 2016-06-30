@@ -1,4 +1,6 @@
 #import "AlopexAppDelegate.h"
+#import "DataManager.h"
+
 
 @implementation AlopexAppDelegate
 
@@ -28,6 +30,14 @@
     
     //Add the view behind the status bar
     [self.window.rootViewController.view addSubview:statusBg];
+    
+//    if (launchOptions){
+//        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//        if (userInfo != nil) {
+//            NSLog(@"%@", userInfo);
+//        }
+//        [self receiveRemoteNotification:launchOptions withAppState:NO];
+//    }
     
     return  YES;
     
@@ -71,12 +81,17 @@
     }
     
     //application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+    
+    //[self receiveRemoteNotification:userInfo withAppState:YES];
+    
 }
 
 // 수정 이전(7.0버전 이전) 코드 부분 (didReceiveRemoteNotification함수)
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"APNS Recv");
+    //[self receiveRemoteNotification:userInfo withAppState:YES];
+    
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -97,6 +112,59 @@
     //    [[NSUserDefaults standardUserDefaults] setObject:deviceId  forKey:@"devicetoken"];
     NSLog(@"APNS Device Token: %@",deviceId);
 }
+
+- (void)receiveRemoteNotification:(NSDictionary *)userInfo withAppState:(BOOL)onForeground
+{
+    NSString* totalDic;
+    totalDic = [NSString stringWithFormat:@"faceBook %@", userInfo];
+  
+    if(onForeground){
+        
+        NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+        
+        NSDictionary *dic = [userInfo objectForKey:@"aps"];
+        
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+        NSString* temp;
+        NSString* tclose;
+        NSString* tcancel;
+        
+        tclose = @"close";
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"cancel", nil];
+        [alert show];
+        
+    }else{
+        
+        NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        
+        if(!dic){
+            return;
+        }
+        
+        NSLog(@"didReceiveRemoteNotification : \n%@", dic);
+        
+        //kSOAlert, kSOMessageId
+        NSString *title = [dic objectForKey:@"title"];
+        NSString *message = [dic objectForKey:@"alert"];
+        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        
+        NSString* temp;
+        NSString* tclose;
+        
+    }
+}
+
 
 
 @end

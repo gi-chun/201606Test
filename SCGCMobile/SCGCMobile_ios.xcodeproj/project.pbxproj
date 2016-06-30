@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28E0780B1D24FEFF00C3BD04 /* libsmartbrokerAPIs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E078081D24FEFF00C3BD04 /* libsmartbrokerAPIs.a */; };
+		28E0780E1D24FF5500C3BD04 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E0780D1D24FF5500C3BD04 /* DataManager.m */; };
 		28ECC48B1D13B93400E68EB6 /* PaymentJSNI.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48A1D13B93400E68EB6 /* PaymentJSNI.m */; };
 		28ECC48E1D13BA3900E68EB6 /* paymentCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 28ECC48D1D13BA3900E68EB6 /* paymentCtl.m */; };
 		36751DF1183C7A2C00E7E68D /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 36751DF0183C7A2C00E7E68D /* config.json */; };
@@ -61,6 +63,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28E078041D24FEFF00C3BD04 /* encstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encstruct.h; sourceTree = "<group>"; };
+		28E078051D24FEFF00C3BD04 /* erb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = erb.h; sourceTree = "<group>"; };
+		28E078061D24FEFF00C3BD04 /* erbapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = erbapi.h; sourceTree = "<group>"; };
+		28E078071D24FEFF00C3BD04 /* erbdefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = erbdefine.h; sourceTree = "<group>"; };
+		28E078081D24FEFF00C3BD04 /* libsmartbrokerAPIs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsmartbrokerAPIs.a; sourceTree = "<group>"; };
+		28E078091D24FEFF00C3BD04 /* ptcdefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ptcdefine.h; sourceTree = "<group>"; };
+		28E0780A1D24FEFF00C3BD04 /* ptcstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ptcstruct.h; sourceTree = "<group>"; };
+		28E0780C1D24FF5500C3BD04 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		28E0780D1D24FF5500C3BD04 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		28ECC4891D13B93400E68EB6 /* PaymentJSNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentJSNI.h; sourceTree = "<group>"; };
 		28ECC48A1D13B93400E68EB6 /* PaymentJSNI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentJSNI.m; sourceTree = "<group>"; };
 		28ECC48C1D13BA3900E68EB6 /* paymentCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paymentCtl.h; sourceTree = "<group>"; };
@@ -580,6 +591,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF98C2281BEC8EB4005412E7 /* libsqlite3.tbd in Frameworks */,
+				28E0780B1D24FEFF00C3BD04 /* libsmartbrokerAPIs.a in Frameworks */,
 				BF228B581B2FF5DF00051D01 /* QuartzCore.framework in Frameworks */,
 				BF98C1421BEC8E42005412E7 /* Alopex.framework in Frameworks */,
 				BF228B561B2FF5CE00051D01 /* ImageIO.framework in Frameworks */,
@@ -607,6 +619,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28E078031D24FEFF00C3BD04 /* pushlib */ = {
+			isa = PBXGroup;
+			children = (
+				28E078041D24FEFF00C3BD04 /* encstruct.h */,
+				28E078051D24FEFF00C3BD04 /* erb.h */,
+				28E078061D24FEFF00C3BD04 /* erbapi.h */,
+				28E078071D24FEFF00C3BD04 /* erbdefine.h */,
+				28E078081D24FEFF00C3BD04 /* libsmartbrokerAPIs.a */,
+				28E078091D24FEFF00C3BD04 /* ptcdefine.h */,
+				28E0780A1D24FEFF00C3BD04 /* ptcstruct.h */,
+			);
+			path = pushlib;
+			sourceTree = "<group>";
+		};
 		28ECC4881D13B93400E68EB6 /* com.skcc.nexcore.mobile.payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,7 +700,10 @@
 				B060163614679620006D320F /* Supporting Files */,
 				A8D10A711B042C0200E91B10 /* SocialSharing.h */,
 				A8D10A721B042C1500E91B10 /* SocialSharing.m */,
+				28E078031D24FEFF00C3BD04 /* pushlib */,
 				BF228C5B1B30079400051D01 /* PushService.h */,
+				28E0780C1D24FF5500C3BD04 /* DataManager.h */,
+				28E0780D1D24FF5500C3BD04 /* DataManager.m */,
 				BF228C5C1B3007CF00051D01 /* PushService.m */,
 				BFE734FF1B4E4A1F0067D603 /* Images.xcassets */,
 			);
@@ -1345,6 +1374,7 @@
 				28ECC48E1D13BA3900E68EB6 /* paymentCtl.m in Sources */,
 				B060164D146797AE006D320F /* AlopexAppDelegate.m in Sources */,
 				A8D10A731B042C1500E91B10 /* SocialSharing.m in Sources */,
+				28E0780E1D24FF5500C3BD04 /* DataManager.m in Sources */,
 				BF228C5D1B3007CF00051D01 /* PushService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1412,6 +1442,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)/alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.barcodereader/ZxingLib",
+					"$(PROJECT_DIR)/alopex_project_ios/pushlib",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1452,6 +1483,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)/alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.barcodereader/ZxingLib",
+					"$(PROJECT_DIR)/alopex_project_ios/pushlib",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",

@@ -1,7 +1,13 @@
 #import <UIKit/UIKit.h>
 #import <Alopex/AlopexManager.h>
-@interface AlopexAppDelegate : AlopexManager <UIAccelerometerDelegate> {
+
+@class DataManager;
+
+@interface AlopexAppDelegate : AlopexManager <UIAccelerometerDelegate, UIApplicationDelegate>
+{
+    DataManager  *_dataManager;
 }
 
-@end
+@property (nonatomic, strong) NSString *pushTokenID;
 
+@end
