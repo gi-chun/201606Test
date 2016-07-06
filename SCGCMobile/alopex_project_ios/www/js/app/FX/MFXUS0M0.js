@@ -232,6 +232,8 @@ function exitAppUser(){
     	};
 	}
 	showProgressBarMsg('처리중입니다.');
+	logf('gclee MFXUS0M0' + param);
+	
 	httpSend("putAccInfo", param, function(cb){
 		logf('cb',cb);
 		hideProgressBar();
@@ -342,6 +344,8 @@ function doPage(){
 
 function openMultiCA(){
 	var pn = getAlopexCookie('uPhone');
+	
+	//gclee login
 	var param = {
 		"phoneNum" : pn, "gubun" : "20"
 	};

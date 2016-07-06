@@ -77,7 +77,7 @@ function setEventListner(){
 				};
 			}
 
-//			console.log(param);
+			console.log('gclee MACHP1S0' + param);
 			
 	    	httpSend("putAccInfo", param, function(cb2){
 //	    		console.log(cb);
@@ -143,6 +143,8 @@ function contiLogin(){
 		alopexController.exit();
 		//navigateGo('MACHP1M0');
 	}else{
+		
+		//gclee login
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
@@ -183,7 +185,7 @@ function contiLogin(){
         						name : '종료'
         					}]
         				});
-    				}
+    				} 
     			}else{
     				notiPop('정기 점검 안내','- 서버 정기점검 안내 -<br/>기간 : 매주 목요일 21:00 ~ 24:00<br/><font color="gray" size="1pt">*작업에 따라 예고없이 연장될 수 있습니다.</font><br/>이용에 불편을 드려 죄송합니다.',true,false,{
     					list : [{

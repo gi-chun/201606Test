@@ -8,83 +8,85 @@ nowPGCode = 'MMNST0M0';
 var cb = '';
 var pnLog = "";
 function init(){
-	killAllSession();
-	if(device.osName == 'Android'){
-		killAllCookie();
-	}
 	
-	//gclee lsc test test
-	var param = {
-			"lsc" : "test",
-		};
-
-	var jsonResult;
-	httpSend("getLscData", param, function(Mcb){
-		jsonResult = JSON.stringify(Mcb.list.Results);
-		logf("getLscData json data : \n");
-		logf(jsonResult);
-		setAlopexCookie('lscDB',jsonResult);
-		//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
-		//setAlopexCookie('lscDB',Mcb.list.Results);
-		loge('@@@@@@@@gclee \n save lscDB \n');
-		
-			// gclee lsc next /////////////////////////////////////////////////////////
-			 param = {
-					"lsc" : "test",
-				};
+	//gclee lsc
+	//check! is there lsc data before 
+	//var lscDB = JSON.parse(getAlopexCookie('lscDB'));
+	var lscDB = getAlopexCookie('lscDB');
 	
-			httpSend("getLscNextData", param, function(Mcb){
-				jsonResult = JSON.stringify(Mcb.list.Results);
-				logf("getLscNextData json data : \n");
-				logf(jsonResult);
-				setAlopexCookie('lscDB2',jsonResult);
-				
-				
-				for(var i=0;i<Mcb.list.Results.length;i++){
-					jsonResult = Mcb.list.Results[i];
-//					logf("per server data : \n");
-//					logf(jsonResult);
-//					logf("per json data : \n");
-//					logf( JSON.stringify(jsonResult));
-					setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
-				}
-				
-//				var arr;
-//				arr = JSON.parse(jsonResult);
-//				
-//				var arr = [];
-//				arr = $.parseJSON(jsonResult);
-//				
-//				for(var i=0;i<arr.length;i++){
-//					setAlopexCookie(arr[i].lsc, JSON.stringify(arr[i]));
-//				}
-				
-				loge('@@@@@@@@gclee \n save lscDB2 \n');
-				
-				if(device.osName == 'Android'){
-					jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
-				}else{
-					// 번호인증
-					popPhone(1);
-				}
-				
-				
-			}, function(errorCode, errorMessage){
-				if (errorCode == "9999") {
-					loge('error :: 9999 :: main');
-				} else {
-					loge('error :: other :: main');
-				}
-			});
-			/////////////////////////////////////////////////////////////////////////////
+	if(lscDB != 'undefined'){
+		//번호인증
+		popPhone('1');
 		
-	}, function(errorCode, errorMessage){
-		if (errorCode == "9999") {
-			loge('error :: 9999 :: main');
-		} else {
-			loge('error :: other :: main');
+	}else{
+		
+		killAllSession();
+		if(device.osName == 'Android'){
+			killAllCookie();
 		}
-	});
+		
+		//서비스센터 데이터 받아오기
+		var param = {
+				"lsc" : "test",
+			};
+
+		var jsonResult;
+		httpSend("getLscData", param, function(Mcb){
+			jsonResult = JSON.stringify(Mcb.list.Results);
+			logf("getLscData json data : \n");
+			logf(jsonResult);
+			setAlopexCookie('lscDB',jsonResult);
+			//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
+			//setAlopexCookie('lscDB',Mcb.list.Results);
+			loge('@@@@@@@@gclee \n save lscDB \n');
+			
+				// gclee lsc next /////////////////////////////////////////////////////////
+				 param = {
+						"lsc" : "test",
+					};
+		
+				httpSend("getLscNextData", param, function(Mcb){
+					jsonResult = JSON.stringify(Mcb.list.Results);
+					logf("getLscNextData json data : \n");
+					logf(jsonResult);
+					setAlopexCookie('lscDB2',jsonResult);
+					
+					for(var i=0;i<Mcb.list.Results.length;i++){
+						jsonResult = Mcb.list.Results[i];
+//						logf("per server data : \n");
+//						logf(jsonResult);
+//						logf("per json data : \n");
+//						logf( JSON.stringify(jsonResult));
+						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
+					}
+					loge('@@@@@@@@gclee \n save lscDB2 \n');
+					//gclee sms Android & iOS 모두 번호인증
+//					if(device.osName == 'Android'){
+//						jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
+//					}else{
+//						// 번호인증
+//						popPhone('1');
+//					}
+					popPhone('1');
+					//gclee sms end
+					
+				}, function(errorCode, errorMessage){
+					if (errorCode == "9999") {
+						loge('error :: 9999 :: main');
+					} else {
+						loge('error :: other :: main');
+					}
+				});
+				/////////////////////////////////////////////////////////////////////////////
+			
+		}, function(errorCode, errorMessage){
+			if (errorCode == "9999") {
+				loge('error :: 9999 :: main');
+			} else {
+				loge('error :: other :: main');
+			}
+		});
+	}
 	
 	settingLoading();
 	$('.imgloading').show();
@@ -97,89 +99,196 @@ function setDefaultBadge(rt){
 
 function popPhone(pn){
 	
-//	pn = '01024183828'; //운영서버 테스트 용도 이명환대리님 전화번호
-	pn = '01028394001'; //TST 자가검침 테스트
-//	pn = '01021283659'; //TST 자가검침 테스트
-//	pn = '01092553966'; //TST 테스트
-//	pn = '01020043999'; //TST 테스트
-//	pn = '01091901214'; //TST 보안점검팀 테스트
-//	pn = '01037625935'; //TST 청구서
-//	pn = "01066103573"; 
+	var chkPhone;
+	var vPn;
 	
-	// test
-	if(isTest){
-		//	console.log('1212121212#####################################ok');
-		//	getRegistrationId('Main');
-		var pnChk = getAlopexCookie('uPhone');
-		if(pnChk == 'undefined'){
-			//navigateGo('MACHP1M0');
+	vPn = pn;
+//	vPn = '01024183828'; //운영서버 테스트 용도 이명환대리님 전화번호
+//	vPn = '01028394001'; //TST 자가검침 테스트
+//	vPn = '01021283659'; //TST 자가검침 테스트
+//	vPn = '01092553966'; //TST 테스트
+//	vPn = '01020043999'; //TST 테스트
+//	vPn = '01091901214'; //TST 보안점검팀 테스트
+//	vPn = '01037625935'; //TST 청구서
+//	vPn = '01066103573'; 
+//  vPn = '01085289374'; //외부가입회원 로그인 프로세스 테스트
+	
+	//gclee login #################################################################################################
+	//gclee sms
+	if(vPn == '1'){
+		chkPhone = getAlopexCookie('uPhone');
+		vPn = chkPhone;
+		if(chkPhone == 'undefined'){
+			
 			navigateGo('MACHP0M0');
-			//console.log('111');
-		}else{
-			logf('222');
-			getRegistrationId('Main');
-		}
-		
-	}else{
-		if(device.osName == 'Android'){
-			pnLog = pn;
-			jsniCaller.invoke("MarketVersionCheck.check","popVersionCheck");
-			//popVersionCheckNo();
-		}else if(device.osName == 'iOS'){
-			if(pn == 1){
-				var pnChk = getAlopexCookie('uPhone');
-				if(pnChk == 'undefined'){
-					navigateGo('MACHP0M0');
-				}else{
-					if(pnChk == '1' || pnChk == '' || pnChk == 'undefined' || pnChk == 'null' || pnChk.indexOf('01') != 0){
-						contiLogin();
-					}else{
-						getRegistrationId('Main');
-						//gclee lsc
-						contiLogin();
-					}
-				}
-			}else{
-				pnLog = pn;
-				if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
-					contiLogin();
-					// 번호 인증페이지
-				}else if(pn){
-					setAlopexCookie('uPhone',codePhoneNM(pn));
-					getRegistrationId('Main');
-					//gclee lsc
-					contiLogin();
-				}else{
-					
-				}
-			}
 			
 		}else{
-			//console.log('1212121212#####################################no');
-			pnLog = pn;
-			if(pn == '1' || pn == '' || pn == 'undefined' || pn == 'null' || pn.indexOf('01') != 0){
-				contiLogin();
-				// 번호 인증페이지
-			}else if(pn){
-				setAlopexCookie('uPhone',codePhoneNM(pn));
-				//? test
-				getRegistrationId('Main');
-				contiLogin();
-			}else{
+			
+/////////////////////////////////////////////////
+			//gclee login
+					
+			//인증된 전화번호로 가입여부를 확인한다.
+			//처음 CIP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자)
+			//API 호출은 80번 하나로 앱가입자, SAP가입자, 미가입자 서버에서 판단하여 보내줌
+			//아래 사항은 서버처리 사항 참고
+			//CIP에 요청결과 가입자면 아래 로그인프로세스 진행
+			//CIP에 요청결과 미가입자면 다시 SAP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자) 
+			//SAP에 요청결과 가입자면 아래 로그인프로세스 진행
+			//SAP에 요청결과 미가입자면 앱 회원가입 화면으로 이동 (MACHP1M0)
+			
+				//gclee login 80번은 신규
+				var param = {
+					"phoneNum" : vPn, "gubun" : "80"
+				};
 				
-			}
+				httpSend("getAccInfo", param, function(cb){
+							
+		    		logf("getIsMemberChk: " + cb);
+		    		logf("getIsMemberChk:joinCode: " + cb.joinCode);
+		    		
+		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자
+		    		if(cb.joinCode == '3'){
+		    			navigateGo('MACHP1M0');
+		    		}else{
+		    			
+		    			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		    			//기존로직 로그인
+		    			
+		    			// test
+		    			if(isTest){
+		    				//	console.log('1212121212#####################################ok');
+		    				//	getRegistrationId('Main');
+		    				var pnChk = getAlopexCookie('uPhone');
+		    				if(pnChk == 'undefined'){
+		    					//navigateGo('MACHP1M0');
+		    					navigateGo('MACHP0M0');
+		    					//console.log('111');
+		    				}else{
+		    					logf('222');
+		    					getRegistrationId('Main');
+		    				}
+		    				
+		    			}else{
+		    				//gclee login Android & iOS 로그인프로세스 동일처리
+		    				
+		    				if(device.osName == 'Android'){
+		    					
+		    					pnLog = vPn;
+		    					
+		    					//jsniCaller.invoke("MarketVersionCheck.check","popVersionCheck");
+		    					//popVersionCheckNo();
+		    					
+		    					//gclee login
+		    					if(vPn == '1'){
+		    						var pnChk = getAlopexCookie('uPhone');
+		    						if(pnChk == 'undefined'){
+		    							navigateGo('MACHP0M0');
+		    						}else{
+		    							if(pnChk == '1' || pnChk == '' || pnChk == 'undefined' || pnChk == 'null' || pnChk.indexOf('01') != 0){
+		    								contiLogin();
+		    							}else{
+		    								getRegistrationId('Main');
+		    								//gclee lsc
+		    								contiLogin();
+		    							}
+		    						}
+		    					}else{
+		    						pnLog = vPn;
+		    						if(vPn == '1' || vPn == '' || vPn == 'undefined' || vPn == 'null' || vPn.indexOf('01') != 0){
+		    							contiLogin();
+		    							// 번호 인증페이지
+		    						}else if(vPn){
+		    							setAlopexCookie('uPhone',codePhoneNM(vPn));
+		    							getRegistrationId('Main');
+		    							//gclee lsc
+		    							contiLogin();
+		    						}else{
+		    							
+		    						}
+		    					}
+		    					//gclee login end
+		    					
+		    				}else if(device.osName == 'iOS'){
+		    					if(vPn == '1'){
+		    						var pnChk = getAlopexCookie('uPhone');
+		    						if(pnChk == 'undefined'){
+		    							navigateGo('MACHP0M0');
+		    						}else{
+		    							if(pnChk == '1' || pnChk == '' || pnChk == 'undefined' || pnChk == 'null' || pnChk.indexOf('01') != 0){
+		    								contiLogin();
+		    							}else{
+		    								getRegistrationId('Main');
+		    								//gclee lsc
+		    								contiLogin();
+		    							}
+		    						}
+		    					}else{
+		    						pnLog = vPn;
+		    						if(vPn == '1' || vPn == '' || vPn == 'undefined' || vPn == 'null' || vPn.indexOf('01') != 0){
+		    							contiLogin();
+		    							// 번호 인증페이지
+		    						}else if(vPn){
+		    							setAlopexCookie('uPhone',codePhoneNM(vPn));
+		    							getRegistrationId('Main');
+		    							//gclee lsc
+		    							contiLogin();
+		    						}else{
+		    							
+		    						}
+		    					}
+		    					
+		    				}else{
+		    					//console.log('1212121212#####################################no');
+		    					pnLog = vPn;
+		    					if(vPn == '1' || vPn == '' || vPn == 'undefined' || vPn == 'null' || vPn.indexOf('01') != 0){
+		    						contiLogin();
+		    						// 번호 인증페이지
+		    					}else if(vPn){
+		    						setAlopexCookie('uPhone',codePhoneNM(vPn));
+		    						//? test
+		    						getRegistrationId('Main');
+		    						contiLogin();
+		    					}else{
+		    						
+		    					}
+		    				}
+		    			}
+		    			
+		    			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		    			//기존로직 로그인
+		    			
+		    		}
+		    		
+		    		
+		    	}, function(errorCode, errorMessage){
+		    		
+		    		if (errorCode == "9999") {
+		    			loge('error :: 9999 :: getIsMemberChk');
+		    		} else {
+		    			loge('error :: other :: getIsMemberChk');
+		    		}
+				});
+			
+			
+			//gclee login end ############################################################################################## 
+		    	
+
+			//$('#uPhones').val(vPn);
+//			var pushID = getAlopexCookie("pushID");
+//			if(isNullCheck(pushID)){
+//			if(true){
+			
+//			}else{
+				//pushNotification.useImmediateForegroundNotification(true);
+//				log.log('pushID :: '+pushID);
+//				runDB();
+//			}
+			
 		}
 	}
-	//$('#uPhones').val(pn);
-//	var pushID = getAlopexCookie("pushID");
-//	if(isNullCheck(pushID)){
-//	if(true){
 	
-//	}else{
-		//pushNotification.useImmediateForegroundNotification(true);
-//		log.log('pushID :: '+pushID);
-//		runDB();
-//	}
+	
+	
 }
 
 function popVersionCheck(ver){
@@ -235,10 +344,12 @@ function contiLogin(){
 		alopexController.exit();
 		//navigateGo('MACHP1M0');
 	}else{
+		
+		//gclee login
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf(param);
+		logf('gclee MMNST0M0 ' + param);
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
@@ -424,39 +535,39 @@ function runMain(){
 				// TODO
 				// 추천인, 가입자, 푸시 아이디를 저장하는 로직. 테스트를 위해 주석 처리. 
 				// gclee
-				runMainGo(rtCB); // 운영 배포시 주석 처리
+//				runMainGo(rtCB); // 운영 배포시 주석 처리
 				
 				// 운영 배포시 아래 부터는 주석 해제
-//				rtCBPush.push_id = pushID;
-//				rtCBPush.device_type = 'A';
-//				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
-//					var recomendr = '';
-//					if(device.osName != 'iOS'){
-//						recomendr = getAlopexSession('recomendr');
-//					}else{
-//						recomendr = getAlopexCookie('recomendrCookie');
-//					}
-//					if(recomendr == 'undefined'){
-//						runMainGo(rtCB);
-//					}else{
-//						var paramRec = {
-//			    			"phoneNum" : pn, "recomendr" : recomendr
-//			    		};
-//			    		httpSend("putRecomendr", paramRec, function(cb3){
-//			    			console.log(cb3);
-//			    			runMainGo(rtCB);
-//			    		}, function(errorCode, errorMessage){
-//			    			if (errorCode == "9999") {
-//			    				loge('error :: 9999 :: main');
-//			    			} else {
-//			    				loge('error :: other :: main');
-//			    			}
-//			    			runMainGo(rtCB);
-//			    		});
-//					}
-//				}, function(errorCode, errorMessage){
-//					runMainGo(rtCB);
-//				});
+				rtCBPush.push_id = pushID;
+				rtCBPush.device_type = 'A';
+				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
+					var recomendr = '';
+					if(device.osName != 'iOS'){
+						recomendr = getAlopexSession('recomendr');
+					}else{
+						recomendr = getAlopexCookie('recomendrCookie');
+					}
+					if(recomendr == 'undefined'){
+						runMainGo(rtCB);
+					}else{
+						var paramRec = {
+			    			"phoneNum" : pn, "recomendr" : recomendr
+			    		};
+			    		httpSend("putRecomendr", paramRec, function(cb3){
+			    			console.log(cb3);
+			    			runMainGo(rtCB);
+			    		}, function(errorCode, errorMessage){
+			    			if (errorCode == "9999") {
+			    				loge('error :: 9999 :: main');
+			    			} else {
+			    				loge('error :: other :: main');
+			    			}
+			    			runMainGo(rtCB);
+			    		});
+					}
+				}, function(errorCode, errorMessage){
+					runMainGo(rtCB);
+				});
 				// --
 				
 			}

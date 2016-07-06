@@ -555,7 +555,7 @@ function doPage(opbelNo){
 		$('#tab2').show();
     	
     	//gclee bill ###################################################################################################
-		if(param_isCertiPass == 'undefined' || param_isCertiPass != '1'){
+		/*if(param_isCertiPass == 'undefined' || param_isCertiPass != '1'){
 			
 			var vIsPerson;
 			vIsPerson = true;
@@ -599,7 +599,7 @@ function doPage(opbelNo){
 					
 				}
 			}
-		}
+		}*/
 		
 		//gclee bill end ###################################################################################################
     	

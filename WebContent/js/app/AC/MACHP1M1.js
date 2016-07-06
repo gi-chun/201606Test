@@ -202,10 +202,13 @@ function setEventListner(){
 };
 
 function goLogin(){
+	
 	var param = {
 		"phoneNum" : uPhone, "gubun" : "10"
 	};
 
+	logf('gclee MACHP1M1', param);
+	
 	httpSend("getAccInfo", param, function(cb){
 		logf('cb',cb);
 		

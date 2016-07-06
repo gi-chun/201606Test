@@ -40,6 +40,8 @@ function setEventListner(){
 			$('.pPhoneSendOK').click(function(){
 				notiPopID.close();
 				
+				//gclee sms 서버에서 생성
+				/*
     			// 난수 발생 세션 저장
     			var testNum = String(Math.floor(Math.random() * 999999) +1);
     			for(var j=0;j<6-testNum.length;j++){
@@ -47,12 +49,17 @@ function setEventListner(){
     			}
 //    			setAlopexSession('testPwd',testNum);
     			setAlopexCookie('testPwdCookie',testNum);
+    			*/
+    			//gclee sms end
+    			
+    			
     			// test 번호저장
 //    			setAlopexSession('testPn',$('#pn').val());
     			setAlopexCookie('testPnCookie',$('#pn').val());
     			
     			// sms 전송
     			//sendAccSms
+    			var testNum = '01000001111';
     			
     			var param = {
 		    		"phoneNum" : $('#pn').val(),
@@ -66,7 +73,12 @@ function setEventListner(){
         	    		navigateGo('MACHP0M1');
         	    	});
 				}else{
-					httpSend("sendAccSms", param, function(Mcb){
+					//gclee sms
+					httpSend("getAccCodeSms", param, function(Mcb){
+						
+						logf("Mcb:certiNo: " + Mcb.certiNo);
+						setAlopexCookie('testPwdCookie', Mcb.certiNo);
+			    		
 			    		notiPop('인증코드 발송','고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.',false,false,null);
 			    		$('.pNotiP2Ok').click(function(){
 	        	    		navigateGo('MACHP0M1');

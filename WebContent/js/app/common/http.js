@@ -1,5 +1,4 @@
-/**
- * Alopex Runtime의 HTTP 모듈을 이용한 통신 시 사용.
+/** * Alopex Runtime의 HTTP 모듈을 이용한 통신 시 사용.
  * 
  * 공통 http 호출 함수, 성공 콜백함수, 에러 콜백함수로 구성
  * 
@@ -16,8 +15,7 @@ var push_errorCallback;
  * @param (string)serviceId
  * @param (json)jsonParam
  * @param (function)_successCallback
- * @param (function)_errorCallback
- */
+ * @param (function)_errorCallback */
 function httpSend(serviceId, jsonParam, _successCallback, _errorCallback){
 
 	//gclee
@@ -41,7 +39,6 @@ function httpSend(serviceId, jsonParam, _successCallback, _errorCallback){
 	var entity = {
 //		"url" : CONSTANTS.CIP_URL,	
 		"url" : CONSTANTS.CIP_TEST_URL,
-//		"url" : "http://localhost:8080/scgc/services/nmp",
 		"method" : "POST",
 		"onBody" : true,
 		"content" : JSON.stringify(jsonParam)

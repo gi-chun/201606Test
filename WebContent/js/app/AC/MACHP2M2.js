@@ -119,6 +119,8 @@ function setUsrCommit(cb){
 	}
 
 	if(param.list[0].bpCaReqList.length > 0){
+		logf('gclee MACHP2M2' + param);
+		
     	httpSend("putAccInfo", param, function(cb){
     		// 인증
     		if(cb.list.bpCaList[0].retCd == 'S'){

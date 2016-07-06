@@ -55,6 +55,6 @@
       <userDefinedJSNI class="com.skcc.nexcore.mobile.barcodereader.BarcodeReaderJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="com.skcc.nexcore.mobile.payment.PaymentJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
-      <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentManager"></userDefinedJSNI>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentPg"></userDefinedJSNI>
   </userDefinedJSNIList>
 </alopexconfig>

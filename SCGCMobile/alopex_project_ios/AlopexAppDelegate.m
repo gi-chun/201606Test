@@ -1,5 +1,6 @@
 #import "AlopexAppDelegate.h"
 #import "DataManager.h"
+#import <Alopex/Navigation.h>
 
 
 @implementation AlopexAppDelegate
@@ -31,13 +32,13 @@
     //Add the view behind the status bar
     [self.window.rootViewController.view addSubview:statusBg];
     
-//    if (launchOptions){
-//        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-//        if (userInfo != nil) {
-//            NSLog(@"%@", userInfo);
-//        }
-//        [self receiveRemoteNotification:launchOptions withAppState:NO];
-//    }
+    if (launchOptions){
+        NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (userInfo != nil) {
+            NSLog(@"%@", userInfo);
+        }
+        [self receiveRemoteNotification:launchOptions withAppState:NO];
+    }
     
     return  YES;
     
@@ -63,9 +64,9 @@
     
     if(application.applicationState == UIApplicationStateActive)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Did receive a Remote Notification", nil) message:[apsInfo objectForKey:@"alert"] delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-        
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Did receive a Remote Notification", nil) message:[apsInfo objectForKey:@"alert"] delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+//        
+//        [alertView show];
     }
     else{
         NSString *alert = [apsInfo objectForKey:@"alert"];
@@ -82,7 +83,7 @@
     
     //application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
     
-    //[self receiveRemoteNotification:userInfo withAppState:YES];
+    [self receiveRemoteNotification:userInfo withAppState:YES];
     
 }
 
@@ -90,7 +91,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"APNS Recv");
-    //[self receiveRemoteNotification:userInfo withAppState:YES];
+    [self receiveRemoteNotification:userInfo withAppState:YES];
     
 }
 
@@ -123,23 +124,26 @@
         NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
         
         NSDictionary *dic = [userInfo objectForKey:@"aps"];
-        
-        //kSOAlert, kSOMessageId
-        NSString *title = [dic objectForKey:@"title"];
-        NSString *message = [dic objectForKey:@"alert"];
-        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
         //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
+        
+        //kSOAlert, kSOMessageId
+        title = [dic objectForKey:@"title"];
+        message = [dic objectForKey:@"alert"];
+        pageId = [dic objectForKey:@"pageId"];
+        r_parameters = [dic objectForKey:@"parameters"];
+        
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@", title, message, pageId ];
         
         NSString* temp;
         NSString* tclose;
         NSString* tcancel;
         
-        tclose = @"close";
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message
-                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"cancel", nil];
+        tclose = @"확인";
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
         [alert show];
         
     }else{
@@ -154,15 +158,48 @@
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);
         
         //kSOAlert, kSOMessageId
-        NSString *title = [dic objectForKey:@"title"];
-        NSString *message = [dic objectForKey:@"alert"];
-        NSString *messageWebUrl = [dic objectForKey:@"web_url"];
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, webUrl:%@", title, message, messageWebUrl ];
+        title = [dic objectForKey:@"title"];
+        message = [dic objectForKey:@"alert"];
+        pageId = [dic objectForKey:@"pageId"];
+        r_parameters = [dic objectForKey:@"parameters"];
+        
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@", title, message, pageId ];
         
         NSString* temp;
         NSString* tclose;
+        NSString* tcancel;
+        
+        
+        tclose = @"확인";
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
+        [alert show];
         
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex == 0){
+        
+        NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
+        [pageInfo setObject:pageId forKey:@"pageId"];
+        
+        NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:r_parameters forKey:@"parameters"];
+        
+        
+        
+        //Navigation *navigation = [Navigation getInstance];
+        [[Navigation getIncetance] backToOrNavigate:pageInfo];
+        //[self appDelegate].mNavigationManager.mNavController = nil;
+        
+        //[navigation backToOrNavigate:pageInfo];
+
+    }
+    
 }
 
 

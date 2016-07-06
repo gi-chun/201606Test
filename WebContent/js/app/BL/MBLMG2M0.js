@@ -63,7 +63,11 @@ function setEventListner(){
       logf("vBPCode : "+vBPCode);
       logf("vConnectURL : "+vConnectURL);
       
-	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+      if(device.osName != 'iOS'){
+    	  jsniCaller.invoke("PaymentPg.startPayment");
+      }else{
+    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+      }                    
                           
 //		var param = {
 //				bp : '1111111',

@@ -31,7 +31,7 @@ function setEventListner(){
 //          popup.bPopup(self.data('bpopup') || {});
 //      });
       
-	// gclee bill
+	// gclee bill 청구서 보기전 암호입력 구현취소됨, 아래 삭제해도 무관
 //	$('#closeBtnExit').click(function() {
 //		popBillCerti.close();
 //	});
@@ -139,7 +139,8 @@ function doPage(){
 	viewBillList();
 	
 	//gclee bill ###################################################################################################
-	var vIsPerson;
+	//gclee 청구서 보기전 암호입력 구현삭제됨, 아래내용 주석처리
+	/*var vIsPerson;
 	vIsPerson = true;
 	
 	var vBillPerCertiNo = getAlopexCookie('billPerCertiNo');
@@ -180,7 +181,7 @@ function doPage(){
 			});
 			
 		}
-	}
+	}*/
 
 	//gclee bill end ###################################################################################################
 	
@@ -521,8 +522,8 @@ function viewBillInfo(){
 				var param = {
 						bp : param2.bp,
 						ca : param2.ca,
-						DOC_HEADER_OPBEL : th.currentTarget.childNodes[0].value,
-						'isCertiPass' : '1'
+						DOC_HEADER_OPBEL : th.currentTarget.childNodes[0].value
+//						'isCertiPass' : '1'
 				};
 //				navigateGo('MBLMG0M2',param);
 				navigateBackToNaviParamGo('MBLMG0M2',param);

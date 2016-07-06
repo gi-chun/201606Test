@@ -1091,13 +1091,54 @@ function mainSetting(cb) {
 	// if(change21 == "true"){
 	// console.log('21 ing...2');
 
-	if ((device.osName == 'Android' || device.osName == 'iOS') == false) { // 웹이라면
-																			// (안드로이드,
-																			// 아이폰이
-																			// 아니라면)
-		// TODO 웹에서 테스트시 데이터 입력 방지를 위함.
-	} else {
-		var paramSS = {
+	//gclee login - 테스트시만 모든 플랫폼 아래전문 실행
+	//gclee login - 배포시는 Android, iOS만 처리되게. 배포버전시 사용자 정보 업데이트 방지
+	
+//	if ((device.osName == 'Android' || device.osName == 'iOS') == false) { // 웹이라면
+//																			// (안드로이드,
+//																			// 아이폰이
+//																			// 아니라면)
+//		// TODO 웹에서 테스트시 데이터 입력 방지를 위함.
+//	} else {
+//		var paramSS = {
+//			'list' : [ {
+//				'bpCaReqList' : []
+//			} ]
+//		};
+//		var j = 0;
+//		for (var i = 0; i < params.list.bpCaList.length; i++) {
+//			if (params.list.bpCaList[i].controlGp != '0021') {
+//				paramSS.list[0].bpCaReqList[j] = {
+//					'bp' : params.list.bpCaList[i].bp,
+//					'ca' : params.list.bpCaList[i].ca,
+//					'phoneNum' : params.list.bpCaList[i].mobile,
+//					'statusGp' : '21',
+//					'gubun' : '50'
+//				};
+//				j = j + 1;
+//			} else {
+//				console.log("controlGp == 0021 [bp:"
+//						+ params.list.bpCaList[i].bp + ", ca:"
+//						+ params.list.bpCaList[i].ca + ", pn:"
+//						+ params.list.bpCaList[i].mobile + "]");
+//			}
+//		}
+//
+//		if (j > 0) {
+//			httpSend("putAccInfo", paramSS, function(cb) {
+//				console.log(cb);
+//				console.log('update ok');
+//				// setAlopexCookie('change21_20150917',"true");
+//			}, function(errorCode, errorMessage) {
+//				console.log('update error');
+//			});
+//		} else {
+//			// setAlopexCookie('change21_20150917',"true");
+//			console.log('21 ing...1');
+//		}
+//	}
+	//gclee login end
+	var paramSS = {
 			'list' : [ {
 				'bpCaReqList' : []
 			} ]
@@ -1122,6 +1163,8 @@ function mainSetting(cb) {
 		}
 
 		if (j > 0) {
+			logf('gclee MMNPG0M0' + paramSS);
+			
 			httpSend("putAccInfo", paramSS, function(cb) {
 				console.log(cb);
 				console.log('update ok');
@@ -1133,7 +1176,12 @@ function mainSetting(cb) {
 			// setAlopexCookie('change21_20150917',"true");
 			console.log('21 ing...1');
 		}
-	}
+		
+   //gclee login end		
+	
+	
+	
+	
 
 	// 제3자 정보제공 동의 여부 체크
 	/*

@@ -29,9 +29,13 @@ function chkNoUser(){
 		clearInterval(intVar);
 		console.log('exit');
 	}
+	
+	//gclee login
 	var param = {
 		"phoneNum" : pn, "gubun" : "20"
 	};
+	console.log('gclee MMNPG1M0 ' + param);
+	
 	httpSend("getAccInfo", param, function(Mcb){
 		console.log(Mcb);
 		// 계량기 여러대
@@ -116,10 +120,13 @@ function setEventListner(){
 	$('#noMemPhone').click(function(){
 		//navigateBackToNaviGo('MBLMG0M0');
 		//전화번호 가입 테스트
+		
+		//gclee login
 		var param = {
     		"phoneNum" : pn, "gubun" : "20"
     	};
-		logf(param);
+		logf('gclee MMNPG1M0 ' + param);
+		
     	httpSend("getAccInfo", param, function(Mcb){
     		console.log(Mcb);
     		// 계량기 여러대

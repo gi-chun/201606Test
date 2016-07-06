@@ -11,6 +11,12 @@ nowPGCode = 'MBLMG0M2';
 var ss = '';
 var params = '';
 var nowGRGno = '0';
+
+//gclee bill
+var popBillCerti = '';
+var popBillCertiSave = '';
+//gclee bill end
+
 function mainStart(){
 	params = navigation.parameters;
 	//params = param;
@@ -132,6 +138,81 @@ function setEventListner(){
 	$('.searchGRG').click(function(){
     	getChangeGRG();
     });
+	
+	// gclee bill
+//	$('#closeBtnExit').click(function() {
+//		popBillCerti.close();
+//	});
+
+	$('#closeBtnExitSave').click(function() {
+		popBillCertiSave.close();
+		navigateBackToNaviGo('MMNPG0M0');
+	});
+	
+	$('#closeBtnExitPer').click(function() {
+		popBillCerti.close();
+		navigateBackToNaviGo('MMNPG0M0');
+		
+	});
+	
+	$('#closeBtnExitCom').click(function() {
+		popBillCerti.close();
+		navigateBackToNaviGo('MMNPG0M0');
+	});
+	
+	$('#bill_Certi_save_rego').click(function() {
+		popBillCerti.close();
+		
+		popBillCertiSave = $('.bill_certi_save').bPopup({
+			opacity : 0.6,
+			speed : 300,
+		});
+		
+	});
+	
+	// 청구서 인증번호 저장클릭 후 처리
+	$('#bill_certi_save_ok').click(function() {
+		
+		fSaveCerti();
+		
+	});
+
+	// 청구서 인증 확인클릭 후 처리
+	$('#bill_perCerti_ok').click(function() {
+		
+		fCerti();
+		
+	});
+	
+	$('#bill_comCerti_ok').click(function() {
+		
+		fCerti();
+		
+	});
+	
+	// 청구서 인증번호 다시 저장 클릭
+	$('#bill_perCerti_save_rego').click(function() {
+		
+		popBillCerti.close();
+		
+		popBillCertiSave = $('.bill_certi_save').bPopup({
+			opacity : 0.6,
+			speed : 300,
+		});
+		
+	});
+	
+	$('#bill_comCerti_save_rego').click(function() {
+		
+		popBillCerti.close();
+		
+		popBillCertiSave = $('.bill_certi_save').bPopup({
+			opacity : 0.6,
+			speed : 300,
+		});
+		
+	});
+	//gclee bill end
 //
 //	$(function(){	
 //		var swiper = new Swiper('.swiper-container', {
@@ -163,6 +244,8 @@ function onScreenBack(){
 
 function doPage(opbelNo){
 	var param = '';
+	
+	var param_isCertiPass = navigation.parameters.isCertiPass;
 	
 	if(opbelNo == '1'){
 		$('.topLogoDiv').html(getTitleBp());
@@ -471,7 +554,54 @@ function doPage(opbelNo){
 		$('.swipe2').children().children().attr('src','../../images/tab_bill2_on.png');
 		$('#tab2').show();
     	
-    	
+    	//gclee bill ###################################################################################################
+		/*if(param_isCertiPass == 'undefined' || param_isCertiPass != '1'){
+			
+			var vIsPerson;
+			vIsPerson = true;
+			
+			var vBillPerCertiNo = getAlopexCookie('billPerCertiNo');
+			var vBillComCertiNo = getAlopexCookie('billComCertiNo');
+			
+			$('#bill_perCerti_save_rego').hide();
+			$('#bill_comCerti_save_rego').hide();
+			
+			if(vBillPerCertiNo == 'undefined' && vBillComCertiNo == 'undefined'){
+				
+				popBillCertiSave = $('.bill_certi_save').bPopup({
+					opacity : 0.6,
+					speed : 300,
+				});
+				
+			}else{
+				
+				if(vBillPerCertiNo.length > 0){
+					//개인고객
+					vIsPerson = true;
+				}else{
+					//기업고객
+					vIsPerson = false;
+				}
+				
+				if(vIsPerson){
+					
+					popBillCerti = $('.bill_perCerti').bPopup({
+						opacity : 0.6,
+						speed : 300,
+					});
+					
+				}else{
+					
+					popBillCerti = $('.bill_comCerti').bPopup({
+						opacity : 0.6,
+						speed : 300,
+					});
+					
+				}
+			}
+		}*/
+		
+		//gclee bill end ###################################################################################################
     	
 //    	setTimeout('setLoadSwiper()',10);
     	//##################################################################
@@ -483,6 +613,210 @@ function doPage(opbelNo){
 		}
 	});
 }
+
+
+//gclee bill
+function fSaveCerti() {
+	
+//	perCertiNo
+//	perCertiNoRe
+//	comCertiNo
+//	comCertiNoRe
+	
+	var vIsPerson;
+	var vPerCertiSaveNo = $('#perCertiSaveNo').val();
+	var vPerCertiNoRe = $('#perCertiNoRe').val();
+	var vComCertiSaveNo = $('#comCertiSaveNo').val();
+	var vComCertiNoRe = $('#comCertiNoRe').val();
+	
+	$('#bill_perCerti_save_rego').hide();
+	$('#bill_comCerti_save_rego').hide();
+	
+	// gcee bill test
+	
+	if( vPerCertiSaveNo.length > 0 && vComCertiSaveNo > 0){
+		$('#erroDescSave').text("개인고객 또는 기업고객 둘중 하나만 입력해 주십시요.");
+		$('#perCertiSaveNo').val('');
+		$('#perCertiNoRe').val('');
+		$('#comCertiSaveNo').val('');
+		$('#comCertiNoRe').val('');
+		
+		return;
+	}
+	
+	vIsPerson = true;
+	if( vPerCertiSaveNo.length > 0 ){
+		vIsPerson = true;
+	}else{
+		vIsPerson = false;
+	}
+	
+	if(vIsPerson){
+		
+		if (vPerCertiSaveNo.length < 6) {
+			$('#erroDescSave').text("생년월일 6자리 숫자를 정확히 입력해주세요.");
+			
+		} else if (vPerCertiSaveNo != vPerCertiNoRe) {
+
+			$('#erroDescSave').text("입력하신 내용이 일치하지 않습니다.");
+		
+		} else {
+			// alert(billCertiNo);
+			setAlopexCookie('billPerCertiNo', vPerCertiSaveNo);
+			setAlopexCookie('billComCertiNo', '');
+
+			popBillCerti = $('.bill_perCerti').bPopup({
+				opacity : 0.6,
+				speed : 300,
+			});
+			
+//			notiPop('인증번호 등록 성공', '인증번호가 저장되었습니다.',false, false, {
+//						list : [ {
+//							type : 2,
+//							id : 'pViewBillOk',
+//							name : '인증번호 입력 계속'
+//						} ]
+//					});
+//
+//			$('.pViewBillOk').click(function() {
+//				notiPopID.close();
+//
+//				popBillCerti = $('.bill_perCerti').bPopup({
+//					opacity : 0.6,
+//					speed : 300,
+//				});
+//			});
+			
+			popBillCertiSave.close();
+		}
+		
+	}else{
+		
+		if (vComCertiSaveNo.length < 10) {
+			$('#erroDescSave').text("사업자번호 10자리 숫자를 정확히 입력해주세요.");
+			
+		} else if (vComCertiSaveNo != vComCertiNoRe) {
+
+			$('#erroDescSave').text("입력하신 내용이 일치하지 않습니다.");
+
+		} else {
+			// alert(billCertiNo);
+			setAlopexCookie('billComCertiNo', vComCertiSaveNo);
+			setAlopexCookie('billPerCertiNo', '');
+
+			popBillCertiSave.close();
+			
+			popBillCerti = $('.bill_comCerti').bPopup({
+				opacity : 0.6,
+				speed : 300,
+			});
+			
+//			notiPop('인증번호 등록 성공', '인증번호가 저장되었습니다.',false, false, {
+//						list : [ {
+//							type : 2,
+//							id : 'pViewBillOk',
+//							name : '인증번호 입력 계속'
+//						} ]
+//			});
+//
+//			$('.pViewBillOk').click(function(){
+//				notiPopID.close();
+//
+//				
+//				popBillCerti = $('.bill_comCerti').bPopup({
+//					opacity : 0.6,
+//					speed : 300,
+//				});
+//			});
+			
+			
+		}
+	}
+	
+}
+
+
+function fCerti() {
+	
+var vIsPerson;
+vIsPerson = true;
+
+var vBillPerCertiNo = getAlopexCookie('billPerCertiNo');
+var vBillComCertiNo = getAlopexCookie('billComCertiNo');
+
+	
+if(vBillPerCertiNo.length > 0){
+	//개인고객
+	vIsPerson = true;
+}else{
+	//기업고객
+	vIsPerson = false;
+}
+	
+var certiNo = '';
+var saveCertiNo = '';
+
+if(vIsPerson){
+	
+	certiNo = $('#perCertiNo').val();
+	saveCertiNo = getAlopexCookie('billPerCertiNo');
+	
+}else{
+	
+	certiNo = $('#comCertiNo').val();
+	saveCertiNo = getAlopexCookie('billComCertiNo');
+}
+	
+if (certiNo.length < 1) {
+	$('#erroDescPer').text("입력하신 내용이 일치하지 않습니다. 다시 입력 해 주세요.");
+	$('#erroDescCom').text("입력하신 내용이 일치하지 않습니다. 다시 입력 해 주세요.");
+
+} else if (saveCertiNo != certiNo) {
+		
+	$('#erroDescPer').text("입력하신 내용이 일치하지 않습니다. 다시 입력 해 주세요.");
+	$('#erroDescCom').text("입력하신 내용이 일치하지 않습니다. 다시 입력 해 주세요.");
+	
+	$('#bill_perCerti_save_rego').show();
+	$('#bill_comCerti_save_rego').show();
+	
+} else {
+	
+	popBillCerti.close();
+
+	notiPop('청구서보기 인증 성공', '청구서보기 인증되었습니다.', false,
+			false, {
+				list : [ {
+					name : '청구서보기 계속',
+					id : 'pViewBill',
+					type : ''
+				} ]
+			});
+	// 청구서보기 인증 및 청구서보기 페이지 이어 하기
+	$('.pViewBill').click(function() {
+
+				notiPopID.close();
+
+				// //////////////////////////////
+				if (billNo == '') {
+					navigateBackToNaviGo('MBLMG0M0');
+				} else {
+					var rtMsg = {
+						'bp' : bp,
+						'ca' : ca,
+						'DOC_HEADER_OPBEL' : billNo
+					};
+					// navigateGo('MBLMG0M2',rtMsg);
+					navigateBackToNaviParamGo(
+							'MBLMG0M2', rtMsg);
+				}
+				// //////////////////////////////
+
+			});
+
+}
+	
+}
+//gclee bill end
 
 //function setLoadSwiper(){
 //	console.log('1111');

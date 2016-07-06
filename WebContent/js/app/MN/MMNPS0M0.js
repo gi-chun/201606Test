@@ -65,10 +65,13 @@ function contiLogin(){
 		alert('죄송합니다.\n공기계 및 해외번호 스마트폰은 사용하실 수 없습니다.\nApp을 종료합니다.');
 		alopexController.exit();
 	}else{
+		
+		//gclee login
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-
+		logf('gclee MMNPS0M0 ', param);
+		
     	httpSend("getAccInfo", param, function(cb){
     		logf('cb',cb);
     		var rtCB = clopCB(cb);

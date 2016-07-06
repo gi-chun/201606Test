@@ -159,7 +159,7 @@ function setEventListner(){
 			};
 		}
 
-		logf(param);
+		logf('gclee MFXUS0M1' + param);
 		
 		httpSend("putAccInfo", param, function(cb2){
 //			console.log(cb);

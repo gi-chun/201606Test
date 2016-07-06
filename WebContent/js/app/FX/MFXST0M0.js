@@ -121,7 +121,7 @@ function setEventListner(){
     		
 		}
 		
-		logf(param);
+		logf('gclee MFXST0M0' + param);
 	
 		httpSend("putAccInfo", param, function(cb){
 			logf(cb);

@@ -191,11 +191,15 @@ function chkUSER(){
 		setAlopexCookie('recomendrCookie',$('.recomendr').val());
 		setAlopexSession('agreeProvideInfoYn',$('#agree_provide_info').is(':checked') ? "Y" : "N");
 		setAlopexCookie('agreeProvideInfoYnCookie',$('#agree_provide_info').is(':checked') ? "Y" : "N");
-		getCh,kUser(pn);
+		getChkUser(pn);
 //	}
 }
 
 function getChkUser(pn){
+	
+	//gclee login
+	// 80번을 선행 요청해야 함
+	
 	var param = {
 		"phoneNum" : pn, "gubun" : "20"
 	};
@@ -216,6 +220,8 @@ function httpSuccessCallback(cb){
 	logf("countDPLost::"+listDPCurrent);
 	logf("countDPCurrent::"+listDPCurrent.length);
 	if(listDPLost.length > 0){
+		
+		//gclee login 보조인증수단으로 
 		logf('S :: 인증완료 :: 등록하자! ');
 		// 검증
 		// 2건이상
@@ -223,6 +229,7 @@ function httpSuccessCallback(cb){
 		// 1건
 //		setUsrCommit(listDPLost);
 	}else if(listDPCurrent.length > 0){
+		//gclee login 로그인으로 
 		logf('S :: 인증완료 :: 로그인! ');
 //		navigateGo('MMNPG0M0',listDPCurrent);
 		navigateGo('index');
@@ -287,7 +294,7 @@ function setUsrCommit(cb){
 		}
 		//console.log(cb[i]);
 	}
-	logf(param);
+	logf('gclee MACHP1M0' + param);
 //	
 	httpSend("putAccInfo", param, function(cb2){
 		

@@ -103,7 +103,7 @@ $a.page(function(){
 					    		"phoneNum" : pn, 
 					    		"gubun" : "30"
 	    					};
-//			    		logf('jys',paramCommit);
+			    		logf('gclee MACHP2M3',paramCommit);
 		    			httpSend("putAccInfo", paramCommit, function(cbCommit){
 		    				logf(cbCommit);
 //		    				

@@ -100,7 +100,7 @@ $a.page(function(){
     
     function makeBox3(box2){
     	var box3ListStr = '';
-    	    	
+    	var lscDB = JSON.parse(getAlopexCookie('lscDB'));
     	var box3List = [];
     	
     	$.each(lscDB, function(i,el){
