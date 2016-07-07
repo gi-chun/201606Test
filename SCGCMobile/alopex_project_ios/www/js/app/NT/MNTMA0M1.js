@@ -22,7 +22,7 @@ function setEventListner(){
 };
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBp());
+	$('.topLogoDiv').html(getTitleBpPush());
 
 	var param = {
 		"seq" : params.noti_no

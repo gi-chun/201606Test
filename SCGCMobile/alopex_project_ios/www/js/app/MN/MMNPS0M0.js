@@ -15,8 +15,13 @@ var pushParams = '';
 //var _rtCB = '';
 
 function init(){
-	killAllSession();
-	killAllCookie();
+	
+    //gclee push
+//    killAllSession();
+//	killAllCookie();
+    
+    pushParams = alopexController.parameters;  // push 파라미터 받기
+    
 	if(device.osName == 'Android'){
 		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
 //		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
@@ -24,7 +29,7 @@ function init(){
 		// 번호인증
 		popPhone(1);
 	}
-	pushParams = alopexController.parameters;  // push 파라미터 받기
+	
 	settingLoading();
 	$('.imgloading').show();
 }
@@ -70,7 +75,7 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf('gclee MMNPS0M0 ', param);
+		logf('gclee MMNPS0M0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
     		logf('cb',cb);
@@ -88,6 +93,10 @@ function contiLogin(){
     				
     				setAlopexCookie('MainBP',getSelBP(cb.list.bpCaList[0].regiogroup));
     				setAlopexCookie('MainBPCA',JSON.stringify(Str3));
+    				
+    				//gclee push test
+    				logf('gclee MMNPS0M0 MainBP '+ getSelBP(cb.list.bpCaList[0].regiogroup));
+    				logf('gclee MMNPS0M0 MainBPCA '+ JSON.stringify(Str3));
     			}
     			if(rtCB.list.bpCaList.length > 0){
     				// 공통 처리
@@ -95,14 +104,21 @@ function contiLogin(){
     				setAlopexCookie('loginCookie',JSON.stringify(rtCB));	// 로그인 세션 생성
 //    				setSelfChkCode(rtCB,cb.list.bpCaList[0].bp,cb.list.bpCaList[0].ca);									// 자가검침 플래그 생성
     				
+    				//gclee push test
+    				logf('gclee MMNPS0M0 loginSession '+ JSON.stringify(rtCB));
+    				logf('gclee MMNPS0M0 loginSession '+ JSON.stringify(rtCB));
+    				
+    				
     				// 분기 키 설정
 //	    				var flag = 'H';
     				if(pushParams == 'undefined'){
+    					logf('gclee MMNPS0M0 go MMNPG0M0 ');
     					navigateGo('MMNPG0M0',rtCB);
     				}else{
 //    					_cb = cb;
 //    					_rtCB = rtCB;
     					console.log('##111#');
+    					logf('gclee MMNPS0M0 go setDefaultStartData ');
     					setDefaultStartData(cb,rtCB);
     				}
     				
@@ -201,10 +217,15 @@ function mainSetting(ccb){
 			setAlopexSession('selfChkSideOut',selfChkSideOut);
 			setAlopexCookie('selfChkSideOutCookie',selfChkSideOut);
 			// 자가검침이 note 10 외부지시부
+			//gclee push
+			logf('###gclee push #1 ###');
+			
 		}else if(isOverChkDate(ccb.e_adatsoll1,ccb.s_adatsoll1)){
 			selfChk = true;
 			setAlopexSession('selfChk',selfChk);
 			setAlopexCookie('selfChkCookie',selfChk);
+			//gclee push
+			logf('###gclee push #2 ###');
 			callBackSetGoing();
 		}else{
 			selfChkSideOut = false;
@@ -213,12 +234,16 @@ function mainSetting(ccb){
 			selfChk = false;
 			setAlopexSession('selfChk',selfChk);
 			setAlopexCookie('selfChkCookie',selfChk);
+			//gclee push
+			logf('###gclee push #3 ###');
 			callBackSetGoing();
 		}
 	}else{
 		selfChk = false;
 		setAlopexSession('selfChk',selfChk);
 		setAlopexCookie('selfChkCookie',selfChk);
+		//gclee push
+		logf('###gclee push #4 ###');
 		callBackSetGoing();
 	}
 	
@@ -246,6 +271,8 @@ function callBackSetGoing(){
 		
 		// 검침 여부 체크 분기
 	}else if(pushParams.PUSH_TYPE == 'E'){	// 청구서
+		//gclee push
+		logf('###gclee push #5 청구서 goto MBLMG0M2 ###');
 		// BP, CA, 청구서번호 
 		var rtMsg = {
 				'bp' : pushParams.BP,

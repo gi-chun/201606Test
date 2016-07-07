@@ -138,6 +138,8 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
     
     if([reqUrl rangeOfString:@"scgcmobile://before"].location != NSNotFound)
     {
+        //gclee
+        //scgcmobile://before?param=rParam
         
         NSLog(@"navigate before page.==>%@",reqUrl);
         

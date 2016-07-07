@@ -178,7 +178,7 @@ function doPage(){
 		params = JSON.parse(getAlopexCookie('loginCookie'));
 	}
 	//console.log(params);
-	$('.topLogoDiv').html(getTitleBp());
+	$('.topLogoDiv').html(getTitleBpPush());
 	
 	var cgListsCookie = getAlopexCookie('cgLists');
 	

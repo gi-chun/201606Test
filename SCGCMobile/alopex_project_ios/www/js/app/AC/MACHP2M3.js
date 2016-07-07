@@ -79,7 +79,7 @@ $a.page(function(){
 			    		//"statusGp" : '21', 
 			    		"gubun" : "70"
 					};
-    			logf(JSON.stringify(param));
+    			logf('gclee MACHP2M3 ' + JSON.stringify(param));
 				
 		    	httpSend("getAccInfo", param, function(cb){
 		    		logf(cb);

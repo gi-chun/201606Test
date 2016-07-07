@@ -151,7 +151,7 @@ function setEventListner(){
 
 function doPage(){
 	
-	$('.topLogoDiv').html(getTitleBp());
+	$('.topLogoDiv').html(getTitleBpPush());
 	
 	var mainParam = '';
 	if(device.osName != 'iOS'){

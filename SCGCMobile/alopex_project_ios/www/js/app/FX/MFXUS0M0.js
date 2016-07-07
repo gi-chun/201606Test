@@ -350,6 +350,8 @@ function openMultiCA(){
 		"phoneNum" : pn, "gubun" : "20"
 	};
 	//showProgressBarMsg('고객 정보를 조회 중입니다.');
+	logf('gclee MFXUS0M0 ' + JSON.stringify(param));
+	
 	httpSend("getAccInfo", param, function(cb){
 //		logf(cb);
 //		setBoxList(cb);

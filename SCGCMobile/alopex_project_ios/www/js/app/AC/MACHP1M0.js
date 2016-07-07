@@ -204,6 +204,7 @@ function getChkUser(pn){
 		"phoneNum" : pn, "gubun" : "20"
 	};
 	showProgressBarMsg('고객 정보를 조회 중입니다.');
+	logf('gclee MACHP1M0 ' + JSON.stringify(param));
 	httpSend("getAccInfo", param, httpSuccessCallback, httpErrorCallback);
 }
 

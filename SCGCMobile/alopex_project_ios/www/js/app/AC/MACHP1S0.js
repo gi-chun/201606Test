@@ -148,7 +148,8 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf(param);
+		logf('gclee MACHP1S0 ' + JSON.stringify(param));
+		
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;

@@ -9,10 +9,10 @@
     NSString *title;
     NSString *message;
     NSString *pageId;
-    NSString *r_parameters;
-    
 }
 
 @property (nonatomic, strong) NSString *pushTokenID;
+@property (nonatomic, strong) NSString *s_parameters;
+@property (nonatomic, strong) NSMutableDictionary *r_parameters;
 
 @end

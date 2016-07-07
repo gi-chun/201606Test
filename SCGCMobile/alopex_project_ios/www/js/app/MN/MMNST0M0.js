@@ -12,6 +12,7 @@ function init(){
 	//gclee lsc
 	//check! is there lsc data before 
 	//var lscDB = JSON.parse(getAlopexCookie('lscDB'));
+	
 	var lscDB = getAlopexCookie('lscDB');
 	
 	if(lscDB != 'undefined'){
@@ -57,6 +58,8 @@ function init(){
 //						logf(jsonResult);
 //						logf("per json data : \n");
 //						logf( JSON.stringify(jsonResult));
+						//gclee push
+						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
 						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
 					}
 					loge('@@@@@@@@gclee \n save lscDB2 \n');
@@ -115,8 +118,9 @@ function popPhone(pn){
 	
 	//gclee login #################################################################################################
 	//gclee sms
-	if(vPn == '1'){
+		
 		chkPhone = getAlopexCookie('uPhone');
+		
 		vPn = chkPhone;
 		if(chkPhone == 'undefined'){
 			
@@ -140,6 +144,8 @@ function popPhone(pn){
 				var param = {
 					"phoneNum" : vPn, "gubun" : "80"
 				};
+				
+				logf('gclee MMNST0M0 ' + JSON.stringify(param));
 				
 				httpSend("getAccInfo", param, function(cb){
 							
@@ -285,9 +291,7 @@ function popPhone(pn){
 //			}
 			
 		}
-	}
-	
-	
+
 	
 }
 
@@ -349,7 +353,7 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf('gclee MMNST0M0 ' + param);
+		logf('gclee MMNST0M0 ' + JSON.stringify(param));
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
@@ -641,7 +645,20 @@ function runMainGo(rtCB){
 //	    	});
 //		}else{
 //			alert('변경 안함');
-			navigateGo('MMNPG0M0',rtCB);
+		//gclee push test 잠시 주석	
+		navigateGo('MMNPG0M0',rtCB);
+			
+			//gclee push test
+//			var rtMsg = {
+//				    "PUSH_TYPE": "E",
+//				    "BP": "16701312",
+//				    "CA": "17285916",
+//				    "DOC_HEADER_OPBEL": "221007358579"
+//				};
+//			
+//			navigateGo('pushstart',rtMsg);
+			
+			//gclee push test end
 //		}
 	}else{
 		console.log(rtCB);

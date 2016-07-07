@@ -131,9 +131,12 @@
         title = [dic objectForKey:@"title"];
         message = [dic objectForKey:@"alert"];
         pageId = [dic objectForKey:@"pageId"];
-        r_parameters = [dic objectForKey:@"parameters"];
+        self.r_parameters = [dic objectForKey:@"parameters"];
+        self.s_parameters = [self.r_parameters JSONFragment];
         
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@", title, message, pageId ];
+        NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
+        
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@, parameters:%@", title, message, pageId, self.s_parameters ];
         
         NSString* temp;
         NSString* tclose;
@@ -161,7 +164,7 @@
         title = [dic objectForKey:@"title"];
         message = [dic objectForKey:@"alert"];
         pageId = [dic objectForKey:@"pageId"];
-        r_parameters = [dic objectForKey:@"parameters"];
+        self.r_parameters = [dic objectForKey:@"parameters"];
         
         NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@", title, message, pageId ];
         
@@ -186,11 +189,9 @@
         
         NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
         [pageInfo setObject:pageId forKey:@"pageId"];
+        [pageInfo setObject:self.r_parameters forKey:@"parameters"];
         
-        NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
-        [parameters setObject:r_parameters forKey:@"parameters"];
-        
-        
+        NSLog(@"\n@@@@@@@ pageInfo : \n%@", pageInfo);
         
         //Navigation *navigation = [Navigation getInstance];
         [[Navigation getIncetance] backToOrNavigate:pageInfo];

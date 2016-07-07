@@ -131,7 +131,8 @@ function doPage(){
 		currentCa = Number(useBPCA.ca);
 	}
 	
-	$('.topLogoDiv').html(getTitleBp());
+	//gclee push
+	$('.topLogoDiv').html(getTitleBpPush());
 	
 	
 	logf('jysjys',params);

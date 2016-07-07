@@ -121,6 +121,7 @@ function setBPBoxList(cbr){
 					bp : cb[0].bp,
 					ca : cb[0].ca
 			};
+			
 			setAlopexCookie('MainBP',getSelBP(cb[0].regiogroup));
 			setAlopexCookie('MainBPCA',JSON.stringify(Str3));
 	}
@@ -207,7 +208,7 @@ function goLogin(){
 		"phoneNum" : uPhone, "gubun" : "10"
 	};
 
-	logf('gclee MACHP1M1', param);
+	logf('gclee MACHP1M1 ' + JSON.stringify(param));
 	
 	httpSend("getAccInfo", param, function(cb){
 		logf('cb',cb);

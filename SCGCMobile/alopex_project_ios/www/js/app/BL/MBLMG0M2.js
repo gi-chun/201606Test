@@ -247,8 +247,12 @@ function doPage(opbelNo){
 	
 	var param_isCertiPass = navigation.parameters.isCertiPass;
 	
+	//gclee push
 	if(opbelNo == '1'){
-		$('.topLogoDiv').html(getTitleBp());
+		//gclee push test
+		$('.topLogoDiv').html(getTitleBpPush());
+		//'<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>'
+		//$('.topLogoDiv').html('<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>');
 		saveBillNo(params.DOC_HEADER_OPBEL);
 		param = {
 				"doc_header_opbel" : params.DOC_HEADER_OPBEL,

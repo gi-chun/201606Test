@@ -47,7 +47,7 @@ function mainStart(){
 }
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBp());
+	$('.topLogoDiv').html(getTitleBpPush());
 
 	$('.uPhone').html(viewPhoneNM(pn));
 	

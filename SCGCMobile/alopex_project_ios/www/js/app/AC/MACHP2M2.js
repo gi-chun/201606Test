@@ -68,7 +68,7 @@ function setEventListner(){
 						"vstelle" : bcode,
 			    		"gubun" : "60"
 					};
-		logf(param);
+		logf('gclee MACHP2M2 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
     		// 회원가입
