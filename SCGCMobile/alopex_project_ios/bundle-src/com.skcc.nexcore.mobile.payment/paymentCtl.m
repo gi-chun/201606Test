@@ -143,7 +143,14 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         
         NSLog(@"navigate before page.==>%@",reqUrl);
         
-        [self.delegate touchCloseButton];
+        reqUrl = @"scgcmobile://before?param=1";
+        NSRange range = [reqUrl rangeOfString:@"="];
+        range.location = range.location + 1;
+        NSString* param = [reqUrl substringFromIndex:range.location];
+        
+        NSLog(@"param url==>%@", param);
+//        [self.delegate touchCloseButton];
+        [self.delegate paymentCtlSuccessCallback:param];
         
         return NO;
     }

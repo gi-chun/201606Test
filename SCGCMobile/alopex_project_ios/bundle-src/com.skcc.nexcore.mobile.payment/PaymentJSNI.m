@@ -62,7 +62,8 @@
     
     [topViewController dismissViewControllerAnimated:YES completion:nil];
     
-    [self performSelector:@selector(injection:) withObject:@"test" afterDelay:0.1];
+//    [self performSelector:@selector(injection:) withObject:@"test" afterDelay:0.1];
+    
 }
 
 - (void)dealloc{
