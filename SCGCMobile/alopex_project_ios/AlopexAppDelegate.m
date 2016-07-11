@@ -1,9 +1,11 @@
 #import "AlopexAppDelegate.h"
 #import "DataManager.h"
 #import <Alopex/Navigation.h>
-
+#include "erbapi.h"
 
 @implementation AlopexAppDelegate
+
+NSString *pushServerIp = @"211.255.202.76";
 
 - (id) init {
     return [super init];
@@ -67,6 +69,7 @@
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Did receive a Remote Notification", nil) message:[apsInfo objectForKey:@"alert"] delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
 //        
 //        [alertView show];
+        [self receiveRemoteNotification:userInfo withAppState:YES];
     }
     else{
         NSString *alert = [apsInfo objectForKey:@"alert"];
@@ -79,21 +82,20 @@
         NSLog(@"Received Push sound : %@", sound);
         
         NSLog(@"userinfo: %@", userInfo);
+        
     }
     
     //application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
     
-    [self receiveRemoteNotification:userInfo withAppState:YES];
-    
 }
 
 // 수정 이전(7.0버전 이전) 코드 부분 (didReceiveRemoteNotification함수)
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-    NSLog(@"APNS Recv");
-    [self receiveRemoteNotification:userInfo withAppState:YES];
-    
-}
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+//{
+//    NSLog(@"APNS Recv");
+//    [self receiveRemoteNotification:userInfo withAppState:YES];
+//    
+//}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -117,8 +119,24 @@
 - (void)receiveRemoteNotification:(NSDictionary *)userInfo withAppState:(BOOL)onForeground
 {
     NSString* totalDic;
-    totalDic = [NSString stringWithFormat:@"faceBook %@", userInfo];
+    totalDic = [NSString stringWithFormat:@"^^ %@", userInfo];
   
+    int rtn;
+    //gclee
+    if([[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]){
+        
+        NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
+        
+        rtn = pushReceipt(pushServerIp, 3101, [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"],  "201603220000082470", 10);
+        
+        if(rtn <= 0){
+            NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
+        }else{
+            NSLog(@"receiveRemoteNotification pushReceipt success : \n");
+        }
+        
+    }
+        
     if(onForeground){
         
         NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
