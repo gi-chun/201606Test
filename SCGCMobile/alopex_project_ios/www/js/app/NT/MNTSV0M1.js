@@ -16,7 +16,7 @@ function mainStart(){
 }
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 	//box_poll
 	var bp = getMainBP();
 	var pn = getAlopexCookie('uPhone');

@@ -23,8 +23,9 @@
     <page id="MBLMG0M0" uri="/html/BL/MBLMG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MBLMG0M2" uri="/html/BL/MBLMG0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MBLMG1M0" uri="/html/BL/MBLMG1M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
-    <page id="MBLMG2M0" uri="/html/BL/MBLMG2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>  
     <page id="MBLMG1M1" uri="/html/BL/MBLMG1M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MBLMG2M0" uri="/html/BL/MBLMG2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>  
+    <page id="MBLMG2M1" uri="/html/BL/MBLMG2M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MFXST0M0" uri="/html/FX/MFXST0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MFXUS0M0" uri="/html/FX/MFXUS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MFXUS0M1" uri="/html/FX/MFXUS0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
@@ -55,6 +56,5 @@
       <userDefinedJSNI class="com.skcc.nexcore.mobile.barcodereader.BarcodeReaderJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="com.skcc.nexcore.mobile.payment.PaymentJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
-      <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentPg"></userDefinedJSNI>
   </userDefinedJSNIList>
 </alopexconfig>

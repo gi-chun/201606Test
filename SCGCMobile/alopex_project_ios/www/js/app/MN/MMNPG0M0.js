@@ -583,6 +583,7 @@ function getMain() {
 	logf('###jys4###');
 	if (mainBPCA == 'undefined') {
 		logf('###jys5###');
+		//gclee login token
 		param = {
 			// "bp" : '14641452', "ca" : '15527726'
 			// "bp" : '12704738', "ca" : '12809544'
@@ -591,7 +592,8 @@ function getMain() {
 			"ca" : String(Number(params.list.bpCaList[0].ca)),
 			"sernr" : params.list.bpCaList[0].sernr,
 			"anlage" : String(Number(params.list.bpCaList[0].anlage)),
-			"regiogroup" : params.list.bpCaList[0].regiogroup
+			"regiogroup" : params.list.bpCaList[0].regiogroup,
+			"token" : getAlopexCookie('loginToken')
 		};
 
 		chkSelfNote(params.list.bpCaList[0].bp, params.list.bpCaList[0].ca);
@@ -599,12 +601,14 @@ function getMain() {
 		logf('###jys6###');
 		var mbc = JSON.parse(mainBPCA);
 		logf('###jys7###');
+		//gclee login token
 		param = {
 			"bp" : String(Number(mbc.bp)),
 			"ca" : String(Number(mbc.ca)),
 			"sernr" : mbc.sernr,
 			"anlage" : String(Number(mbc.anlage)),
-			"regiogroup" : mbc.regiogroup
+			"regiogroup" : mbc.regiogroup,
+			"token" : getAlopexCookie('loginToken')
 		};
 		chkSelfNote(mbc.bp, mbc.ca);
 	}

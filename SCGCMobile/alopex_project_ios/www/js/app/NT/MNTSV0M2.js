@@ -18,7 +18,7 @@ function mainStart(){
 
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 
 	var param = {
 		"qestnrId" : params.svrNo

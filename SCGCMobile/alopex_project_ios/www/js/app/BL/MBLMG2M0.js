@@ -28,8 +28,15 @@ var vConnectURL;
 
 //gclee card
 var cardFee = ''; //ZBTRANZ
+var popPayFail = ''; //gclee card 
 
 function setEventListner(){
+	
+	//gclee card - ing
+	$('#okPayFail').click(function() {
+		popPayFail.close();
+		
+	});
 	
 	//gclee card
 	$('.goPayPage').click(function(){
@@ -51,9 +58,7 @@ function setEventListner(){
       "BPCode" : vBPCode,
       "connectURL" : vConnectURL
       };
-      
-      
-      
+           
       logf("vPhoneNo : "+vPhoneNo);
       logf("vOrderName : "+vOrderName);
       logf("vOrderNumber : "+vOrderNumber);
@@ -63,12 +68,18 @@ function setEventListner(){
       logf("vBPCode : "+vBPCode);
       logf("vConnectURL : "+vConnectURL);
       
+      //gclee card 임시 결제완료, 결제실패, 이전
       if(device.osName != 'iOS'){
-    	  jsniCaller.invoke("PaymentPg.startPayment");
+    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
       }else{
     	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
-      }                    
-                          
+      }    
+      
+      //gclee card - ing - 테스트시 사용
+      //popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
+      
+     //gclee card 임시 결제완료, 결제실패, 이전
+                    
 //		var param = {
 //				bp : '1111111',
 //				ca : '1111111'),
@@ -91,7 +102,7 @@ function setEventListner(){
 };
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 //	var mainPage = JSON.parse(getAlopexSession('mainPage'));
 	var loginSession = "";
 	if(device.osName != 'iOS'){
@@ -127,6 +138,7 @@ function doPage(){
 
 var pinId = '';
 function showPayList(){
+	
 	httpSend("getBpCaPayInfo", paramBpCa, function(cbq){
 		logf('jysjys',cbq);
 
@@ -223,6 +235,9 @@ function showPayInfo(pr){
 	//if(currentCa == ''){
 	
 	//}
+	//gclee card - ing : 여기에 추가전문 필요
+	//getRealPayInfor
+	
 	logf(pr);
 	httpSend("getPayInfo", pr, function(cbq){
 		logf(cbq);
@@ -289,6 +304,7 @@ function showPayInfo(pr){
 				$('.account_list').html(account_listStr);
 			}
 			
+			//gclee card
 			$('.form_price').html(s2[s2.length-1]+'원');
 			$('.form_closed2').html(toDateAddDot(cbq.list.billDetailResult[0].FAEDN)+'까지');
 			
@@ -338,20 +354,28 @@ $a.page(function(){
     
 });
 
-//gclee card
+//gclee card - ing
 function popCardResult(ss){
-    logf('popCardResult ok');
-    
-    $('.pop_prepare').bPopup({
-                             opacity: 0.6,
-                             speed: 300,
-                             });
-    
-    if(ss.length==11){
-        
-        
-    }else{
-        
-    }
-    
+	
+	//1:취소(처음위치), 2:결제성공(결제목록화면이동), 3:결제실패(결제실패하였습니다. 다시 시도하십시요! alert)
+	
+	logf('popCardResult param = ' + ss);
+	
+	if(ss == '1'){
+		//1:취소(처음위치)
+		
+	}else if(ss == '2'){
+		//2:결제성공
+		navigateBackToNaviGo('MBLMG2M1');
+		
+	}else if(ss == '3'){
+		//3:결제실패
+		//alert
+		
+		popPayFail = $('.confirm_payFail').bPopup({
+			opacity : 0.6,
+			speed : 300,
+		});	
+		 
+	}    
 }

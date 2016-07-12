@@ -5,7 +5,7 @@
 
 @implementation AlopexAppDelegate
 
-NSString *pushServerIp = @"211.255.202.76";
+NSString *pushServerIp_App = @"168.154.182.107";
 
 - (id) init {
     return [super init];
@@ -127,7 +127,7 @@ NSString *pushServerIp = @"211.255.202.76";
         
         NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
         
-        rtn = pushReceipt(pushServerIp, 3101, [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"],  "201603220000082470", 10);
+        rtn = pushReceipt(pushServerIp_App, 3101, [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"],  "201603220000082470", 10);
         
         if(rtn <= 0){
             NSLog(@"receiveRemoteNotification pushReceipt fail : \n");

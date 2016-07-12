@@ -7,11 +7,13 @@
 
 document.addEventListener('alopexready', mainStart);
 
-nowPGCode = 'MBLMG0M0';
+nowPGCode = 'MBLMG2M1';
 var ss = '';
 var params = '';
 var currentCa = '';
 var pinId = '';
+var popPayCancel = ''; //test
+
 function mainStart(){
 	setEventListner();
 	
@@ -35,7 +37,56 @@ function setEventListner(){
 //	$('#closeBtnExit').click(function() {
 //		popBillCerti.close();
 //	});
-
+	
+	//gclee card - ing
+	$('#noPayCancel').click(function() {
+		popPayCancel.close();
+		
+	});
+	
+	$('#okPayCancel').click(function() {
+		popPayCancel.close();
+		
+		var param = {
+			      'bp' : cbq.list.bpCaList[i].bp,
+			      'ca' : cbq.list.bpCaList[i].ca,
+			      'doc_header_opbel' : cbq.list.bpCaList[i].doc_header_opbel
+			    };
+				
+				logf('gclee MBLMG2M1 okPayCancel :' + param);
+				
+				if(isTest){
+//					notiPop('인증코드 발송 TEST','고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.(TEST 전송X)',false,false,null);
+//		    		$('.pNotiP2Ok').click(function(){
+//			    		navigateGo('MACHP0M1');
+//			    	});
+				}else{
+					//gclee sms
+//					httpSend("putPayCancel", param, function(Mcb){
+//						
+//						logf("Mcb: " + JSON.stringify(Mcb));
+//						logf("Mcb:certiNo: " + Mcb.certiNo);
+//						
+//			    		notiPop('신용카드 결제취소','신용카드 결제취소가 완료되었습니다.',false,false,null);
+//			    		
+////			    		$('.pNotiP2Ok').click(function(){
+////		    	    		navigateGo('MACHP0M1');
+////		    	    	});
+//			    		
+//			    	}, function(errorCode, errorMessage){
+//			    		notiPop('신용카드 결제취소','전송 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',true,false,null);
+//						if (errorCode == "9999") {
+//			    			loge('error :: 9999 :: main');
+//			    		} else {
+//			    			loge('error :: other :: main');
+//			    		}
+//					});  
+					
+				}
+		
+	});
+	//gclee card - ing
+	
 	$('#closeBtnExitSave').click(function() {
 		popBillCertiSave.close();
 		navigateBackToNaviGo('MMNPG0M0');
@@ -113,6 +164,15 @@ function goMenuBLMG02(){
 	navigateBackToNaviGo('MBLMG1M0');
 };
 
+//gclee card - ing
+function goPayCancel(){
+	
+	popPayCancel = $('.confirm_payCancel').bPopup({
+		opacity : 0.6,
+		speed : 300,
+	});		
+};
+
 function onScreenBack(){
 	doPage();	
 }
@@ -131,7 +191,6 @@ function doPage(){
 		currentCa = Number(useBPCA.ca);
 	}
 	
-	//gclee push
 	$('.topLogoDiv').html(getTitleBp());
 	
 	
@@ -393,6 +452,7 @@ if (certiNo.length < 1) {
 //gclee bill end
 
 function viewBillList(){
+	
 	var buymInfo = getBuym(currentCa);
 	var box_type1Str = '<h3>납입자번호</h3>'+
 	'<span class="col_red">'+currentCa+'</span>';
@@ -446,10 +506,11 @@ function viewBillList(){
 		pinId.close();
 	});
 
-	viewBillInfo();
+	//gclee card - 차후 backend 수정후 - 전문 - getPayInfoHistory
+	viewPayList();
 }
 
-function viewBillInfo(){
+function viewPayList(){
 	//gclee login token
 	var param = {
 //			"bp" : '14641452',	"ca" : '15527726'
@@ -457,14 +518,8 @@ function viewBillInfo(){
 			"ca" : String(Number(params.list.bpCaList[0].ca)),
 			"token" : getAlopexCookie('loginToken')
 	};
-//	var param = {
-////			"bp" : '14641452',	"ca" : '15527726'
-//			"bp" : String(Number(params.list.bpCaList[0].bp)),	
-//			"ca" : String(Number(params.list.bpCaList[0].ca))
-//	};
 	
-	//gclee login token
-	logf('gclee MBLMG0M0 ' + JSON.stringify(param));
+	logf('gclee MBLMG2M1 param:' + JSON.stringify(param));
 	
 	var param2 = JSON.parse(JSON.stringify(param));
 	param2.list = [{'bpCaList' : []}];
@@ -480,13 +535,9 @@ function viewBillInfo(){
 	}
 	logf(param2);
 	setDefault();
-	
-	
 	httpSend("getBillList", param2, function(cb){
 		logf(cb);
 		logf(cb.list.billResultList);
-		
-		logf('gclee MBLMG0M0 isTokenTrue: ' + cb.isTokenTrue);
 		
 		//gclee login token
 		if(cb.isTokenTrue == 'false'){
@@ -503,16 +554,18 @@ function viewBillInfo(){
 		}else{
 			var contStr = '';
 			for(var i=0;i<cb.list.billResultList.length;i++){
+				
+				//gclee card
 				var buymInfo = getBuym(cb.list.billResultList[i].CANO);
 				contStr += '<li class="view_cont">'+
 				'	<a href="javascript:void(0);" class="view_cont_Detail">'+
 				'<input type="hidden" value="'+cb.list.billResultList[i].DOC_HEADER_OPBEL+'"/>'+
 				'		<div>'+
-				'			<p class="form_title">'+cb.list.billResultList[i].BUDAT_YEAR+'년 '+cb.list.billResultList[i].BUDAT_MONTH+'월 청구서</p>'+
+				'			<p class="form_title">'+cb.list.billResultList[i].BUDAT_YEAR+'년 '+cb.list.billResultList[i].BUDAT_MONTH+'월 결제</p>'+
 				'			<p class="form_view px0">'+chkBillNo(cb.list.billResultList[i].DOC_HEADER_OPBEL)+'</p>'+
 				'		</div>'+
 				'		<div class="pt10">';
-				if(i==0) contStr += '			<p class="form_closed">'+(Number(buymInfo.betrw) > 0?'<span class="bg_green">미납</span>':'')+' 납부마감일 <span class="col_red">'+cb.list.billResultList[i].FAEDN+'</span></p>';
+				if(i==0) contStr += '			<p class="form_closed">'+(Number(buymInfo.betrw) > 0?'<span class="bg_green">미납</span>':'')+' 결제일 <span class="col_red">'+cb.list.billResultList[i].FAEDN+'</span></p>';
 				contStr += '			<p class="form_price">'+cb.list.billResultList[i].ZBTRANS_99+'원</p>'+
 				'		</div>'+
 				'	</a>';
@@ -530,11 +583,14 @@ function viewBillInfo(){
 						currentCa = Number(useBPCA.ca);
 					}
 					var buymInfo = getBuym(currentCa);
-					if(Number(buymInfo.betrw) > 0){
-						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>';
-					}else{
-						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
-					}
+					//gclee card - ing
+//					if(Number(buymInfo.betrw) > 0){
+//						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>';
+//					}else{
+//						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
+//					}
+					contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >결제취소완료</a></p>';
+					contStr += '	<p class="tac pt10"><a href="javascript:goPayCancel();" class="Button red big" >결제취소</a></p>';
 				}
 				contStr += '</li>';
 			}

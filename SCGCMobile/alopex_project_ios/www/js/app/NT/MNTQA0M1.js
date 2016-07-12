@@ -19,7 +19,7 @@ function setEventListner(){
 }
 var ss = '';
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 	var pn = getAlopexCookie('uPhone');
 	
 	var param = {

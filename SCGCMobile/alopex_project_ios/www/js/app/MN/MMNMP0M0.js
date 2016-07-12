@@ -14,7 +14,7 @@ nowPGCode = 'MMNMP0M0';
 var bpInfo = '';
 function mainStart(){
 	setEventListner();
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 
 	settingLoading();
 	$('.imgloading').show();

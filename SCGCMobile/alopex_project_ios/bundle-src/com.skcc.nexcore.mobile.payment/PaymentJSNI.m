@@ -13,7 +13,7 @@
 #include "erbapi.h"
 #include "DataManager.h"
 
-NSString *pushServerIp = @"211.255.202.76";
+NSString *pushServerIp = @"168.154.182.107";
 
 static DataManager *dataManager = nil;
 

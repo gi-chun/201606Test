@@ -19,7 +19,7 @@ function mainStart(){
 	//params = param;
 	
 	setEventListner();
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 	
 	//setDefault();
 	settingLoading();
@@ -35,7 +35,7 @@ function setEventListner(){
 function doPage(opbelNo){
 	var param = '';
 
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 	saveBillNo(params.DOC_HEADER_OPBEL);
 	param = {
 			"doc_header_opbel" : params.DOC_HEADER_OPBEL,

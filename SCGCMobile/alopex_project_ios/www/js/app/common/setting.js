@@ -401,10 +401,10 @@
 	function getCardPayURL(nm){
 		 //test
 		 var MPI_TEST_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
 		 //real
 		 var MPI_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+		 var ISP_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
 			 
 		//console.log('nm.length',nm.length);
 		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
@@ -415,60 +415,6 @@
 	}
 	
 	/**
-	 * gclee push test 
-	 * 상단 BP로고 가져오기
-	 * @returns
-	 */
-	function getTitleBpPush(){
-		
-		//gclee push
-		var mbp = getMainBP();
-		
-		/////////////////////////////////////////////////////////
-		var mainParam = '';
-		if(device.osName != 'iOS'){
-			mainParam = getAlopexSession('mainParam');
-		}else{
-			mainParam = getAlopexCookie('mainParamCookie');
-		}
-		mainParam = JSON.parse(mainParam);
-		logf('gclee setting mainParam: ' + JSON.stringify(mainParam));
-		/////////////////////////////////////////////////////////
-	
-		
-//    	var rtStr = '';
-    	var bpLogo = [];
-    	bpLogo[0] = '<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>';
-    	bpLogo[1] = '<h2 class="bs"><a href="#">부산도시가스 | SK E&amp;S</a></h2>';		
-    	bpLogo[2] = '<h2 class="ch"><a href="#">충청에너지서비스 | SK E&amp;S</a></h2>';		
-    	bpLogo[3] = '<h2 class="gumi"><a href="#">영남에너지서비스(구미) | SK E&amp;S</a></h2>';		
-    	bpLogo[4] = '<h2 class="gw"><a href="#">강원도시가스 | SK E&amp;S</a></h2>';		
-    	bpLogo[5] = '<h2 class="jb"><a href="#">전북에너지서비스 | SK E&amp;S</a></h2>';		
-    	bpLogo[6] = '<h2 class="jn"><a href="#">전남도시가스 | SK E&amp;S</a></h2>';		
-    	bpLogo[7] = '<h2 class="pohang"><a href="#">영남에너지서비스(포항) | SK E&amp;S</a></h2>';
-    	
-    	if(mbp == 'B001'){ //코원에너지서비스
-    		return bpLogo[0];
-    	}else if(mbp == 'C001'){//부산도시가스
-    		return bpLogo[1];
-    	}else if(mbp == 'D001'){//충청에너지서비스
-    		return bpLogo[2];
-    	}else if(mbp == 'E001'){//영남에너지서비스
-    		return bpLogo[3];
-    	}else if(mbp == 'J001'){//강원도시가스
-    		return bpLogo[4];
-    	}else if(mbp == 'K001'){//전북에너지서비스
-    		return bpLogo[5];
-    	}else if(mbp == 'G001'){//전남에너지서비스
-    		return bpLogo[6];
-//    	}else if(bpInfo.bpname == '영남에너지서비스(포항)'){
-//    		return bpLogo[7];
-    	}
-    	 
-	}
-	//gclee push test end
-	
-	/**
 	 * 상단 BP로고 가져오기
 	 * @returns
 	 */
@@ -476,18 +422,6 @@
 		
 		//gclee push
 		var mbp = getMainBP();
-		
-		/////////////////////////////////////////////////////////
-		var mainParam = '';
-		if(device.osName != 'iOS'){
-			mainParam = getAlopexSession('mainParam');
-		}else{
-			mainParam = getAlopexCookie('mainParamCookie');
-		}
-		mainParam = JSON.parse(mainParam);
-		logf('gclee setting mainParam: ' + JSON.stringify(mainParam));
-		/////////////////////////////////////////////////////////
-		
 		logf('gclee setting mbp: ' + JSON.stringify(mbp));
 		var bpInfoStr = getAlopexCookie(mbp);
 		logf('gclee setting bpInfoStr: ' + bpInfoStr);

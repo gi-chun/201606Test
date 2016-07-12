@@ -14,7 +14,7 @@ function mainStart(){
 }
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 	var bp = getMainBP();
 	var ss2 = bp.substring(0,1)+"000";
 	

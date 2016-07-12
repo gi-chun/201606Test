@@ -78,7 +78,7 @@ function setEventListner(){
 };
 
 function doPage(){
-	$('.topLogoDiv').html(getTitleBpPush());
+	$('.topLogoDiv').html(getTitleBp());
 //	var mainPage = JSON.parse(getAlopexSession('mainPage'));
 	var loginSession = "";
 	if(device.osName != 'iOS'){

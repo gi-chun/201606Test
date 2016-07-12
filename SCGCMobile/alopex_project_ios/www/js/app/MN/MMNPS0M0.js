@@ -16,12 +16,13 @@ var pushParams = '';
 
 function init(){
 	
-    //gclee push
-//    killAllSession();
+	//gclee push
+//	killAllSession();
 //	killAllCookie();
-    
-    pushParams = alopexController.parameters;  // push 파라미터 받기
-    
+	
+	//gclee push
+	pushParams = alopexController.parameters;  // push 파라미터 받기
+	
 	if(device.osName == 'Android'){
 		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
 //		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
@@ -138,6 +139,7 @@ function contiLogin(){
 
 function setDefaultStartData(cb,rtCB){
 	console.log('##11122#');
+	//gclee login token
 	if(pushParams.PUSH_TYPE == 'E' || pushParams.PUSH_TYPE == 'D' || pushParams.PUSH_TYPE == 'B' || pushParams.PUSH_TYPE == 'C'){
 		for(var j=0;j<cb.list.bpCaList.length;j++){
 			if(String(Number(cb.list.bpCaList[j].ca)) == pushParams.CA){
@@ -146,7 +148,8 @@ function setDefaultStartData(cb,rtCB){
 						ca : String(Number(cb.list.bpCaList[j].ca)),
 						sernr : cb.list.bpCaList[j].sernr,
 						anlage : String(Number(cb.list.bpCaList[j].anlage)),
-						regiogroup : cb.list.bpCaList[j].regiogroup
+						regiogroup : cb.list.bpCaList[j].regiogroup,
+						"token" : getAlopexCookie('loginToken')
 				};
 				setSelfChkCode(rtCB,cb.list.bpCaList[j].bp,cb.list.bpCaList[j].ca);									// 자가검침 플래그 생성
 				setAlopexSession('mainParam',JSON.stringify(rtMsg));
