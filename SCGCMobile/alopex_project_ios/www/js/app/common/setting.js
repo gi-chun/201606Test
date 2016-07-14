@@ -403,14 +403,14 @@
 		 var MPI_TEST_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
 		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
 		 //real
-		 var MPI_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
+		 var MPI_URL = "http://168.154.182.41/services/MPI/m_mpiTest.jsp";
+		 var ISP_URL = "http://168.154.182.41/services/ISP/payment_entry.jsp";
 			 
 		//console.log('nm.length',nm.length);
 		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
-			return ISP_TEST_URL;
+			return ISP_URL;
 		}else{	           // 2자리 코드
-			return MPI_TEST_URL;
+			return MPI_URL;
 		}
 	}
 	
