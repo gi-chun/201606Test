@@ -603,7 +603,6 @@
         
         if(nPropertyCurrentVersion == 0)
         { // 현재 property file version이 0 일때. 무조건 다운로드
-           //gclee release
             //return NO;
             return YES;
         }
@@ -652,7 +651,6 @@
     NSData *dataReply;
     id stringReply;
     
-    //gclee
     //CIP쪽 현재 가지고 있는 컨텐트가 최신 버전일 경우 리모트 컨텐트 매니져 종료
     BOOL isUpdate;
     isUpdate = [self isUpdateContentToCIP];
@@ -660,7 +658,6 @@
     if(!isUpdate){
         [self finishRemoteContentManage];
     }
-    //gclee end
     
     self.serverUrl = [remoteContentProperties objectForKey:server_url];
 	
@@ -943,8 +940,6 @@
     NSLog(@"appUpDate");
 	// 앱 업데이트진행
 	//마켓앱 있는지 확인
-	//NSString* marketID =  [NSString stringWithFormat: @"%@://", [remoteContentProperties objectForKey:marketApp_ID]];
-//    NSString* marketID =  [NSString stringWithFormat: @"%@", [remoteContentProperties objectForKey:marketApp_ID]];
     NSString* marketID = @"https://itunes.apple.com/us/app/dosigaseu/id1017623141?mt=8";
    
 	if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:marketID]]) // 마켓앱 있으면 마켓앱 호출
@@ -955,8 +950,6 @@
 	}
 	else //마켓앱 없으면 브라우져 실행
 	{
-//        NSString *stringURL = [remoteContentProperties objectForKey:marketDawnLoadURL];
-//		NSURL *url = [NSURL URLWithString:stringURL];
         NSURL *url = [NSURL URLWithString:marketID];
 		[[UIApplication sharedApplication] openURL:url];
 		

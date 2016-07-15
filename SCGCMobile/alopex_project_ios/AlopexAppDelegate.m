@@ -122,7 +122,6 @@ NSString *pushServerIp_App = @"168.154.182.107";
     totalDic = [NSString stringWithFormat:@"^^ %@", userInfo];
   
     int rtn;
-    //gclee
     if([[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]){
         
         NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);

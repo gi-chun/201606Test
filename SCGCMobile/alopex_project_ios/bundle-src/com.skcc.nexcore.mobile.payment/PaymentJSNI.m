@@ -32,7 +32,6 @@ static DataManager *dataManager = nil;
 
 - (void)setPushToken:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     
-    //gclee token
     userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
     NSLog(@"from setPushToken userParam values ==>%@", userParam);
     
