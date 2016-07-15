@@ -22,6 +22,8 @@
 #define COMPARE_VERSION		@"compversion"
 #define TOKEN				@"token"
 #define RC_CURRENT_VERSION	@"appversion"
+#define RC_VERCHECKURL	    @"http://168.154.182.107:19681/cip/services/nmp"
+//#define RC_VERCHECKURL	    @"https://scgc.skens.com:9090/services/nmp"
 
 #define CYPHERSTRING					@"NEXCOREMOBILEAPP" //AES암호화 대상, 해당 스트링과 현재 날짜 조합 
 
@@ -522,9 +524,7 @@
     [contentInfo release];
     postData = [postStringBody dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString* rcVerCheckURL =@"http://168.154.182.107:19681/cip/services/nmp";
-    //NSString* rcVerCheckURL =@"https://scgc.skens.com:9090/services/nmp";
-    NSURL * url = [NSURL URLWithString: rcVerCheckURL];
+    NSURL * url = [NSURL URLWithString: RC_VERCHECKURL];
     NSLog(@"postData = %@ , %@" , postStringBody , url);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
