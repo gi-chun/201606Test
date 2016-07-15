@@ -148,9 +148,9 @@
 	{
         //test
         useEncrypt = [self checkEncryptConfig];
-//		[self requesHTTPRemoteContent];
+		[self requesHTTPRemoteContent];
         //test end
-        [self requestContentVer];
+//        [self requestContentVer];
 	}
 	else
 	{
@@ -325,9 +325,45 @@
             error:&error];
 }
 
+-(BOOL)needsUpdate
+{
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    if ([lookup[@"resultCount"] integerValue] == 1){
+        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+        if (![appStoreVersion isEqualToString:currentVersion]){
+            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark request Appver - App Ver 체크
 -(void)requesHTTPRemoteContent
 {
+    
+    if([self needsUpdate]){
+        //App 필수업데이트
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:mustAppUpDateAlertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"확인"
+                                              otherButtonTitles:nil];
+        [alert setTag:mustAppUpDateAlertTag];
+        
+        [alert show];
+        [alert release];
+    }else{
+        [self requestContentVer];
+    }
+    
+    /*
 	currentStep = appVerCheck;
 	
 	NSString* postStringBody = nil;
@@ -350,6 +386,8 @@
 	[contentInfo release];
 	postData = [postStringBody dataUsingEncoding:NSUTF8StringEncoding];
 	NSString* appVerCheckURL = [NSString stringWithFormat:@"%@%@" , self.serverUrl, AppVersionCheckURL];
+    NSLog(@"appVerCheckURL = %@" , appVerCheckURL);
+    
 	NSURL * url = [NSURL URLWithString: appVerCheckURL];
 	NSLog(@"postData = %@ , %@" , postStringBody , url);
  	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
@@ -389,7 +427,7 @@
 	
 	if(statusCode == 200)
 	{
-		NSMutableDictionary *appVersionCheckResponseData = [stringReply JSONFragmentValue];
+        NSMutableDictionary *appVersionCheckResponseData = [stringReply JSONFragmentValue];
 		NSLog(@"rcVersionCheck : %@" ,appVersionCheckResponseData );
 		//NSString *serviceID = [appVersionCheckResponseData objectForKey:SERVICE_ID];
 		
@@ -398,6 +436,10 @@
 		NSString* currentVersion = [[AlopexUtil getAppVersion] stringByReplacingOccurrencesOfString:@"." withString:@""];
 		NSString* minVersion = [[appVersionCheckResponseData objectForKey:MIN_VERSION] stringByReplacingOccurrencesOfString:@"." withString:@""];
 		NSString* compVersion =[[appVersionCheckResponseData objectForKey:COMPARE_VERSION] stringByReplacingOccurrencesOfString:@"." withString:@""];
+        
+        NSLog(@"currentVersion = %@", currentVersion);
+        NSLog(@"minVersion = %@", minVersion);
+        NSLog(@"compVersion = %@", compVersion);
 		
 		int nCurrentVer = [currentVersion intValue];
 		int nMinVer	= [minVersion intValue];
@@ -456,6 +498,7 @@
 	}
 	
 	[stringReply release];
+    */
 }
 
 #pragma mark request -content Ver 체크 to CIP
@@ -900,7 +943,10 @@
     NSLog(@"appUpDate");
 	// 앱 업데이트진행
 	//마켓앱 있는지 확인
-	NSString* marketID =  [NSString stringWithFormat: @"%@://", [remoteContentProperties objectForKey:marketApp_ID]];
+	//NSString* marketID =  [NSString stringWithFormat: @"%@://", [remoteContentProperties objectForKey:marketApp_ID]];
+//    NSString* marketID =  [NSString stringWithFormat: @"%@", [remoteContentProperties objectForKey:marketApp_ID]];
+    NSString* marketID = @"https://itunes.apple.com/us/app/dosigaseu/id1017623141?mt=8";
+   
 	if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:marketID]]) // 마켓앱 있으면 마켓앱 호출
 	{
 		NSURL *url = [NSURL URLWithString:marketID];
@@ -909,8 +955,9 @@
 	}
 	else //마켓앱 없으면 브라우져 실행
 	{
-		NSString *stringURL = [remoteContentProperties objectForKey:marketDawnLoadURL];
-		NSURL *url = [NSURL URLWithString:stringURL];
+//        NSString *stringURL = [remoteContentProperties objectForKey:marketDawnLoadURL];
+//		NSURL *url = [NSURL URLWithString:stringURL];
+        NSURL *url = [NSURL URLWithString:marketID];
 		[[UIApplication sharedApplication] openURL:url];
 		
 		//exit(0);

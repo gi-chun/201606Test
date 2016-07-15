@@ -45,11 +45,12 @@
 -(void)requesHTTPRemoteContent;
 -(void)requestContentVer;
 -(void)contentDawnLoad;
--(BOOL)isUpdateContentToCIP; //gclee
+-(BOOL)isUpdateContentToCIP;
 
 -(void)initContentFile;
 -(BOOL)copyWWWFile;
 -(BOOL)removeContentFile;
+-(BOOL)needsUpdate;
 -(NSString*)getCurrentDate;
 -(void)finishRemoteContentManage;
 
