@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+
+<link rel="stylesheet" type="text/css" href="../../css/app/reset.css" />
+<link rel="stylesheet" type="text/css" href="../../css/app/main.css" />
+<link rel="stylesheet" type="text/css" href="../../css/app/common.css" />
+
+<script type="text/javascript" src="../../js/lib/jquery/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../../js/lib/alopex/alopex_controller.js"></script>
+<script type="text/javascript" src="../../js/lib/alopex/alopex-ui.js"></script>
+<script type="text/javascript" src="../../js/lib/alopex/alopex-grid.js"></script>
+
+<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
+<script type="text/javascript" src="../../js/app/common/setting.js"></script>
+<script type="text/javascript" src="../../js/app/MN/TEST_MPI.js"></script>
+
+<title>도시가스 | SK E&amp;S</title>
+</head>
+<body>
+<div>
+	<table>
+	<tr>
+		<td>전화번호</td>
+		<td><input type="text" id="pn" value=""/></td>
+	</tr>
+	<tr>
+		<td>횟수</td>
+		<td><input type="text" id="num" value="100"/></td>
+	</tr>
+	<tr>
+		<td>시작</td>
+		<td><button class="Button startBT" href="javascript:void(0);">시작!</button></td>
+	</tr>
+	</table>
+	<br/>
+	<table id='reTB'>
+	
+	</table>
+</div>
+
+<div>
+<FORM name=Visa3d action="https://kspay.ksnet.to/mobileMpi/veri_host.jsp"  target="MPIFRAME" method=post>
+	<INPUT type="hidden"   name=pan				size="19"	maxlength="19"	value="">
+	<INPUT type="hidden"   name=expiry			size="6"	maxlength="6"	value="">
+	<INPUT type="hidden"   name=purchase_amount	size="20"	maxlength="20"	value="1004">
+	<INPUT type="hidden"   name=amount			size="20"	maxlength="20"	value="1004">
+	<INPUT type="hidden"   name=description		size="80"	maxlength="80"	value="tomato">
+	<INPUT type="hidden"   name=currency		size="3"	maxlength="3"	value="410">
+	<INPUT type="hidden"   name=recur_frequency	size="4"	maxlength="4"	value="">
+	<INPUT type="hidden"   name=recur_expiry	size="8"	maxlength="8"	value="">
+	<INPUT type="hidden"   name=installments	size="4"	maxlength="4"	value="95">   
+	<INPUT type="hidden"   name=device_category	size="20"	maxlength="20"	value="0">
+	<!-- name : 영문 20자 이내-->
+	<INPUT type="hidden"   name="name"			size="20"	value="테스트 상점">
+	<!-- url : 해당 URL로 변경 -->
+	<INPUT type="hidden"   name="url"			size="20"	value="http://www.test_store.co.kr">
+	<INPUT type="hidden"   name="country"		size="20"	value="410">
+	<!--  <INPUT type="password" name="dummy"			value=""> -->
+	<INPUT type="hidden"   name="returnUrl"		value="http://168.154.182.107:19681/cip/MPI/m_return.jsp">
+
+<!------------------------------------------------------>
+<!-- x-mpi 추가 : 신규 변수 추가 start !!             -->
+<!------------------------------------------------------>
+	<!-- 1. [필수] 카드사코드 -->
+	<input type="hidden" name=cardcode value="6">
+<!------------------------------------------------------>
+<!-- x-mpi 추가 : 신규 변수 추가 end !!               -->
+<!------------------------------------------------------>
+
+
+
+<!------------------------------------------------------>
+<!-- x-mpi 추가 : 신규 변수 추가 start !!             -->
+<!-- merinfo : van (단말기번호), pg (상점 ID)         -->
+<!-- bizNo : 사업자 번호 (PG : 하위 몰 사업자번호)    -->
+<!-- instYN : 유/무 이자 구분 ( 1 : 일반, 2 : 무이자 )-->
+<!-- 아래 항목의 value에 해당 업체의 정보로 수정 !!   -->
+<!------------------------------------------------------>
+	<!--input type="hidden" name="merInfo" value="DPT0006503">
+	<input type="hidden" name="bizNo" value="1208197322">
+	<input type="hidden" name="instType" value="1"-->
+
+	<!--  gclee <input type="hidden" name="merInfo" value="2600106655"> -->
+	<input type="hidden" name="merInfo" value="DPT0Z18004">
+	<input type="hidden" name="bizNo" value="1208197322">
+	<!--input type="hidden" name="bizNo" value="2200448396"-->
+
+	<!-- 롯데 test -->
+	<!--input type="hidden" name="merInfo" value="DPT0Q00332">
+	<input type="hidden" name="merInfo" value="2002100356">
+	<input type="hidden" name="bizNo" value="1048518866"-->
+	<input type="hidden" name="instType" value="1">
+	<input type="hidden" name="shiYN" value="Y">
+	<input type="hidden" name="lotteYN" value="Y">
+<!------------------------------------------------------>
+<!-- x-mpi 추가 : 신규 변수 추가 end !!               -->
+<!------------------------------------------------------>
+
+</FORM>
+</div>
+
+<div>
+<div id="divpop" name="divpop" style="position:absolute;left:1px;top:65px;visibility:hidden;"> 
+<iframe style="background-color:#FFFFFF;display:none;border-width:0px;" align=center name='MPIFRAME' id='MPIFRAME' src="http://m.naver.com" onLoad='resizeFrame(this)'>
+</iframe>
+</div>
+</div>
+
+<div>
+<frameset rows="0,*" frameborder="no" framespacing="0">
+        <frame src="about:blank" frameborder="No" framespacing="0" marginheight="" marginwidth="0" noresize scrolling="no">
+	<frame name="main" src="url" frameborder="No" framespacing="0" noresize scrolling="auto">
+</frameset>
+</div>
+
+
+<iframe src="http://www.homejjang.com" frameborder="0" width="600" height="300">
+
+</body>
+</html>

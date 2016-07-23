@@ -12,6 +12,7 @@ function init(){
 	//gclee lsc
 	//check! is there lsc data before 
 	//var lscDB = JSON.parse(getAlopexCookie('lscDB'));
+	
 	var lscDB = getAlopexCookie('lscDB');
 	
 	if(lscDB != 'undefined'){
@@ -57,17 +58,20 @@ function init(){
 //						logf(jsonResult);
 //						logf("per json data : \n");
 //						logf( JSON.stringify(jsonResult));
+						//gclee push
+						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
 						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
 					}
 					loge('@@@@@@@@gclee \n save lscDB2 \n');
 					//gclee sms Android & iOS 모두 번호인증
-//					if(device.osName == 'Android'){
-//						jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
-//					}else{
-//						// 번호인증
-//						popPhone('1');
-//					}
-					popPhone('1');
+					if(device.osName == 'Android'){
+						jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
+						// 번호인증
+						popPhone('1');
+					}else{
+						// 번호인증
+						popPhone('1');
+					}
 					//gclee sms end
 					
 				}, function(errorCode, errorMessage){
@@ -115,8 +119,9 @@ function popPhone(pn){
 	
 	//gclee login #################################################################################################
 	//gclee sms
-	if(vPn == '1'){
+		
 		chkPhone = getAlopexCookie('uPhone');
+		
 		vPn = chkPhone;
 		if(chkPhone == 'undefined'){
 			
@@ -128,11 +133,11 @@ function popPhone(pn){
 			//gclee login
 					
 			//인증된 전화번호로 가입여부를 확인한다.
-			//처음 CIP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자)
+			//처음 CIP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자, 4.클라이언트 vs 서버 토큰 틀린경우 )
 			//API 호출은 80번 하나로 앱가입자, SAP가입자, 미가입자 서버에서 판단하여 보내줌
 			//아래 사항은 서버처리 사항 참고
 			//CIP에 요청결과 가입자면 아래 로그인프로세스 진행
-			//CIP에 요청결과 미가입자면 다시 SAP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자) 
+			//CIP에 요청결과 미가입자면 다시 SAP에 요청하여 가입여부확인 (결과값 1:앱가입자, 2:SAP가입자, 3:미가입자, 4:클라이언트 vs 서버토큰 상이 -> 번호인증화면 ) 
 			//SAP에 요청결과 가입자면 아래 로그인프로세스 진행
 			//SAP에 요청결과 미가입자면 앱 회원가입 화면으로 이동 (MACHP1M0)
 			
@@ -141,18 +146,25 @@ function popPhone(pn){
 					"phoneNum" : vPn, "gubun" : "80"
 				};
 				
+				logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
+				
 				httpSend("getAccInfo", param, function(cb){
 							
-		    		logf("getIsMemberChk: " + cb);
-		    		logf("getIsMemberChk:joinCode: " + cb.joinCode);
+		    		logf("getAccInfo: " + cb);
+		    		logf("getAccInfo:joinCode: " + cb.joinCode);
 		    		
-		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자
+		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 
 		    		if(cb.joinCode == '3'){
 		    			navigateGo('MACHP1M0');
+		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
+		    			navigateGo('MACHP0M0');
 		    		}else{
 		    			
 		    			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		    			//기존로직 로그인
+		    			//gclee login token
+		    			logf("getAccInfo:loginToken: " + cb.token);
+		    			setAlopexCookie('loginToken', cb.token);
 		    			
 		    			// test
 		    			if(isTest){
@@ -285,9 +297,7 @@ function popPhone(pn){
 //			}
 			
 		}
-	}
-	
-	
+
 	
 }
 
@@ -349,7 +359,7 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf('gclee MMNST0M0 ' + param);
+		logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
@@ -641,7 +651,20 @@ function runMainGo(rtCB){
 //	    	});
 //		}else{
 //			alert('변경 안함');
-			navigateGo('MMNPG0M0',rtCB);
+		//gclee push test 잠시 주석	
+		navigateGo('MMNPG0M0',rtCB);
+			
+			//gclee push test
+//			var rtMsg = {
+//				    "PUSH_TYPE": "E",
+//				    "BP": "16701312",
+//				    "CA": "17285916",
+//				    "DOC_HEADER_OPBEL": "221007358579"
+//				};
+//			
+//			navigateGo('pushstart',rtMsg);
+			
+			//gclee push test end
 //		}
 	}else{
 		console.log(rtCB);

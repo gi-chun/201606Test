@@ -34,7 +34,7 @@ function chkNoUser(){
 	var param = {
 		"phoneNum" : pn, "gubun" : "20"
 	};
-	console.log('gclee MMNPG1M0 ' + JSON.stringify(param));
+	console.log('gclee getAccInfo MMNPG1M0 ' + JSON.stringify(param));
 	
 	httpSend("getAccInfo", param, function(Mcb){
 		console.log(Mcb);
@@ -125,7 +125,7 @@ function setEventListner(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "20"
     	};
-		logf('gclee MMNPG1M0 ' + JSON.stringify(param));
+		logf('gclee getAccInfo MMNPG1M0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(Mcb){
     		console.log(Mcb);

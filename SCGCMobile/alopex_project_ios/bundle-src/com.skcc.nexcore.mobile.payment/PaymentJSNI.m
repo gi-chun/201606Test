@@ -13,7 +13,7 @@
 #include "erbapi.h"
 #include "DataManager.h"
 
-NSString *pushServerIp = @"168.154.182.107";
+NSString *pushServerIp = @"168.154.182.41";
 
 static DataManager *dataManager = nil;
 
@@ -32,8 +32,13 @@ static DataManager *dataManager = nil;
 
 - (void)setPushToken:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     
-    userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
-    NSLog(@"from setPushToken userParam values ==>%@", userParam);
+    NSLog(@"from arguments values ==>%@", arguments);
+    
+    if (arguments.count==2) {
+        userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
+        NSLog(@"from setPushToken userParam values ==>%@", userParam);
+    }
+    
     
     //        var option = {
     //            "phoneno" : vPhoneNo,
@@ -41,11 +46,22 @@ static DataManager *dataManager = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:[userParam objectForKey:@"phoneno"] forKey:@"currentPhoneNo"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString* tempToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"pushToken"];
+     NSLog(@"tempToken token values ==>%@", tempToken);
 
+    
+//    self.pushTokenID = [NSString stringWithString:deviceId];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"notifyPushTokenCreated" object:nil];
+//    
+//    _dataManager.deviceUUID = deviceId;
    
+    NSLog(@"deviceUUID token values ==>%@", dataManager.deviceUUID);
+    
     int rtn;
-     const char *token = [dataManager.deviceUUID UTF8String];
-    NSLog(@"setPushToken token values ==>%@", token);
+//     const char *token = [dataManager.deviceUUID UTF8String];
+    const char *token = [tempToken UTF8String];
+    NSLog(@"setPushToken token values ==>%s", token);
      
      if(token == NULL)
      {
@@ -63,11 +79,11 @@ static DataManager *dataManager = nil;
      */
     
     //덩일하게
-
     
-    //rtn = pushRegist("114.205.98.48", 6101, "komj", (char *)token, "com.h2osystech.iMeritzService", (char *)[multi UTF8String], 10);
-    rtn = pushRegist(pushServerIp, 3101, [userParam objectForKey:@"phoneno"], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
-    //    rtn = pushRegist("192.168.3.172", 3101, "komj", (char *)token, "com.h2osystech.iMeritzService", (char *)[multi UTF8String], 10);
+    NSString* phoneNumber = [userParam objectForKey:@"phoneno"];
+    NSLog(@"setPushToken phoneNumber values ==>%@", phoneNumber);
+
+    rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
     
     NSLog(@"pushRegist (%d), (%@)", rtn, dataManager.deviceUUID);
     if(rtn <= 0)

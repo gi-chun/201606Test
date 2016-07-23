@@ -68,6 +68,8 @@ function setEventListner(){
 		
 		var cgListsCookie = getAlopexCookie('cgLists');
 		
+		//gclee login important
+		
 		if(cgListsCookie == 'undefined'){
 			var cgLists = [];
 			logf(param);
@@ -121,7 +123,7 @@ function setEventListner(){
     		
 		}
 		
-		logf('gclee MFXST0M0' + param);
+		logf('gclee putAccInfo MFXST0M0' + param);
 	
 		httpSend("putAccInfo", param, function(cb){
 			logf(cb);

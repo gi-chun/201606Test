@@ -7,7 +7,7 @@
     <description><![CDATA[Enter descriptions.]]></description>
   </project-info>
   <pageList start="index">
-    <page id="index" type="local" uri="/html/MN/MMNST0M0.html" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="index" type="local" uri="/html/MN/TEST_MPI.html" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MMNPG0M0" uri="/html/MN/MMNPG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MMNHM0M0" uri="/html/MN/MMNHM0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MMNMP0M0" uri="/html/MN/MMNMP0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
@@ -23,8 +23,11 @@
     <page id="MBLMG0M0" uri="/html/BL/MBLMG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MBLMG0M2" uri="/html/BL/MBLMG0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MBLMG1M0" uri="/html/BL/MBLMG1M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
-    <page id="MBLMG2M0" uri="/html/BL/MBLMG2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>  
     <page id="MBLMG1M1" uri="/html/BL/MBLMG1M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="MBLMG2M0" uri="/html/BL/MBLMG2M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>  
+    <page id="MBLMG2M1" uri="/html/BL/MBLMG2M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MBLMG3M0" uri="/html/BL/MBLMG3M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
+    <page id="MBLMG4M0" uri="/html/BL/MBLMG4M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MFXST0M0" uri="/html/FX/MFXST0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MFXUS0M0" uri="/html/FX/MFXUS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MFXUS0M1" uri="/html/FX/MFXUS0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
@@ -46,7 +49,7 @@
     <page id="MNTQA0M1" uri="/html/NT/MNTQA0M1.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MNTQA0M2" uri="/html/NT/MNTQA0M2.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MINRE0M0" uri="/html/IN/MINRE0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
-    <page id="pushstart" uri="/html/MN/MMNPS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="pushstart" uri="/html/MN/MMNPS0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="PAYMENT" type="native" uri="AbstractScreen_tViewController" ></page>
   </pageList>
   <userDefinedJSNIList>
@@ -55,6 +58,5 @@
       <userDefinedJSNI class="com.skcc.nexcore.mobile.barcodereader.BarcodeReaderJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="com.skcc.nexcore.mobile.payment.PaymentJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
-      <userDefinedJSNI class="etc.skcc.alopex.jsni.PaymentPg"></userDefinedJSNI>
   </userDefinedJSNIList>
 </alopexconfig>

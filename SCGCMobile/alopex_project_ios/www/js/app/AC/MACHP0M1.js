@@ -18,7 +18,10 @@ function init(){
 	if(testPn == 'undefined'){
 		loge('testpn error');
 	}else if(testPwd == 'undefined'){
-		loge('testpwd error');
+		//loge('testpwd error');
+		// gclee login
+		// 성공
+		$('#hp').val(testPn);
 	}else{
 		// 성공
 		$('#hp').val(testPn);

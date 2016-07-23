@@ -208,7 +208,7 @@ function goLogin(){
 		"phoneNum" : uPhone, "gubun" : "10"
 	};
 
-	logf('gclee MACHP1M1 ' + JSON.stringify(param));
+	logf('gclee getAccInfo MACHP1M1 ' + JSON.stringify(param));
 	
 	httpSend("getAccInfo", param, function(cb){
 		logf('cb',cb);

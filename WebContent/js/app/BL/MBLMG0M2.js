@@ -247,13 +247,19 @@ function doPage(opbelNo){
 	
 	var param_isCertiPass = navigation.parameters.isCertiPass;
 	
+	//gclee push
 	if(opbelNo == '1'){
+		//gclee push test
 		$('.topLogoDiv').html(getTitleBp());
+		//'<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>'
+		//$('.topLogoDiv').html('<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>');
 		saveBillNo(params.DOC_HEADER_OPBEL);
+		//gclee login token
 		param = {
 				"doc_header_opbel" : params.DOC_HEADER_OPBEL,
 				"bp" : String(Number(navigation.parameters.bp)),	
-				"ca" : String(Number(navigation.parameters.ca))
+				"ca" : String(Number(navigation.parameters.ca)),
+				"token" : getAlopexCookie('loginToken')
 		};
 		
 	}else{
@@ -264,15 +270,29 @@ function doPage(opbelNo){
 		$('.loading').show();
 //		$('.imgloading').show();
 		saveBillNo(opbelNo);
+		
+		//gclee login token
 		param = {
 				"doc_header_opbel" : opbelNo,
 				"bp" : String(Number(navigation.parameters.bp)),	
-				"ca" : String(Number(navigation.parameters.ca))
+				"ca" : String(Number(navigation.parameters.ca)),
+				"token" : getAlopexCookie('loginToken')
 		};
 	}
 
+	logf('gclee MBLMG0M2 param:' + JSON.stringify(param));
+	
 	httpSend("getBillDetail", param, function(cb){
 		ss = cb;
+		
+		//gclee login token
+		if(cb.isTokenTrue == 'false'){
+			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+			navigateGo('MACHP0M0');
+			return;
+		}
+		//gclee login token end
+		
 		// 이전월 다음월
 		var monthViewListStr = '';
 		if(cb.list.billDetailResult[0].PREV_DOC_HEADER_OPBEL!="") monthViewListStr += '<a href="javascript:void(0);" class="prev_month">이전 월 보기</a>';

@@ -912,6 +912,20 @@
 	}
 	
 	/**
+	 * 미납 체납
+	 * @param status
+	 * @returns {String}
+	 */
+	function getStringPayStatus(status){
+		
+		if(status == '1'){
+			return '미납';
+		}else{
+			return '체납';
+		}
+	}
+	
+	/**
 	 * null chk
 	 * @param value
 	 * @returns {Boolean}

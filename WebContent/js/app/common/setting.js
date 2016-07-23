@@ -401,16 +401,16 @@
 	function getCardPayURL(nm){
 		 //test
 		 var MPI_TEST_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
 		 //real
-		 var MPI_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_URL = "http://168.154.182.107:19681/cip/ISP/intro.html";
+		 var MPI_URL = "http://168.154.182.41/services/MPI/m_mpiTest.jsp";
+		 var ISP_URL = "http://168.154.182.41/services/ISP/payment_entry.jsp";
 			 
 		//console.log('nm.length',nm.length);
 		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
-			return ISP_TEST_URL;
+			return ISP_URL;
 		}else{	           // 2자리 코드
-			return MPI_TEST_URL;
+			return MPI_URL;
 		}
 	}
 	
@@ -419,8 +419,18 @@
 	 * @returns
 	 */
 	function getTitleBp(){
+		
+		//gclee push
 		var mbp = getMainBP();
-    	var bpInfo = JSON.parse(getAlopexCookie(mbp));
+		logf('gclee setting mbp: ' + JSON.stringify(mbp));
+		var bpInfoStr = getAlopexCookie(mbp);
+		logf('gclee setting bpInfoStr: ' + bpInfoStr);
+    	var bpInfo = JSON.parse(bpInfoStr);
+    	
+    	//var bpInfo = JSON.parse('MainBPCA');
+    	
+    	logf('gclee setting bpInfo: ' + JSON.stringify(bpInfo));
+		
 //    	var rtStr = '';
     	var bpLogo = [];
     	bpLogo[0] = '<h2 class="ko-one"><a href="#">코원에너지서비스 | SK E&amp;S</a></h2>';
@@ -898,6 +908,20 @@
 				logf('chkno::'+chkno);
 				return '미열람';
 			}
+		}
+	}
+	
+	/**
+	 * 미납 체납
+	 * @param status
+	 * @returns {String}
+	 */
+	function getStringPayStatus(status){
+		
+		if(status == '1'){
+			return '미납';
+		}else{
+			return '체납';
 		}
 	}
 	

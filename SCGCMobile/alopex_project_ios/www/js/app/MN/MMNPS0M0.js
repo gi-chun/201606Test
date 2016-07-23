@@ -338,6 +338,19 @@ function runMain(){
 				}
 			}
 			
+			//gclee card push id
+			var pn = getAlopexCookie('uPhone');
+			var option = {
+				      "phoneno" : pn
+			};
+				      
+		   if(device.osName != 'iOS'){                                                                
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }else{                                                                                     
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }
+		   //gclee card push id end
+			
 			if(dType=='Android'){
 				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';

@@ -79,7 +79,7 @@ $a.page(function(){
 			    		//"statusGp" : '21', 
 			    		"gubun" : "70"
 					};
-    			logf('gclee MACHP2M3 ' + JSON.stringify(param));
+    			logf('gclee getAccInfo MACHP2M3 ' + JSON.stringify(param));
 				
 		    	httpSend("getAccInfo", param, function(cb){
 		    		logf(cb);
@@ -103,7 +103,7 @@ $a.page(function(){
 					    		"phoneNum" : pn, 
 					    		"gubun" : "30"
 	    					};
-			    		logf('gclee MACHP2M3',paramCommit);
+			    		logf('gclee putAccInfo MACHP2M3',paramCommit);
 		    			httpSend("putAccInfo", paramCommit, function(cbCommit){
 		    				logf(cbCommit);
 //		    				

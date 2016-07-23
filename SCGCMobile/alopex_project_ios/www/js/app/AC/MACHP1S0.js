@@ -12,11 +12,14 @@ var cgLists = [];
 var params = '';
 var uPhone = '';
 var pop_rep_pop = '';
+var beforeSummit = false;
 
 function mainStart(){
 	params = navigation.parameters;
 //	console.log(JSON.stringify(params));
 	uPhone = getAlopexCookie('uPhone');
+	//gclee login
+	beforeSummit = false;
 	
 	setBoxList(params);
 //	console.log(viewPhoneNM(uPhone));
@@ -60,6 +63,13 @@ function setEventListner(){
 	});
 		
 	$('#pop_rep').click(function(){
+		//gclee login 
+		
+		if(beforeSummit){
+		   logf('gclee MACHP1S0 pop_rep already click');
+		   return;
+		}
+		
 		if($('[name=chkc0]:checked').length > 0){
 			logf('go join');
 			logf($('[name=chkc0]:checked').length);
@@ -77,7 +87,9 @@ function setEventListner(){
 				};
 			}
 
-			console.log('gclee MACHP1S0' + param);
+			console.log('gclee putAccInfo MACHP1S0' + param);
+			
+			beforeSummit = true;
 			
 	    	httpSend("putAccInfo", param, function(cb2){
 //	    		console.log(cb);
@@ -110,6 +122,9 @@ function setEventListner(){
 	    			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
 	    		}
 	    	}, function(errorCode, errorMessage){
+	    		//gclee login
+	    		beforeSummit = false;
+	    		
 	    		if (errorCode == "9999") {
 	    			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
 	    			loge('error :: 9999 :: hsUsrCommit');
@@ -119,6 +134,11 @@ function setEventListner(){
 	    		}
 	    	});
 		}else{
+			
+			//gclee login
+    		beforeSummit = false;
+    		
+    		
 			loge('non selected');
 			pop_rep_pop = $('.pop_rep').bPopup({
     			opacity: 0.6,
@@ -148,7 +168,7 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf('gclee MACHP1S0 ' + JSON.stringify(param));
+		logf('gclee getAccInfo MACHP1S0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
@@ -238,6 +258,20 @@ function runMain(){
 				rtCBPush.agree_provide_info_yn = getAlopexCookie('agreeProvideInfoYnCookie');
 			}
 		}
+		
+		//gclee card push id
+		var pn = getAlopexCookie('uPhone');
+		var option = {
+			      "phoneno" : pn
+		};
+			      
+	   if(device.osName != 'iOS'){                                                                
+		   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+	   }else{                                                                                     
+		   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+	   }
+	   //gclee card push id end
+	   
 		
 		if(dType=='Android'){
 			rtCBPush.push_id = pushID;

@@ -27,7 +27,7 @@ function mainStart(){
 		"phoneNum" : uPhone, "gubun" : "20"
 	};
 	//showProgressBarMsg('고객 정보를 조회 중입니다.');
-	logf('gclee MFXUS0M1 ' + JSON.stringify(param));
+	logf('gclee getAccInfo MFXUS0M1 ' + JSON.stringify(param));
 	
 	httpSend("getAccInfo", param, function(cb){
 		logf(cb);
@@ -161,7 +161,7 @@ function setEventListner(){
 			};
 		}
 
-		logf('gclee MFXUS0M1' + param);
+		logf('gclee putAccInfo MFXUS0M1' + param);
 		
 		httpSend("putAccInfo", param, function(cb2){
 //			console.log(cb);

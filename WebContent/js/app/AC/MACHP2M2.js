@@ -68,7 +68,7 @@ function setEventListner(){
 						"vstelle" : bcode,
 			    		"gubun" : "60"
 					};
-		logf(param);
+		logf('gclee getAccInfo MACHP2M2 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
     		// 회원가입
@@ -119,7 +119,7 @@ function setUsrCommit(cb){
 	}
 
 	if(param.list[0].bpCaReqList.length > 0){
-		logf('gclee MACHP2M2' + param);
+		logf('gclee putAccInfo MACHP2M2' + param);
 		
     	httpSend("putAccInfo", param, function(cb){
     		// 인증

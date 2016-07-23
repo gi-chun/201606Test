@@ -131,6 +131,7 @@ function doPage(){
 		currentCa = Number(useBPCA.ca);
 	}
 	
+	//gclee push
 	$('.topLogoDiv').html(getTitleBp());
 	
 	
@@ -449,11 +450,22 @@ function viewBillList(){
 }
 
 function viewBillInfo(){
+	//gclee login token
 	var param = {
 //			"bp" : '14641452',	"ca" : '15527726'
 			"bp" : String(Number(params.list.bpCaList[0].bp)),	
-			"ca" : String(Number(params.list.bpCaList[0].ca))
+			"ca" : String(Number(params.list.bpCaList[0].ca)),
+			"token" : getAlopexCookie('loginToken')
 	};
+//	var param = {
+////			"bp" : '14641452',	"ca" : '15527726'
+//			"bp" : String(Number(params.list.bpCaList[0].bp)),	
+//			"ca" : String(Number(params.list.bpCaList[0].ca))
+//	};
+	
+	//gclee login token
+	logf('gclee MBLMG0M0 ' + JSON.stringify(param));
+	
 	var param2 = JSON.parse(JSON.stringify(param));
 	param2.list = [{'bpCaList' : []}];
 	for(var i=0;i<params.list.bpCaList.length;i++){
@@ -468,9 +480,21 @@ function viewBillInfo(){
 	}
 	logf(param2);
 	setDefault();
+	
+	
 	httpSend("getBillList", param2, function(cb){
 		logf(cb);
 		logf(cb.list.billResultList);
+		
+		logf('gclee MBLMG0M0 isTokenTrue: ' + cb.isTokenTrue);
+		
+		//gclee login token
+		if(cb.isTokenTrue == 'false'){
+			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+			navigateGo('MACHP0M0');
+			return;
+		}
+		//gclee login token end
 		
 		if(cb.list.billResultList == undefined){
 			//console.log('################################################');

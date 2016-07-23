@@ -146,7 +146,7 @@ function popPhone(pn){
 					"phoneNum" : vPn, "gubun" : "80"
 				};
 				
-				logf('gclee MMNST0M0 ' + JSON.stringify(param));
+				logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
 				
 				httpSend("getAccInfo", param, function(cb){
 							
@@ -359,7 +359,7 @@ function contiLogin(){
 		var param = {
     		"phoneNum" : pn, "gubun" : "10"
     	};
-		logf('gclee MMNST0M0 ' + JSON.stringify(param));
+		logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
@@ -455,7 +455,20 @@ function runMain(){
 				}
 			}
 			
+			//gclee card push id
+			var option = {
+				      "phoneno" : pn
+			};
+				      
+		   if(device.osName != 'iOS'){                                                                
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }else{                                                                                     
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }
+		   //gclee card push id end
+			
 			if(dType=='Android'){
+				
 				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){

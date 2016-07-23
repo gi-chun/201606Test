@@ -204,7 +204,7 @@ function getChkUser(pn){
 		"phoneNum" : pn, "gubun" : "20"
 	};
 	showProgressBarMsg('고객 정보를 조회 중입니다.');
-	logf('gclee MACHP1M0 ' + JSON.stringify(param));
+	logf('gclee getAccInfo MACHP1M0 ' + JSON.stringify(param));
 	httpSend("getAccInfo", param, httpSuccessCallback, httpErrorCallback);
 }
 
@@ -295,7 +295,7 @@ function setUsrCommit(cb){
 		}
 		//console.log(cb[i]);
 	}
-	logf('gclee MACHP1M0' + param);
+	logf('gclee putAccInfo MACHP1M0' + param);
 //	
 	httpSend("putAccInfo", param, function(cb2){
 		

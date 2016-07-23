@@ -7,11 +7,11 @@
 	<script type="text/javascript" src="../../js/app/common/common_popup.js"></script>
 	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
 	<script type="text/javascript" src="../../js/app/BL/MBLMG2M0.js"></script>
-	<script>TITLE('신용카드 결제');	</script>
+	<script>TITLE('미납내역');	</script>
 </head>
 <body>
 <div id="wrap" class="sub">
-	<script>HEADER('신용카드 결제');	</script>
+	<script>HEADER('미납내역');	</script>
 	<div id="container" class="clearfix dispNone">
 		<div class='topLogoDiv'>
 			<!-- <h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2> -->
@@ -34,10 +34,14 @@
 					</li>
 				</ul>
 			</div>
+			
 			<div class="box_form dispNone formBox1">
 				<ul>
 					<li>
 						<a href="#">
+							<div>
+								<p class="form_title"><input class="Checkbox" name="chk1" value="check1" >&nbsp;&nbsp;결제선택</p>
+							</div>
 						    <div>
 								<p class="form_title">(카드)결제금액</p>
 								<p class="form_price col_red">-원</p>
@@ -54,6 +58,7 @@
 					</li>
 				</ul>
 			</div>
+			
 
 				<!--  카드선택 -->
 				<!-- 
@@ -70,6 +75,7 @@
 					</ul>
 				-->
 				<!-- gclee card MPI방식만 노출, ISP방식 제공 jsp에러 확인후 노출예정-->
+				
 				<select id="cardSelect" name="신용카드">
 				<option value="1">외환카드</option>
 				<option value="2">삼성카드</option>
@@ -86,6 +92,7 @@
 				<option value="1500">광주카드</option>
 				<option value="1600">전북카드</option>
 				</select>
+				
 				</div>
 
 

@@ -5,7 +5,7 @@
 
 @implementation AlopexAppDelegate
 
-NSString *pushServerIp_App = @"168.154.182.107";
+NSString *pushServerIp_App = @"168.154.182.41";
 
 - (id) init {
     return [super init];
@@ -25,6 +25,9 @@ NSString *pushServerIp_App = @"168.154.182.107";
     {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     }
+    
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     
     //Create the background
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
@@ -112,6 +115,10 @@ NSString *pushServerIp_App = @"168.154.182.107";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"notifyPushTokenCreated" object:nil];
     
     _dataManager.deviceUUID = deviceId;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceId forKey:@"pushToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     //    [[NSUserDefaults standardUserDefaults] setObject:deviceId  forKey:@"devicetoken"];
     NSLog(@"APNS Device Token: %@",deviceId);
 }

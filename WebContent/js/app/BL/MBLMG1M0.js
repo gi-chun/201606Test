@@ -72,7 +72,8 @@ function setEventListner(){
 	
 	//gclee card
 	$('.btn_account_card').click(function(){
-		navigateGo('MBLMG2M0');
+//		navigateGo('MBLMG2M0');
+		navigateGo('MBLMG3M0');
 	});
 	
 };

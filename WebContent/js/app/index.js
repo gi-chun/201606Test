@@ -1,14 +1,13 @@
 document.addEventListener('alopexready', init);
 
 function init(){
-	//gclee sms 번호인증 함으로 전호번호 가져오지 않음
-//	if(device.osName == 'Android'){
-//		// 전화번호 가져오기
-//		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
-////		AlopexController.setCustomizedBack(function(){
-////			alert('1');
-////		});
-//	}
+	if(device.osName == 'Android'){
+		// 전화번호 가져오기
+		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
+//		AlopexController.setCustomizedBack(function(){
+//			alert('1');
+//		});
+	}
 }
 
 function popPhone(pn){

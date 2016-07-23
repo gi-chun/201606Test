@@ -232,7 +232,7 @@ function exitAppUser(){
     	};
 	}
 	showProgressBarMsg('처리중입니다.');
-	logf('gclee MFXUS0M0' + param);
+	logf('gclee putAccInfo MFXUS0M0' + param);
 	
 	httpSend("putAccInfo", param, function(cb){
 		logf('cb',cb);
@@ -350,7 +350,7 @@ function openMultiCA(){
 		"phoneNum" : pn, "gubun" : "20"
 	};
 	//showProgressBarMsg('고객 정보를 조회 중입니다.');
-	logf('gclee MFXUS0M0 ' + JSON.stringify(param));
+	logf('gclee getAccInfo MFXUS0M0 ' + JSON.stringify(param));
 	
 	httpSend("getAccInfo", param, function(cb){
 //		logf(cb);
