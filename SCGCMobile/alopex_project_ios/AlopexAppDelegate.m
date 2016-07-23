@@ -133,7 +133,19 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
         NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
         
-        rtn = pushReceipt(pushServerIp_App, 3101, [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"],  "201603220000082470", 10);
+        NSDictionary *dicData = [userInfo objectForKey:@"aps"];
+        
+        NSString* msgID = [dicData objectForKey:@"MSGIDX"];
+        
+        NSLog(@"msgID @@@@@@@msgID : \n%@", msgID);
+        
+        NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
+        NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
+        
+        //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
+
+        
+        rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
         
         if(rtn <= 0){
             NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
@@ -147,20 +159,34 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
         NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
         
+    
         NSDictionary *dic = [userInfo objectForKey:@"aps"];
-        //NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
         
         //kSOAlert, kSOMessageId
-        title = [dic objectForKey:@"title"];
-        message = [dic objectForKey:@"alert"];
-        pageId = [dic objectForKey:@"pageId"];
-        self.r_parameters = [dic objectForKey:@"parameters"];
-        self.s_parameters = [self.r_parameters JSONFragment];
+        if( [dic objectForKey:@"subject"] != nil ){
+            title = [dic objectForKey:@"subject"];
+        }
+        if( [dic objectForKey:@"alert"] != nil ){
+            message = [dic objectForKey:@"alert"];
+        }
+        if( [dic objectForKey:@"parameter"] != nil ){
+            
+            if( [self.r_parameters objectForKey:@"pageId"] != nil ){
+                pageId = [self.r_parameters objectForKey:@"pageId"];
+            }
+            
+            if( [self.r_parameters objectForKey:@"parameters"] != nil ){
+                self.r2_parameters = [self.r_parameters objectForKey:@"parameter"];
+                self.s_parameters = [self.r_parameters JSONFragment];
+                
+                NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
+                
+            }
+            
+        }
         
-        NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
-        
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@, parameters:%@", title, message, pageId, self.s_parameters ];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@", title, message];
         
         NSString* temp;
         NSString* tclose;
@@ -185,12 +211,29 @@ NSString *pushServerIp_App = @"168.154.182.41";
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);
         
         //kSOAlert, kSOMessageId
-        title = [dic objectForKey:@"title"];
-        message = [dic objectForKey:@"alert"];
-        pageId = [dic objectForKey:@"pageId"];
-        self.r_parameters = [dic objectForKey:@"parameters"];
+        if( [dic objectForKey:@"subject"] != nil ){
+            title = [dic objectForKey:@"subject"];
+        }
+        if( [dic objectForKey:@"alert"] != nil ){
+            message = [dic objectForKey:@"alert"];
+        }
+        if( [dic objectForKey:@"parameter"] != nil ){
+            
+            if( [self.r_parameters objectForKey:@"pageId"] != nil ){
+                pageId = [self.r_parameters objectForKey:@"pageId"];
+            }
+            
+            if( [self.r_parameters objectForKey:@"parameters"] != nil ){
+                self.r2_parameters = [self.r_parameters objectForKey:@"parameter"];
+                self.s_parameters = [self.r_parameters JSONFragment];
+                
+                NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
+                
+            }
+            
+        }
         
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@, pageId:%@", title, message, pageId ];
+        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@", title, message];
         
         NSString* temp;
         NSString* tclose;

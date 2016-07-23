@@ -14,5 +14,6 @@
 @property (nonatomic, strong) NSString *pushTokenID;
 @property (nonatomic, strong) NSString *s_parameters;
 @property (nonatomic, strong) NSMutableDictionary *r_parameters;
+@property (nonatomic, strong) NSMutableDictionary *r2_parameters;
 
 @end
