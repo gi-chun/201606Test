@@ -25,6 +25,9 @@ function init(){
 	}else{
 		// 성공
 		$('#hp').val(testPn);
+		//gclee login - test 릴리즈시 주석처리요망
+		$('#code').val(testPwd);
+		
 		if(isTest){
 			$('#code').val(testPwd);
 		}

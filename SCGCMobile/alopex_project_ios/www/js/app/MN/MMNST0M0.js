@@ -153,9 +153,11 @@ function popPhone(pn){
 		    		logf("getAccInfo: " + cb);
 		    		logf("getAccInfo:joinCode: " + cb.joinCode);
 		    		
-		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 
+		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
 		    			navigateGo('MACHP1M0');
+		    			//토큰 서버로 전송예정
+		    			
 		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    			navigateGo('MACHP0M0');
 		    		}else{
@@ -439,6 +441,7 @@ function runMain(){
 	logf(rtCBPush);
 	var pn = getAlopexCookie('uPhone');
 	var pushID = getAlopexCookie("pushID");
+	
 	if(rtCB.list.bpCaList.length > 0){										// 쓸수있는 정보있는지 확인
 //		if(pushID == 'undefined'){												// PushID 여부 확인
 //			runMainGo(rtCB);
@@ -468,7 +471,6 @@ function runMain(){
 		   //gclee card push id end
 			
 			if(dType=='Android'){
-				
 				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){

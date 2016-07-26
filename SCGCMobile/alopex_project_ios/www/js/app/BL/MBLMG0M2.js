@@ -285,6 +285,9 @@ function doPage(opbelNo){
 	httpSend("getBillDetail", param, function(cb){
 		ss = cb;
 		
+		logf('gclee MBLMG0M2 return: ' + JSON.stringify(cb));
+		var returnStr = JSON.stringify(cb);
+		
 		//gclee login token
 		if(cb.isTokenTrue == 'false'){
 			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
@@ -325,7 +328,9 @@ function doPage(opbelNo){
 			//상단 정보
 			var topInfoViewStr = '<li class="tit"><strong>납입자번호</strong> <span class="col_red">'+Number(cb.list.billDetailResult[0].CANO)+'</span></li>'+
 			'	<li><strong>고객명</strong>'+ascUserNM(cb.list.billDetailResult[0].BUS_PART_NAME)+'</li>'+
-			'	<li><strong>고객주소</strong>'+cb.list.billGashtDetailResult[0].I_DEVICE_ADDRESS+'</li>';
+			'	<li><strong>고객주소</strong>'+cb.list.billDetailResult[0].CONT_ADDRESS+'</li>';
+			//gclee card billGashtDetailResult 데이터 없는 경우 발생 처리 
+			//'	<li><strong>고객주소</strong>'+cb.list.billGashtDetailResult[0].I_DEVICE_ADDRESS+'</li>';
 			
 			$('.topInfoView').html(topInfoViewStr);
 		}
@@ -431,7 +436,14 @@ function doPage(opbelNo){
 		//tab3_1
 //    	var tab3_1Str = getTab3_1Str(cb);
 //    	$('.tab3_1').html(tab3_1Str);
-    	getTab3_1Str(cb);
+		//gclee card 아래데이터 없는경우 발생
+		if( returnStr.indexOf('billGashtDetailResult') > -1 ){
+			getTab3_1Str(cb);
+		}
+//		if( cb.list.billGashtDetailResult.length > 0){
+//			getTab3_1Str(cb);
+//		}
+    	
     	//tab3_2
     	//tab3_3
     	

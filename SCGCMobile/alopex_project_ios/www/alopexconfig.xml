@@ -7,7 +7,7 @@
     <description><![CDATA[Enter descriptions.]]></description>
   </project-info>
   <pageList start="index">
-    <page id="index" type="local" uri="/html/MN/MMNST0M0.html" orientation="portrait" changeOrientation="false" skipPage="true"></page>
+    <page id="index" type="local" uri="/html/BL/MBLMG3M0.html" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MMNPG0M0" uri="/html/MN/MMNPG0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="false"></page>
     <page id="MMNHM0M0" uri="/html/MN/MMNHM0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>
     <page id="MMNMP0M0" uri="/html/MN/MMNMP0M0.html" type="local" orientation="portrait" changeOrientation="false" skipPage="true"></page>

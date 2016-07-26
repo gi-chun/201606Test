@@ -75,6 +75,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         [self receiveRemoteNotification:userInfo withAppState:YES];
     }
     else{
+        [self receiveRemoteNotification:userInfo withAppState:YES];
         NSString *alert = [apsInfo objectForKey:@"alert"];
         NSLog(@"Received Push Alert : %@", alert);
         
@@ -121,6 +122,40 @@ NSString *pushServerIp_App = @"168.154.182.41";
     
     //    [[NSUserDefaults standardUserDefaults] setObject:deviceId  forKey:@"devicetoken"];
     NSLog(@"APNS Device Token: %@",deviceId);
+    
+    //test test
+    int rtn;
+    //     const char *token = [dataManager.deviceUUID UTF8String];
+    const char *token = [deviceId UTF8String];
+    NSLog(@"setPushToken token values ==>%s", token);
+    
+    if(token == NULL)
+    {
+        token = "testtoken";
+    }
+    
+    NSString *multi = @"Y";
+    
+    
+    rtn = pushRegist("168.154.182.41", 3101, "01066103573", (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
+    
+    if(rtn <= 0)
+    {
+        NSLog(@"pushRegist 실패 rtn(%d)", rtn);
+    }
+    else if(rtn == 3)
+    {
+        NSLog(@"등록된 기기가 존재합니다.");
+    }
+    else if(rtn == 7)
+    {
+        NSLog(@"중복접속이 허용되지 않았습니다.");
+    }
+    else
+    {
+        NSLog(@"pushRegist 성공");
+    }
+    //test test
 }
 
 - (void)receiveRemoteNotification:(NSDictionary *)userInfo withAppState:(BOOL)onForeground
@@ -129,32 +164,68 @@ NSString *pushServerIp_App = @"168.154.182.41";
     totalDic = [NSString stringWithFormat:@"^^ %@", userInfo];
   
     int rtn;
-    if([[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]){
-        
-        NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
-        
-        NSDictionary *dicData = [userInfo objectForKey:@"aps"];
-        
-        NSString* msgID = [dicData objectForKey:@"MSGIDX"];
-        
-        NSLog(@"msgID @@@@@@@msgID : \n%@", msgID);
-        
-        NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
-        NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
-        
-        //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
-
-        
-        rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
-        
-        if(rtn <= 0){
-            NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
-        }else{
-            NSLog(@"receiveRemoteNotification pushReceipt success : \n");
-        }
-        
+    
+    // test test
+//    if([[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]){
+//        
+//        NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
+//        
+//        NSDictionary *dicData = [userInfo objectForKey:@"aps"];
+//        
+//        NSString* msgID = [dicData objectForKey:@"MSGIDX"];
+//        
+//        NSLog(@"msgID @@@@@@@msgID : \n%@", msgID);
+//        
+//        NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
+//        NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
+//        
+//        //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
+//
+//        
+//        rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
+//        
+//        if(rtn <= 0){
+//            NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
+//        }else{
+//            NSLog(@"receiveRemoteNotification pushReceipt success : \n");
+//        }
+//        
+//    }
+    
+    NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
+    
+    NSDictionary *dicData = [userInfo objectForKey:@"aps"];
+    
+    NSString* msgID = [dicData objectForKey:@"MSGIDX"];
+    
+    NSLog(@"msgID @@@@@@@msgID : \n%@", msgID);
+    
+    NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
+    NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
+    
+    //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
+    
+    
+   // rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
+    rtn = pushReceipt("168.154.182.41", 3101, "01066103573",  (char *)[msgID UTF8String], 10);
+    
+    if(rtn <= 0){
+        NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
+    }else{
+        NSLog(@"receiveRemoteNotification pushReceipt success : \n");
     }
-        
+    
+    //
+    rtn = pushReadCheck("168.154.182.41", 3101, "01066103573",  (char *)[msgID UTF8String], 10);
+    
+    if(rtn <= 0){
+        NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
+    }else{
+        NSLog(@"receiveRemoteNotification pushReceipt success : \n");
+    }
+    
+    //test test
+    
     if(onForeground){
         
         NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
@@ -219,13 +290,15 @@ NSString *pushServerIp_App = @"168.154.182.41";
         }
         if( [dic objectForKey:@"parameter"] != nil ){
             
+            self.r_parameters = [dic objectForKey:@"parameter"];
+            
             if( [self.r_parameters objectForKey:@"pageId"] != nil ){
                 pageId = [self.r_parameters objectForKey:@"pageId"];
             }
             
             if( [self.r_parameters objectForKey:@"parameters"] != nil ){
-                self.r2_parameters = [self.r_parameters objectForKey:@"parameter"];
-                self.s_parameters = [self.r_parameters JSONFragment];
+                self.r2_parameters = [self.r_parameters objectForKey:@"parameters"];
+                self.s_parameters = [self.r2_parameters JSONFragment];
                 
                 NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
                 
@@ -256,7 +329,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
         NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
         [pageInfo setObject:pageId forKey:@"pageId"];
-        [pageInfo setObject:self.r_parameters forKey:@"parameters"];
+        [pageInfo setObject:self.r2_parameters forKey:@"parameters"];
         
         NSLog(@"\n@@@@@@@ pageInfo : \n%@", pageInfo);
         

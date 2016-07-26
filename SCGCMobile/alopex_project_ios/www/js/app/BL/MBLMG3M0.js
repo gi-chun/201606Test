@@ -108,6 +108,21 @@ function popCardResult(ss){
 	}    
 }
 
+function getRealCardCode(pCardCode){
+	
+	var rCardCode = '';
+	var tCardCode = '';
+	for(var ii=0;ii<gUnpaiedList.list.cardStoreInfoList.length;ii++){
+		//rCardCode = '<option value="'+cb.list.cardStoreInfoList[ii].CARDCOMPCD+'">'+cb.list.cardStoreInfoList[ii].CARDCOMNAME+'</option>';
+		tCardCode = cb.list.cardStoreInfoList[ii].CARDCOMPCD; //서버에서 내려주는 real card code 설정
+		if( pCardCode == tCardCode){
+			rCardCode = cb.list.cardStoreInfoList[ii].CARDCOMPCD;
+			logf('gclee MBLMG3M0 getRealCardCode pCardCode : ' + pCardCode + ' rCardCode : ' + rCardCode);
+			return rCardCode;
+		}
+	}
+}
+
 function goMenuBLMG02(){
 	//gclee card
 	var pCardCode = $("#cardSelect option:selected").val();
@@ -117,6 +132,48 @@ function goMenuBLMG02(){
 	
 	logf('gclee MBLMG3M0 goMenuBLMG02 미수납내역 : ' + gUnpaiedList.resultList);
 	
+	//get card code
+	var rCardCode = getRealCardCode(pCardCode);
+	var isISP = false;
+	if(rCardCode.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
+		isISP = true;
+	}else{	           // 2자리 코드
+		isISP = false;
+	}
+	
+	if(isISP){
+		//#0. TID를 우선 client에서 생성
+				// M(1) + ordId(?) + "_"(1) + yyMMddHHmmss(12) + "_"(1) + seq(5:00001~) - max 40 bytes ( UNIQUE value )
+		//OPBEL	0	0	left	0x20	N	N	문서번호
+		
+		//realform._KVP_TID.value = "M" + OPBEL(문서번호) + "_" + "<%=nowTime.substring(2)%>" + "_" + seq;
+		var Now = new Date();
+		var NowTime = Now.getFullYear();
+		NowTime += '-' + Now.getMonth() + 1 ;
+		NowTime += '-' + Now.getDate();
+		NowTime += ' ' + Now.getHours();
+		NowTime += ':' + Now.getMinutes();
+		NowTime += ':' + Now.getSeconds();
+		
+		//M1111_16072609337_00001
+//		var TID;
+//		TID = 'M'+
+
+
+
+
+		//#1. 카드인증 전문요청 (cip server)
+		//#2. 카드인증 전문요청 결과 받으면
+		//    TID를 받아서 jsni를 통해 IPS 앱실행
+		//    서버측에 요청 --> isp_rtn.jsp 이전 return callBackUrl에 앱(iOS & Android) 스킴URL를 설정에서 카드승인 해줄것을 요청예정, ISP앱 카드승인 후 도시가스앱으로 다시 돌아와야함
+		//#3  결제요청 전문요청 (이전 TID로 요청할 것임)
+		//#4  수납내역 화면으로 이동
+	}else{
+		// MPI 확인 call back
+		//#1. 리얼 카드코드로 앱 내부 jsni를 통해MBLMG6M0화면을 보여줌
+		//    결제완료 callbackUrl은 서버CIP 전문URL넘김
+		//#2. 결제완료후 앱이 현재화면 유지, ??? 상의필요
+	}
 	//navigateBackToNaviGo('MBLMG1M0');
 	
 //	 vCardCode = $("#cardSelect option:selected").val();
@@ -162,25 +219,27 @@ function onScreenBack(){
 }
 
 function doPage(){
-	if(device.osName != 'iOS'){
-		params = JSON.parse(getAlopexSession('loginSession'));
-	}else{
-		params = JSON.parse(getAlopexCookie('loginCookie'));
-	}
-	var chkBPCA = getMainBPCA();
-	if(chkBPCA == 'undefined'){
-		currentCa = Number(params.list.bpCaList[0].ca);
-	}else{
-		var useBPCA = JSON.parse(chkBPCA);
-		currentCa = Number(useBPCA.ca);
-	}
-	
-	//gclee push
-	$('.topLogoDiv').html(getTitleBp());
-	
-	logf('jysjys',params);
-	
-	viewBillList();
+	//gclee card ing
+//	if(device.osName != 'iOS'){
+//		params = JSON.parse(getAlopexSession('loginSession'));
+//	}else{
+//		params = JSON.parse(getAlopexCookie('loginCookie'));
+//	}
+//	var chkBPCA = getMainBPCA();
+//	if(chkBPCA == 'undefined'){
+//		currentCa = Number(params.list.bpCaList[0].ca);
+//	}else{
+//		var useBPCA = JSON.parse(chkBPCA);
+//		currentCa = Number(useBPCA.ca);
+//	}
+//	
+//	//gclee push
+//	$('.topLogoDiv').html(getTitleBp());
+//	
+//	logf('jysjys',params);
+//	
+//	viewBillList();
+	viewUnpaidList();
 }
 
 function viewBillList(){
@@ -247,10 +306,17 @@ function viewUnpaidList(){
 	var pMbp = mbp.substring(0,1) + '000';
 	logf('gclee substring mbp: ' + JSON.stringify(pMbp));
 	
+//	var param = {
+//			"COMPCD" : pMbp,	
+//			"GUBUN" : '03',
+//			"CANO" : '15979102' //test
+////			"CANO" : String(Number(params.list.bpCaList[0].ca))
+//	};
+	
 	var param = {
-			"COMPCD" : pMbp,	
+			"COMPCD" : 'B000',	
 			"GUBUN" : '03',
-			"CANO" : '10576739' //test
+			"CANO" : '15979102' //test
 //			"CANO" : String(Number(params.list.bpCaList[0].ca))
 	};
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));

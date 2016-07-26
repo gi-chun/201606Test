@@ -85,11 +85,16 @@ function setEventListner(){
 		}
 		mainParam = JSON.parse(mainParam);
 		
+		//gclee self order
+		//'ablbelnr' : cb.ablbelnr, 추가 
+		console.log('gclee putMrSelfOrderResult  data',mainParam);
+		
 		var cb = meParam;
 		param = {	
 				'bp' : cb.list.userInfoResult[0].BPNO,
 				'ca' : cb.list.userInfoResult[0].CANO,
 				'sernr' : cb.gasMrnrNo,
+				'ablbelnr' : cb.ablbelnr,
 				'anlage' : mainParam.anlage,
 				'v_ldo' : mainParam.regiogroup,
 				'adatsoll1' : cb.adatsoll1,
@@ -298,7 +303,8 @@ function addBPCAList(){
 	var endME = getAlopexSession('endME');
 	httpSend("getMrSelfOrderBpCaInfo", pr, function(cb){
 //		logf('3333');
-//		console.log('2222',cb);
+		console.log('gclee getMrSelfOrderBpCaInfo result data',cb);
+		//gclee 
 		var popListStr = '';
 		$.each(cb.list.bpCaMeResultList, function(i,el){
 			logf(el);
