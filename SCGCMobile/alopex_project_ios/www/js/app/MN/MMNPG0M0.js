@@ -581,6 +581,9 @@ function getMain() {
 	var mainBPCA = getMainBPCA();
 	logf(mainBPCA);
 	logf('###jys4###');
+	
+	var vPhone = getAlopexCookie('uPhone');
+	
 	if (mainBPCA == 'undefined') {
 		logf('###jys5###');
 		//gclee login token
@@ -593,7 +596,8 @@ function getMain() {
 			"sernr" : params.list.bpCaList[0].sernr,
 			"anlage" : String(Number(params.list.bpCaList[0].anlage)),
 			"regiogroup" : params.list.bpCaList[0].regiogroup,
-			"token" : getAlopexCookie('loginToken')
+			"token" : getAlopexCookie('loginToken'),
+			"mbtlnum" : vPhone
 		};
 
 		chkSelfNote(params.list.bpCaList[0].bp, params.list.bpCaList[0].ca);
@@ -602,19 +606,22 @@ function getMain() {
 		var mbc = JSON.parse(mainBPCA);
 		logf('###jys7###');
 		//gclee login token
+		
 		param = {
 			"bp" : String(Number(mbc.bp)),
 			"ca" : String(Number(mbc.ca)),
 			"sernr" : mbc.sernr,
 			"anlage" : String(Number(mbc.anlage)),
 			"regiogroup" : mbc.regiogroup,
-			"token" : getAlopexCookie('loginToken')
+			"token" : getAlopexCookie('loginToken'),
+			"mbtlnum" : vPhone
 		};
 		chkSelfNote(mbc.bp, mbc.ca);
 	}
 
 	logf('###jys8###');
-	logf(param);
+	//gclee login 
+	logf('gclee getMnpgInfo : ' + JSON.stringify(param));
 	setAlopexSession('mainParam', JSON.stringify(param));
 	setAlopexCookie('mainParamCookie', JSON.stringify(param));
 

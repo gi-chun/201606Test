@@ -205,6 +205,10 @@ function getChkUser(pn){
 	};
 	showProgressBarMsg('고객 정보를 조회 중입니다.');
 	logf('gclee getAccInfo MACHP1M0 ' + JSON.stringify(param));
+	
+	$('#agree_both').hide();
+	$('.imgloading').show();
+	
 	httpSend("getAccInfo", param, httpSuccessCallback, httpErrorCallback);
 }
 

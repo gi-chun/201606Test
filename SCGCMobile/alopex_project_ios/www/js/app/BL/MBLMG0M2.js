@@ -360,12 +360,13 @@ function doPage(opbelNo){
 			}
 			var buymInfo = getBuym(currentCa);
 			//gclee card 테스트위해 betrw값 있다고 가정
-//			if(Number(buymInfo.betrw) > 0){
-//				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
-//			}else{
-//				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
-//			}
+			if(Number(buymInfo.betrw) > 0){
+				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
+			}else{
+				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
+			}
 			
+			//gclee card 테스트할때 아래 부분 사용하자 
 			middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
 			//gclee end
 			

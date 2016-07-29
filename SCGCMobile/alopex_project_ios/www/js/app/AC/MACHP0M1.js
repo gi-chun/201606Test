@@ -75,41 +75,6 @@ function setEventListner(){
 		
 		logf('gclee sms test force pass #0');
 		
-		//gclee login token
-		//이명환대리님 전화번호 바로 인증성공 - iOS review를 위해
-//		if(testPn == '01024183828' && testCode == '201607'){
-//			notiPop('인증코드 확인','정확한 인증코드가 입력되었습니다.',false,false,{
-//				list : [{
-//					name : '회원가입 계속',
-//					id : 'pJoinCont',
-//					type : ''
-//				}]
-//			});
-//			// local 저장소 저장, 가입 페이지 이어 하기
-//			$('.pJoinCont').click(function(){
-//				setAlopexCookie('uPhone',codePhoneNM(testPn));
-//	    		navigateGo('index');
-//	    	});
-//			return;
-//		}
-//		//test 번호 차후 배포시 주석처리 해야함
-//		if(testPn == '01028394001' && testCode == '201607'){
-//			notiPop('인증코드 확인','정확한 인증코드가 입력되었습니다.',false,false,{
-//				list : [{
-//					name : '회원가입 계속',
-//					id : 'pJoinCont',
-//					type : ''
-//				}]
-//			});
-//			// local 저장소 저장, 가입 페이지 이어 하기
-//			$('.pJoinCont').click(function(){
-//				setAlopexCookie('uPhone',codePhoneNM(testPn));
-//	    		navigateGo('index');
-//	    	});
-//			return;
-//		}
-		//////////////////////////////////////////////////////////////////////////////////////////
-		
 		//gclee sms 
 		if(testCode.length < 6){
 			
@@ -167,25 +132,6 @@ function setEventListner(){
     			loge('error :: other :: main');
     		}
 		});
-		
-		//gclee login token 성공했다 가정 패스 - 서버작업 완료후 처리 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		//gclee login token 임시 
-//		notiPop('인증코드 확인','정확한 인증코드가 입력되었습니다.',false,false,{
-//			list : [{
-//				name : '회원가입 계속',
-//				id : 'pJoinCont',
-//				type : ''
-//			}]
-//			});
-//			// local 저장소 저장, 가입 페이지 이어 하기
-//			$('.pJoinCont').click(function(){
-//				setAlopexCookie('uPhone',codePhoneNM(testPn));
-//	    		navigateGo('index');
-//	    	});
-			
-       //gclee login token 임시 			
 		
 	});
 	

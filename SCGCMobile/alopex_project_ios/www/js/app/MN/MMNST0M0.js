@@ -141,6 +141,19 @@ function popPhone(pn){
 			//SAP에 요청결과 가입자면 아래 로그인프로세스 진행
 			//SAP에 요청결과 미가입자면 앱 회원가입 화면으로 이동 (MACHP1M0)
 			
+			//gclee login token
+			//토큰이 없다면 sms인증 화면으로
+//			var chkLoginToken = getAlopexCookie('loginToken');
+//			logf('gclee MMNST0M0 chkLoginToken' + chkLoginToken);
+//			
+//			if(chkLoginToken == 'undefined' || chkLoginToken.length < 1){
+//				logf('gclee MMNST0M0 chkLoginToken #2' + chkLoginToken);
+//				navigateGo('MACHP0M0');
+//				return;
+//			}
+			
+//			logf('gclee MMNST0M0 chkLoginToken #3' + chkLoginToken);
+			
 				//gclee login 80번은 신규
 				var param = {
 					"phoneNum" : vPn, "gubun" : "80"
@@ -155,8 +168,8 @@ function popPhone(pn){
 		    		
 		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
+		    			setAlopexCookie('loginToken', cb.token);
 		    			navigateGo('MACHP1M0');
-		    			//토큰 서버로 전송예정
 		    			
 		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    			navigateGo('MACHP0M0');
@@ -464,15 +477,18 @@ function runMain(){
 			};
 				      
 		   if(device.osName != 'iOS'){                                                                
-			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+			   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
 		   }else{                                                                                     
 			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
 		   }
 		   //gclee card push id end
 			
 			if(dType=='Android'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					var recomendr = getAlopexSession('recomendr');
 					var recomendr = '';
@@ -512,8 +528,11 @@ function runMain(){
 					runMainGo(rtCB);
 				});
 			}else if(dType=='iOS'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'I';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					runMainGo(rtCB);
 //					var recomendr = getAlopexSession('recomendr');
@@ -563,8 +582,11 @@ function runMain(){
 //				runMainGo(rtCB); // 운영 배포시 주석 처리
 				
 				// 운영 배포시 아래 부터는 주석 해제
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 					var recomendr = '';
 					if(device.osName != 'iOS'){
@@ -600,7 +622,7 @@ function runMain(){
 	}else{
 		console.log(cb);
 //		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 
@@ -683,7 +705,7 @@ function runMainGo(rtCB){
 //		}
 	}else{
 		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 

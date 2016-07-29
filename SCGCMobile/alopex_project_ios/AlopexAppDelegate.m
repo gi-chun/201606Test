@@ -6,6 +6,9 @@
 @implementation AlopexAppDelegate
 
 NSString *pushServerIp_App = @"168.154.182.41";
+#define	mustAppUpDateAlertMessage		@"최신버전 앱이 업데이트 되었습니다. \n앱 업데이트를 진행하지 않으면 사용이 불가합니다. 앱을 업데이트 합니다."
+#define mustAppUpDateAlertTag			10000
+#define linkPageAlertTag			    10001
 
 - (id) init {
     return [super init];
@@ -36,6 +39,20 @@ NSString *pushServerIp_App = @"168.154.182.41";
     
     //Add the view behind the status bar
     [self.window.rootViewController.view addSubview:statusBg];
+    
+    //check app version
+    if([self needsUpdate]){
+        //App 필수업데이트
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:mustAppUpDateAlertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"확인"
+                                              otherButtonTitles:nil];
+        [alert setTag:mustAppUpDateAlertTag];
+        
+        [alert show];
+        [alert release];
+    }
     
     if (launchOptions){
         NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -268,6 +285,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
                                                        delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
+        [alert setTag:linkPageAlertTag];
         [alert show];
         
     }else{
@@ -317,29 +335,86 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
                                                        delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
+        [alert setTag:linkPageAlertTag];
         [alert show];
         
     }
 }
 
+-(void)appUpDate
+{
+    NSLog(@"appUpDate");
+    // 앱 업데이트진행
+    //마켓앱 있는지 확인
+    NSString* marketID = @"https://itunes.apple.com/us/app/dosigaseu/id1017623141?mt=8";
+    
+    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:marketID]]) // 마켓앱 있으면 마켓앱 호출
+    {
+        NSURL *url = [NSURL URLWithString:marketID];
+        [[UIApplication sharedApplication] openURL: url];
+        //exit(0);
+    }
+    else //마켓앱 없으면 브라우져 실행
+    {
+        NSURL *url = [NSURL URLWithString:marketID];
+        [[UIApplication sharedApplication] openURL:url];
+        
+        //exit(0);
+    }
+    
+}
+
+-(BOOL)needsUpdate
+{
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    if ([lookup[@"resultCount"] integerValue] == 1){
+        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+        if (![appStoreVersion isEqualToString:currentVersion]){
+            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSInteger alertViewTag = alertView.tag;
     
-    if (buttonIndex == 0){
-        
-        NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
-        [pageInfo setObject:pageId forKey:@"pageId"];
-        [pageInfo setObject:self.r2_parameters forKey:@"parameters"];
-        
-        NSLog(@"\n@@@@@@@ pageInfo : \n%@", pageInfo);
-        
-        //Navigation *navigation = [Navigation getInstance];
-        [[Navigation getIncetance] backToOrNavigate:pageInfo];
-        //[self appDelegate].mNavigationManager.mNavController = nil;
-        
-        //[navigation backToOrNavigate:pageInfo];
-
+    switch (alertViewTag) {
+        case mustAppUpDateAlertTag:
+        { // 필수 앱 업데이트
+            [self appUpDate];
+        }
+            break;
+        case linkPageAlertTag:
+        {
+            if (buttonIndex == 0){
+                
+                NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
+                [pageInfo setObject:pageId forKey:@"pageId"];
+                [pageInfo setObject:self.r2_parameters forKey:@"parameters"];
+                
+                NSLog(@"\n@@@@@@@ pageInfo : \n%@", pageInfo);
+                
+                //Navigation *navigation = [Navigation getInstance];
+                [[Navigation getIncetance] backToOrNavigate:pageInfo];
+                //[self appDelegate].mNavigationManager.mNavController = nil;
+                
+                //[navigation backToOrNavigate:pageInfo];
+                
+            }
+        }
+            break;
     }
+    
+    
     
 }
 

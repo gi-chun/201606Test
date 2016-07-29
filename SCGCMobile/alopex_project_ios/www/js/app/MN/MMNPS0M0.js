@@ -124,7 +124,7 @@ function contiLogin(){
     				}
     				
     			}else{
-    				navigateGo('MACHP1M0');
+    				navigateGo('MMNPG0M0');
     			}
 //	    		}
     	}, function(errorCode, errorMessage){
@@ -181,7 +181,7 @@ function setDefaultStartData(cb,rtCB){
 				}
 			}
 		}else{
-			navigateGo('MACHP1M0');
+			navigateGo('MMNPG0M0');
 		}
 	}
 }
@@ -345,15 +345,18 @@ function runMain(){
 			};
 				      
 		   if(device.osName != 'iOS'){                                                                
-			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+			   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
 		   }else{                                                                                     
 			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
 		   }
 		   //gclee card push id end
 			
 			if(dType=='Android'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+				//rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					console.log('push id save ok1');//
 					setSessionKill('agreeProvideInfoYn');
@@ -366,8 +369,11 @@ function runMain(){
 					runMainGo(rtCB);
 				});
 			}else if(dType=='iOS'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'I';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					console.log('push id save ok2');
 					setSessionKill('agreeProvideInfoYn');
@@ -385,7 +391,7 @@ function runMain(){
 			}
 //		}
 	}else{
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 
@@ -405,7 +411,7 @@ function runMainGo(rtCB){
 	if(rtCB.list.bpCaList.length > 0){
 		navigateGo('MMNPG0M0',rtCB);
 	}else{
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 

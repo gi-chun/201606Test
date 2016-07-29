@@ -55,7 +55,7 @@ function doPage(){
 	}
 	var param = JSON.parse(mainParam);
 	
-	logf('mainParam::'+mainParam);
+	logf('gclee getMrSelfOrderInfo mainParam::'+mainParam);
 	setDefault();
 	httpSend("getMrSelfOrderInfo", param, pageSetting, function(errorCode, errorMessage){
 		if (errorCode == "9999") {

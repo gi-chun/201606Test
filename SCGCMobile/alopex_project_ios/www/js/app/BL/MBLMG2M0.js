@@ -105,57 +105,57 @@ function doPage(){
 	
 	//gclee card 임시 결제완료, 결제실패, 이전
 	//gclee 임시테스트 
-	var option = {
-		      "ordername" : "test",
-		      "ordernumber" : "111111",
-		      "amount" : "1004",
-		      "goodname" : "testGoodName",
-		      "phoneno" : "0100004444",
-		      "cardCode" : "",
-		      "BPCode" : "B00",
-		      "connectURL" : "http://168.154.182.107:19681/cip/ISP/intro.html"
-		      };
-	
-    if(device.osName != 'iOS'){
-  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-    }else{
-  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
-    }    
+//	var option = {
+//		      "ordername" : "test",
+//		      "ordernumber" : "111111",
+//		      "amount" : "1004",
+//		      "goodname" : "testGoodName",
+//		      "phoneno" : "0100004444",
+//		      "cardCode" : "",
+//		      "BPCode" : "B00",
+//		      "connectURL" : "http://168.154.182.107:8080/scgc/ksnet/mpi.do"
+//		      };
+//	
+//    if(device.osName != 'iOS'){
+//  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
+//    }else{
+//  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+//    }    
     //gclee 임시테스트 끝
     
     
-//	$('.topLogoDiv').html(getTitleBp());
-////	var mainPage = JSON.parse(getAlopexSession('mainPage'));
-//	var loginSession = "";
-//	if(device.osName != 'iOS'){
-//		loginSession = JSON.parse(getAlopexSession('loginSession'));
-//	}else{
-//		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
-//	}
-//	logf(loginSession);
+	$('.topLogoDiv').html(getTitleBp());
+//	var mainPage = JSON.parse(getAlopexSession('mainPage'));
+	var loginSession = "";
+	if(device.osName != 'iOS'){
+		loginSession = JSON.parse(getAlopexSession('loginSession'));
+	}else{
+		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
+	}
+	logf(loginSession);
+	
+	
+//	paramBpCa.list = [{'bpCaList' : []}];
 //	
-//	
-////	paramBpCa.list = [{'bpCaList' : []}];
-////	
-//	for(var i=0;i<loginSession.list.bpCaList.length;i++){
-//		paramBpCa.list[0].bpCaList[i] = {
-//			'bp' : String(Number(loginSession.list.bpCaList[i].bp)),
-//			'ca' : String(Number(loginSession.list.bpCaList[i].ca)),
-//			'regiogroup' : loginSession.list.bpCaList[i].regiogroup,
-//			'sernr' : loginSession.list.bpCaList[i].sernr,
-//			'anlage' : loginSession.list.bpCaList[i].anlage
-//			
-//		};
-//	}
-//	var chkBPCA = getMainBPCA();
-//	if(chkBPCA == 'undefined'){
-//		currentCa = Number(loginSession.list.bpCaList[0].ca);
-//	}else{
-//		var useBPCA = JSON.parse(chkBPCA);
-//		currentCa = Number(useBPCA.ca);
-//	}
-//	
-//	showPayList();
+	for(var i=0;i<loginSession.list.bpCaList.length;i++){
+		paramBpCa.list[0].bpCaList[i] = {
+			'bp' : String(Number(loginSession.list.bpCaList[i].bp)),
+			'ca' : String(Number(loginSession.list.bpCaList[i].ca)),
+			'regiogroup' : loginSession.list.bpCaList[i].regiogroup,
+			'sernr' : loginSession.list.bpCaList[i].sernr,
+			'anlage' : loginSession.list.bpCaList[i].anlage
+			
+		};
+	}
+	var chkBPCA = getMainBPCA();
+	if(chkBPCA == 'undefined'){
+		currentCa = Number(loginSession.list.bpCaList[0].ca);
+	}else{
+		var useBPCA = JSON.parse(chkBPCA);
+		currentCa = Number(useBPCA.ca);
+	}
+	
+	showPayList();
 }
 
 var pinId = '';

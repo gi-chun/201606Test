@@ -400,17 +400,17 @@
 	 */
 	function getCardPayURL(nm){
 		 //test
-		 var MPI_TEST_URL = "http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
-		 var ISP_TEST_URL = "http://168.154.182.107:19681/cip/ISP/payment_entry.jsp";
+		 var MPI_TEST_URL = "http://168.154.182.107:8080/scgc/ksnet/mpi.do";
+		 var ISP_TEST_URL = "http://168.154.182.107:8080/scgc/ksnet/isp.do";
 		 //real
 		 var MPI_URL = "http://168.154.182.41/services/MPI/m_mpiTest.jsp";
 		 var ISP_URL = "http://168.154.182.41/services/ISP/payment_entry.jsp";
 			 
 		//console.log('nm.length',nm.length);
 		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
-			return ISP_URL;
+			return ISP_TEST_URL;
 		}else{	           // 2자리 코드
-			return MPI_URL;
+			return MPI_TEST_URL;
 		}
 	}
 	

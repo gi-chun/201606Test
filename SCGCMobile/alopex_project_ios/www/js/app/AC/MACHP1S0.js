@@ -89,6 +89,9 @@ function setEventListner(){
 
 			console.log('gclee putAccInfo MACHP1S0' + param);
 			
+			$('.imgloading').show();
+			$('#pop_rep').hide();
+			
 			beforeSummit = true;
 			
 	    	httpSend("putAccInfo", param, function(cb2){
@@ -266,7 +269,7 @@ function runMain(){
 		};
 			      
 	   if(device.osName != 'iOS'){                                                                
-		   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
 	   }else{                                                                                     
 		   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
 	   }
@@ -274,7 +277,9 @@ function runMain(){
 	   
 		
 		if(dType=='Android'){
-			rtCBPush.push_id = pushID;
+			//gclee push
+			//rtCBPush.push_id = pushID;
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			rtCBPush.device_type = 'A';
 			httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 				var recomendr = '';
@@ -316,7 +321,9 @@ function runMain(){
 				setCookieKill('agreeProvideInfoYnCookie');
 			});
 		}else if(dType=='iOS'){
-			rtCBPush.push_id = pushID;
+			//gclee push
+			//rtCBPush.push_id = pushID;
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			rtCBPush.device_type = 'I';
 			if(device.osName != 'iOS'){
 				rtCBPush.agree_provide_info_yn = getAlopexSession('agreeProvideInfoYn');
@@ -358,8 +365,10 @@ function runMain(){
 				setCookieKill('agreeProvideInfoYnCookie');
 			});
 		}else{
-			rtCBPush.push_id = pushID;
+			//gclee push
+//			rtCBPush.push_id = pushID;
 			rtCBPush.device_type = 'A';
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			if(device.osName != 'iOS'){
 				if(getAlopexSession('agreeProvideInfoYn')!='undefined'){
 					rtCBPush.agree_provide_info_yn = getAlopexSession('agreeProvideInfoYn');
@@ -483,7 +492,7 @@ function runMainGo(rtCB){
 		navigateGo('MMNPG0M0',rtCB);
 	}else{
 		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 

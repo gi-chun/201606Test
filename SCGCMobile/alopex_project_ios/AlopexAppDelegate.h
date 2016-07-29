@@ -16,4 +16,7 @@
 @property (nonatomic, strong) NSMutableDictionary *r_parameters;
 @property (nonatomic, strong) NSMutableDictionary *r2_parameters;
 
+-(BOOL)needsUpdate;
+-(void)appUpDate;
+
 @end

@@ -141,6 +141,10 @@ function setEventListner(){
 		
 	$('#pop_rep').click(function(){
 		showProgressBar();
+		
+		$('#pop_rep').hide();
+		$('.imgloading').show();
+		
 		if(mbpFlag){
 			var Str1 = $('[name=chk0]:checked')[0].value;
 			var Str2 = Str1.split(',');
@@ -203,13 +207,13 @@ function setEventListner(){
 };
 
 function goLogin(){
-	
+
 	var param = {
 		"phoneNum" : uPhone, "gubun" : "10"
 	};
 
 	logf('gclee getAccInfo MACHP1M1 ' + JSON.stringify(param));
-	
+
 	httpSend("getAccInfo", param, function(cb){
 		logf('cb',cb);
 		
@@ -247,7 +251,7 @@ function goLogin(){
 //			navigateGo('MMNPG0M0',rtCB);
 			navigateGo('index');
 		}else{
-			navigateGo('MACHP1M0');
+			navigateGo('MMNPG0M0');
 		}
 	}, function(errorCode, errorMessage){
 		if (errorCode == "9999") {
