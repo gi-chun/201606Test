@@ -168,9 +168,7 @@ function popPhone(pn){
 		    		
 		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
-		    			setAlopexCookie('loginToken', cb.token);
 		    			navigateGo('MACHP1M0');
-		    			
 		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    			navigateGo('MACHP0M0');
 		    		}else{

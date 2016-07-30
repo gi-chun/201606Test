@@ -1,5 +1,5 @@
 {
-    "use_push_notification" : true,
+    "use_push_notification" : false,
     "security" : {
         "use_plugin" : true ,
         "file_path_extension" : ["txt","DOC"]

@@ -45,7 +45,7 @@
 -(void)requesHTTPRemoteContent;
 -(void)requestContentVer;
 -(void)contentDawnLoad;
--(BOOL)isUpdateContentToCIP;
+-(int)isUpdateContentToCIP;
 
 -(void)initContentFile;
 -(BOOL)copyWWWFile;

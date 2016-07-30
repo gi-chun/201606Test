@@ -92,7 +92,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         [self receiveRemoteNotification:userInfo withAppState:YES];
     }
     else{
-        [self receiveRemoteNotification:userInfo withAppState:YES];
+        [self receiveRemoteNotification:userInfo withAppState:NO];
         NSString *alert = [apsInfo objectForKey:@"alert"];
         NSLog(@"Received Push Alert : %@", alert);
         
@@ -182,33 +182,6 @@ NSString *pushServerIp_App = @"168.154.182.41";
   
     int rtn;
     
-    // test test
-//    if([[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]){
-//        
-//        NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
-//        
-//        NSDictionary *dicData = [userInfo objectForKey:@"aps"];
-//        
-//        NSString* msgID = [dicData objectForKey:@"MSGIDX"];
-//        
-//        NSLog(@"msgID @@@@@@@msgID : \n%@", msgID);
-//        
-//        NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
-//        NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
-//        
-//        //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
-//
-//        
-//        rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
-//        
-//        if(rtn <= 0){
-//            NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
-//        }else{
-//            NSLog(@"receiveRemoteNotification pushReceipt success : \n");
-//        }
-//        
-//    }
-    
     NSLog(@"receiveRemoteNotification currentPhoneNo : \n%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"]);
     
     NSDictionary *dicData = [userInfo objectForKey:@"aps"];
@@ -220,11 +193,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
     NSString* phoneNumber = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentPhoneNo"];
     NSLog(@"pushRegist phoneNumber values ==>%@", phoneNumber);
     
-    //rtn = pushRegist("168.154.182.41", 3101, (char *)[phoneNumber UTF8String], (char *)token, "com.alopex.android.template", (char *)[multi UTF8String], 10);
-    
-    
-   // rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
-    rtn = pushReceipt("168.154.182.41", 3101, "01066103573",  (char *)[msgID UTF8String], 10);
+    rtn = pushReceipt("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
     
     if(rtn <= 0){
         NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
@@ -233,15 +202,13 @@ NSString *pushServerIp_App = @"168.154.182.41";
     }
     
     //
-    rtn = pushReadCheck("168.154.182.41", 3101, "01066103573",  (char *)[msgID UTF8String], 10);
+    rtn = pushReadCheck("168.154.182.41", 3101, (char *)[phoneNumber UTF8String],  (char *)[msgID UTF8String], 10);
     
     if(rtn <= 0){
-        NSLog(@"receiveRemoteNotification pushReceipt fail : \n");
+        NSLog(@"receiveRemoteNotification pushReadCheck fail : \n");
     }else{
-        NSLog(@"receiveRemoteNotification pushReceipt success : \n");
+        NSLog(@"receiveRemoteNotification pushReadCheck success : \n");
     }
-    
-    //test test
     
     if(onForeground){
         
@@ -250,54 +217,6 @@ NSString *pushServerIp_App = @"168.154.182.41";
     
         NSDictionary *dic = [userInfo objectForKey:@"aps"];
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", userInfo];
-        
-        //kSOAlert, kSOMessageId
-        if( [dic objectForKey:@"subject"] != nil ){
-            title = [dic objectForKey:@"subject"];
-        }
-        if( [dic objectForKey:@"alert"] != nil ){
-            message = [dic objectForKey:@"alert"];
-        }
-        if( [dic objectForKey:@"parameter"] != nil ){
-            
-            if( [self.r_parameters objectForKey:@"pageId"] != nil ){
-                pageId = [self.r_parameters objectForKey:@"pageId"];
-            }
-            
-            if( [self.r_parameters objectForKey:@"parameters"] != nil ){
-                self.r2_parameters = [self.r_parameters objectForKey:@"parameter"];
-                self.s_parameters = [self.r_parameters JSONFragment];
-                
-                NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
-                
-            }
-            
-        }
-        
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@", title, message];
-        
-        NSString* temp;
-        NSString* tclose;
-        NSString* tcancel;
-        
-        
-        tclose = @"확인";
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
-                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
-        [alert setTag:linkPageAlertTag];
-        [alert show];
-        
-    }else{
-        
-        NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
-        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
-        
-        if(!dic){
-            return;
-        }
-        
-        NSLog(@"didReceiveRemoteNotification : \n%@", dic);
         
         //kSOAlert, kSOMessageId
         if( [dic objectForKey:@"subject"] != nil ){
@@ -324,7 +243,60 @@ NSString *pushServerIp_App = @"168.154.182.41";
             
         }
         
-        NSString *messageTotal = [NSString stringWithFormat:@"title:%@, message:%@", title, message];
+        NSString *messageTotal = [NSString stringWithFormat:@"%@", message];
+        
+        NSString* temp;
+        NSString* tclose;
+        NSString* tcancel;
+        
+        
+        tclose = @"확인";
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:messageTotal
+                                                       delegate:self cancelButtonTitle:tclose otherButtonTitles:@"취소", nil];
+        [alert setTag:linkPageAlertTag];
+        [alert show];
+        
+    }else{
+        
+        NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+        
+        NSDictionary *dic = [userInfo objectForKey:@"aps"];
+        NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
+        
+//        if(!dic){
+//            return;
+//        }
+        
+        NSLog(@"didReceiveRemoteNotification : \n%@", dic);
+        
+        //kSOAlert, kSOMessageId
+        if( [dic objectForKey:@"subject"] != nil ){
+            title = [dic objectForKey:@"subject"];
+        }
+        if( [dic objectForKey:@"alert"] != nil ){
+            message = [dic objectForKey:@"alert"];
+        }
+        
+        if( [dic objectForKey:@"parameter"] != nil ){
+            
+            self.r_parameters = [dic objectForKey:@"parameter"];
+            
+            if( [self.r_parameters objectForKey:@"pageId"] != nil ){
+                pageId = [self.r_parameters objectForKey:@"pageId"];
+            }
+            
+            if( [self.r_parameters objectForKey:@"parameters"] != nil ){
+                self.r2_parameters = [self.r_parameters objectForKey:@"parameters"];
+                self.s_parameters = [self.r2_parameters JSONFragment];
+                
+                NSLog(@"first @@@@@@@s_parameters : \n%@", self.s_parameters);
+                
+            }
+            
+        }
+        
+        NSString *messageTotal = [NSString stringWithFormat:@"%@", message];
         
         NSString* temp;
         NSString* tclose;

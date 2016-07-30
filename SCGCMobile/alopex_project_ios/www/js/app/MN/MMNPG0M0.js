@@ -693,13 +693,11 @@ function onScreenBack() {
 }
 
 function mainSetting(cb) {
-	logf('###jys9###');
 	setAlopexSession('mainPage', JSON.stringify(cb));
 	logf(cb);
-	console.log(cb);
 	var chkstr = '0';
 	// 자가검침이 입력된 경우 체크
-	if (cb.custReadingresult == "") {
+	if (cb.custReadingresult == "0" ||cb.custReadingresult == "null") {
 		chkstr += '1';
 		endME = false;
 		setAlopexSession('endME', endME);

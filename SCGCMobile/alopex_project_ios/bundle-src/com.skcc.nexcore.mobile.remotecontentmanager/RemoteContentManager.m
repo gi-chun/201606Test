@@ -504,7 +504,7 @@
 }
 
 #pragma mark request -content Ver 체크 to CIP
--(BOOL)isUpdateContentToCIP{
+-(int)isUpdateContentToCIP{
     
     NSLog(@"isUpdateContentToCIP");
     
@@ -518,9 +518,11 @@
     
     NSMutableDictionary * contentInfo = [[NSMutableDictionary alloc] init];
     //set body
-    [contentInfo setObject:@"test" forKey:@"lsc"];
-    postStringBody = [contentInfo JSONFragment];
-    NSLog(postStringBody);
+//    [contentInfo setObject:@"I" forKey:@"devType"];
+//    postStringBody = [contentInfo JSONFragment];
+//    NSLog(@"postStringBody  before: %@" , postStringBody);
+    postStringBody = @"{}";
+    NSLog(@"postStringBody  : %@" , postStringBody);
     [contentInfo release];
     postData = [postStringBody dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -548,17 +550,17 @@
     if(dataReply == nil)
     {
         //[indicatorView stopAnimating];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:networkErrorMessage1
-                                                       delegate:self
-                                              cancelButtonTitle:@"확인"
-                                              otherButtonTitles:nil];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                        message:networkErrorMessage1
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"확인"
+//                                              otherButtonTitles:nil];
+//        
+//        [alert setTag:networkErrorAlertTag];
+//        [alert show];
+//        [alert release];
         
-        [alert setTag:networkErrorAlertTag];
-        [alert show];
-        [alert release];
-        
-        return NO;
+        return 0;
     }
     
     //[indicatorView stopAnimating];
@@ -582,38 +584,16 @@
     
     if(statusCode == 200)
     {
-        //NSArray *dataArray
-        //NSMutableDictionary* dCurrentTemp;
-        NSArray *dCurrentTemp;
-        dCurrentTemp = [[RCVersionCheckResponseData objectForKey:@"list"] objectForKey:@"Results"];
-        NSLog(@"dCurrentTemp = %@", dCurrentTemp);
-        
-        NSString* currentTemp = [dCurrentTemp[0] objectForKey:@"version"];
-        
-        NSLog(@"currentTemp = %@", currentTemp);
-        
-        NSString* currentVersion = [currentTemp stringByReplacingOccurrencesOfString:@"." withString:@""];
-        NSString* propertyCurrentVersion =[[remoteContentProperties objectForKey:contentCurrentVersion] stringByReplacingOccurrencesOfString:@"." withString:@""];
+        NSString* currentVersion = [RCVersionCheckResponseData objectForKey:@"version"];
+//        NSString* currentVersion = [RCVersionCheckResponseData objectForKey:@"result"];
+        NSLog(@"dCurrentTemp = %@", currentVersion);
         
         int nCurrentVersion	= [currentVersion intValue];
-        int nPropertyCurrentVersion = [propertyCurrentVersion intValue];
         
         NSLog(@"nCurrentVersion = %d", nCurrentVersion);
-        NSLog(@"nPropertyCurrentVersion = %d", nPropertyCurrentVersion);
         
-        if(nPropertyCurrentVersion == 0)
-        { // 현재 property file version이 0 일때. 무조건 다운로드
-            //return NO;
-            return YES;
-        }
-        else if(nPropertyCurrentVersion < nCurrentVersion)
-        {// 현재 버전이 최소 버전보다 낮을때 다운로드
-            return YES;
-        }
-        else
-        {
-            return NO;
-        }
+        return nCurrentVersion;
+        
     }
     else
     {
@@ -629,11 +609,11 @@
         [alert show];
         [alert release];
         
-        return NO;
+        return 0;
     }
     [stringReply release];
     
-    return YES;
+    return 0;
     
 }
 
@@ -652,12 +632,13 @@
     id stringReply;
     
     //CIP쪽 현재 가지고 있는 컨텐트가 최신 버전일 경우 리모트 컨텐트 매니져 종료
-    BOOL isUpdate;
+    int isUpdate;
     isUpdate = [self isUpdateContentToCIP];
     NSLog(@"isUpdate value = %d", isUpdate);
-    if(!isUpdate){
-        [self finishRemoteContentManage];
-    }
+   
+//    if(!isUpdate){
+//        [self finishRemoteContentManage];
+//    }
     
     self.serverUrl = [remoteContentProperties objectForKey:server_url];
 	
@@ -726,13 +707,18 @@
         NSLog(@"nMinVersion = %d", nMinVersion);
         NSLog(@"nCurrentVersion = %d", nCurrentVersion);
         NSLog(@"nPropertyCurrentVersion = %d", nPropertyCurrentVersion);
+        NSLog(@"isUpdate = %d", isUpdate);
 		
 		self.contentDawnLoadInfo = stringReply;
         NSLog(@"contentDownloadInfo = %@", stringReply);
 		
-        //test
-        //[self finishRemoteContentManage];
-        //test end
+        
+        if( isUpdate <= nPropertyCurrentVersion)
+        {
+            [self finishRemoteContentManage];
+            return;
+
+        }
         
 		if(nPropertyCurrentVersion == 0)
 		{ // 현재 property file version이 0 일때. 무조건 다운로드
@@ -747,19 +733,19 @@
 			[alert show];
 			[alert release];
 		}
-		else if(nPropertyCurrentVersion < nMinVersion)
-		{// 현재 버전이 최소 버전보다 낮을때 다운로드
-			//필수 업데이트
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:mustContentUpDateAlertMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:@"확인"
-                                                  otherButtonTitles:nil];
-			[alert setTag:mustContentUpDateAlertTag];
-            
-			[alert show];
-			[alert release];
-		}
+//		else if(nPropertyCurrentVersion < nMinVersion)
+//		{// 현재 버전이 최소 버전보다 낮을때 다운로드
+//			//필수 업데이트
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:mustContentUpDateAlertMessage
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"확인"
+//                                                  otherButtonTitles:nil];
+//			[alert setTag:mustContentUpDateAlertTag];
+//            
+//			[alert show];
+//			[alert release];
+//		}
 		else
 		{
 			if(nPropertyCurrentVersion < nCurrentVersion)
