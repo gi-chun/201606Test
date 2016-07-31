@@ -9,6 +9,7 @@
     NSString *title;
     NSString *message;
     NSString *pageId;
+    BOOL isAleady;
 }
 
 @property (nonatomic, strong) NSString *pushTokenID;

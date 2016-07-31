@@ -17,8 +17,8 @@ var pushParams = '';
 function init(){
 	
 	//gclee push
-//	killAllSession();
-//	killAllCookie();
+	killAllSession();
+	killAllCookie();
 	
 	//gclee push
 	pushParams = alopexController.parameters;  // push 파라미터 받기

@@ -60,6 +60,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
             NSLog(@"%@", userInfo);
         }
         [self receiveRemoteNotification:launchOptions withAppState:NO];
+        isAleady = true;
     }
     
     return  YES;
@@ -84,15 +85,20 @@ NSString *pushServerIp_App = @"168.154.182.41";
     NSLog(@"Remote Notification: %@", [userInfo description]);
     NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
     
+    if(!isAleady){
+        [self receiveRemoteNotification:userInfo withAppState:YES];
+    }else{
+        isAleady = false;
+    }
+    
     if(application.applicationState == UIApplicationStateActive)
     {
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Did receive a Remote Notification", nil) message:[apsInfo objectForKey:@"alert"] delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
 //        
 //        [alertView show];
-        [self receiveRemoteNotification:userInfo withAppState:YES];
     }
     else{
-        [self receiveRemoteNotification:userInfo withAppState:NO];
+        //[self receiveRemoteNotification:userInfo withAppState:NO];
         NSString *alert = [apsInfo objectForKey:@"alert"];
         NSLog(@"Received Push Alert : %@", alert);
         
@@ -259,14 +265,14 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
     }else{
         
-        NSLog(@"didReceiveRemoteNotification : \n%@", userInfo);
+        NSDictionary *dic = [[userInfo objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"aps"];
         
-        NSDictionary *dic = [userInfo objectForKey:@"aps"];
         NSString *messageDic = [NSString stringWithFormat:@"my dictionary is %@", dic];
         
-//        if(!dic){
-//            return;
-//        }
+        
+        if(!dic){
+            return;
+        }
         
         NSLog(@"didReceiveRemoteNotification : \n%@", dic);
         
