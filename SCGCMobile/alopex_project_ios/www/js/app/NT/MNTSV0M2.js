@@ -181,6 +181,8 @@ function doPage(){
 				lc = JSON.parse(getAlopexSession('loginSession'));
 			}else{
 				lc = JSON.parse(getAlopexCookie('loginCookie'));
+				//gclee login
+//				lc = JSON.parse(getAlopexCookie('loginSession'));
 			}
 			var BPCA = JSON.parse(getAlopexCookie('MainBPCA'));
 			var bp = getMainBP();

@@ -1,5 +1,5 @@
 document.addEventListener('alopexready', mainStart);
-nowPGCode = 'MMNPG1M0';
+//nowPGCode = 'MMNPG1M0';
 var params = '';
 var pn = '';
 var pushID = '';

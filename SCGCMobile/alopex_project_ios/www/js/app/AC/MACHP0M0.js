@@ -88,6 +88,10 @@ function setEventListner(){
 			    		
 			    		notiPop('인증코드 발송','고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.',false,false,null);
 			    		$('.pNotiP2Ok').click(function(){
+			    			//gclee login
+			    			setAlopexCookie('joinStep', 'stepA');
+			    			setAlopexCookie('joinOK', 'false');
+			    			
 	        	    		navigateGo('MACHP0M1');
 	        	    	});
 			    	}, function(errorCode, errorMessage){

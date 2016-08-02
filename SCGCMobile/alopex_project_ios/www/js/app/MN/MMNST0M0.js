@@ -51,6 +51,7 @@ function init(){
 					logf("getLscNextData json data : \n");
 					logf(jsonResult);
 					setAlopexCookie('lscDB2',jsonResult);
+					setAlopexCookie('lscDB2All', JSON.stringify(Mcb));
 					
 					for(var i=0;i<Mcb.list.Results.length;i++){
 						jsonResult = Mcb.list.Results[i];
@@ -168,7 +169,36 @@ function popPhone(pn){
 		    		
 		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
-		    			navigateGo('MACHP1M0');
+		    			//gclee login
+		    			var joinStep = getAlopexCookie('joinStep');
+		    			var chkJoin = getAlopexCookie('joinOK');
+		    			
+		    			logf("gclee joinStep: " + joinStep);
+		    			logf("gclee chkJoin: " + chkJoin);
+		    			
+		    			if(joinStep == 'undefined'){
+		    				
+		    				navigateGo('MACHP0M0');
+		    				
+		    			}else if(joinStep == 'stepA'){ //sms인증번호 전송 step
+		    				
+		    				navigateGo('MACHP1M0');
+		    				
+		    			}else if(joinStep == 'stepB'){ //가입화면으로 이동된 상태
+		    				
+		    				if(chkJoin == 'false'){
+		    					navigateGo('MACHP0M0');
+		    				}else{
+		    					navigateGo('MACHP1M0');
+		    				}
+		    				
+		    			}else if(joinStep == 'stepC'){ //가입버튼 클릭 시, 앱설정 가입관리 변경버튼 클릭 시 
+		    				
+		    				//navigateGo('MACHP1M0');
+		    			}
+		    			
+//		    			navigateGo('MACHP1M0');
+		    			
 		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    			navigateGo('MACHP0M0');
 		    		}else{

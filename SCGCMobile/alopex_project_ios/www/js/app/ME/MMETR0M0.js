@@ -16,6 +16,8 @@ function mainStart(){
 		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSessionInfo = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}
 	
 	setEventListner();

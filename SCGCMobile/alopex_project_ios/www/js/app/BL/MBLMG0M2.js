@@ -350,6 +350,8 @@ function doPage(opbelNo){
 				params = JSON.parse(getAlopexSession('loginSession'));
 			}else{
 				params = JSON.parse(getAlopexCookie('loginCookie'));
+				//gclee login
+//				params = JSON.parse(getAlopexSession('loginSession'));
 			}
 			var chkBPCA = getMainBPCA();
 			if(chkBPCA == 'undefined'){
@@ -438,10 +440,9 @@ function doPage(opbelNo){
 //    	var tab3_1Str = getTab3_1Str(cb);
 //    	$('.tab3_1').html(tab3_1Str);
 		//gclee card 아래데이터 없는경우 발생
-		if( returnStr.indexOf('billGashtDetailResult') > -1 ){
-			getTab3_1Str(cb);
-		}
-//		if( cb.list.billGashtDetailResult.length > 0){
+		getTab3_1Str(cb);
+		
+//		if( returnStr.indexOf('billGashtDetailResult') > -1 ){
 //			getTab3_1Str(cb);
 //		}
     	
@@ -638,6 +639,29 @@ function doPage(opbelNo){
     	
 //    	setTimeout('setLoadSwiper()',10);
     	//##################################################################
+		
+		//gclee push test  ############################# 임시로 푸시왔을때 상황을 테스트함
+		
+//		var chkAlready = getAlopexCookie('chkAlready');
+//	
+//		if(chkAlready != 'true'){
+//			
+//			setAlopexCookie('chkAlready', 'true');
+//			
+//			var rtMsg = {
+//					'PUSH_TYPE' : 'E',
+//					'BP' : '10030764',
+//					'CA' : '10007307',
+//					'DOC_HEADER_OPBEL' : '204006968472' //204006968472
+//			};
+//			
+//			logf('gclee pushstart MBLMG0M2 ' + JSON.stringify(rtMsg));
+//			
+//			navigateGo('pushstart',rtMsg);
+//		}
+		
+		//gclee push test end ##########################
+		
 	}, function(errorCode, errorMessage){
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: main');

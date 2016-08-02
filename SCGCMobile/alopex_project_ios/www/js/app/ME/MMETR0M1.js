@@ -12,6 +12,8 @@ function mainStart(){
 		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSessionInfo = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}
 	
 	//params = param;
@@ -90,7 +92,7 @@ function pageSetting(cb){
 	}
 	*/
 	var useGS = cb.currUsage *1;
-	
+		
 	//console.log('3');
 	
 //		for(var i=0;i<cb.list.userInfoResult.length;i++){
@@ -116,8 +118,8 @@ function pageSetting(cb){
 		//var me01Str = '<ul>'+
 		me01Str = '<ul>'+
 		'	<li><strong>고객명</strong> '+ascUserNM(cb.list.userInfoResult[0].BUS_PART_NAME)+'</li>'+
-		'	<li><strong>고객주소</strong>'+cb.list.userInfoResult[0].CONT_ADDRESS+'</li>';
-//		'	<li><strong>고객주소</strong>'+meAddr+'</li>';
+//		'	<li><strong>고객주소</strong>'+cb.list.userInfoResult[0].CONT_ADDRESS+'</li>';
+		'	<li><strong>고객주소</strong>'+meAddr+'</li>';
 		me01Str += '	<li><strong>등록기간</strong> '+toMEDate(cb.s_adatsoll1,cb.e_adatsoll1)+'</li>'+
 		'	<li><strong>계량기번호</strong> '+cb.gasMrnrNo+'</li>'+
 		'	<li><strong>전월지침</strong> '+cb.lsmthMesureValue+'㎥</li>'+

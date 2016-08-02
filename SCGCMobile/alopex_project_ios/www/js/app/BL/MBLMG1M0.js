@@ -86,6 +86,8 @@ function doPage(){
 		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}
 	logf(loginSession);
 	
@@ -236,7 +238,7 @@ function showPayInfo(pr){
 			$('.cgInfo').html(cgInfoStr);
 			
 			//gclee card - important
-//			cbq.list.billDetailResult[0].BANKA = '';
+			cbq.list.billDetailResult[0].BANKA = '';
 			//gclee
 			// 납부방식 화면 헨들링
 			if(cbq.list.billDetailResult[0].BANKA == ''){

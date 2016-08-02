@@ -34,7 +34,7 @@ function doPage(){
 //	var mbp = getMainBP();
 //	var bpInfo = JSON.parse(getAlopexCookie(mbp));
 	var mbp = JSON.parse(getMainBPCA());
-		
+	bpInfo = JSON.parse(getAlopexCookie(mbp.regiogroup));
 	console.log(JSON.stringify(bpInfo));
 	console.log(bpInfo);
 	$('.titMap').text(bpInfo.lscNm);

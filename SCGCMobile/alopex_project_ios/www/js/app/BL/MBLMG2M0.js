@@ -76,7 +76,7 @@ function setEventListner(){
       }    
       
       //gclee card - ing - 테스트시 사용
-      popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
+     // popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
       
      //gclee card 임시 결제완료, 결제실패, 이전
                     
@@ -131,6 +131,8 @@ function doPage(){
 		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}
 	logf(loginSession);
 	

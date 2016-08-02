@@ -14,22 +14,47 @@ var pushParams = '';
 //var _cb = '';
 //var _rtCB = '';
 
+function onScreenBack(){
+    init();
+}
+
 function init(){
 	
 	//gclee push
+	var pn = getAlopexCookie('uPhone');
+	var loginToken = getAlopexCookie('loginToken');
+	var lscDB = getAlopexCookie('lscDB');
+	var lscDB2 = getAlopexCookie('lscDB2')
+	var lscDB2All = getAlopexCookie('lscDB2All')
+	
 	killAllSession();
 	killAllCookie();
 	
-	//gclee push
 	pushParams = alopexController.parameters;  // push 파라미터 받기
 	
-	if(device.osName == 'Android'){
-		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
-//		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
-	}else{
-		// 번호인증
-		popPhone(1);
-	}
+	setAlopexCookie('uPhone',pn);
+	setAlopexCookie('loginToken',loginToken);
+	setAlopexCookie('lscDB',lscDB);
+	setAlopexCookie('lscDB2',lscDB2);
+	setAlopexCookie('lscDB2All',lscDB2All);
+	
+	var results = JSON.parse(lscDB2All);
+	var jsonResult = '';
+	for(var i=0;i<results.list.Results.length;i++){
+		jsonResult = results.list.Results[i];
+		//logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+		setAlopexCookie(results.list.Results[i].lsc, JSON.stringify(jsonResult) );
+	}	
+	//gclee push test
+	popPhone(1);
+	
+//	if(device.osName == 'Android'){
+//		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
+////		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
+//	}else{
+//		// 번호인증
+//		popPhone(1);
+//	}
 	
 	settingLoading();
 	$('.imgloading').show();
@@ -79,9 +104,10 @@ function contiLogin(){
 		logf('gclee MMNPS0M0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
-    		logf('cb',cb);
+    		logf('gclee MMNPS0M0 getAccInfo result: ', JSON.stringify(cb));
     		var rtCB = clopCB(cb);
-    		logf(rtCB);
+    		logf('gclee MMNPS0M0 getAccInfo result rtCB : ', JSON.stringify(rtCB));
+    		
     			if(getAlopexCookie('MainBP') == 'undefined'){
     				
     				var Str3 = {
@@ -141,8 +167,13 @@ function setDefaultStartData(cb,rtCB){
 	console.log('##11122#');
 	//gclee login token
 	if(pushParams.PUSH_TYPE == 'E' || pushParams.PUSH_TYPE == 'D' || pushParams.PUSH_TYPE == 'B' || pushParams.PUSH_TYPE == 'C'){
+		
 		for(var j=0;j<cb.list.bpCaList.length;j++){
+			
+			logf('gclee setDefaultStartData MMNPS0M0 param CA value: ' + pushParams.CA + 'getAccInfo CA value: ' + String(Number(cb.list.bpCaList[j].ca)));
+			
 			if(String(Number(cb.list.bpCaList[j].ca)) == pushParams.CA){
+				
 				var rtMsg = {
 						bp : String(Number(cb.list.bpCaList[j].bp)),
 						ca : String(Number(cb.list.bpCaList[j].ca)),
@@ -171,7 +202,8 @@ function setDefaultStartData(cb,rtCB){
 							ca : String(Number(cb.list.bpCaList[j].ca)),
 							sernr : cb.list.bpCaList[j].sernr,
 							anlage : String(Number(cb.list.bpCaList[j].anlage)),
-							regiogroup : cb.list.bpCaList[j].regiogroup
+							regiogroup : cb.list.bpCaList[j].regiogroup,
+							"token" : getAlopexCookie('loginToken')                                                     //gclee push - token추가 서버올라오면 확인예정
 					};
 					setSelfChkCode(rtCB,cb.list.bpCaList[j].bp,cb.list.bpCaList[j].ca);									// 자가검침 플래그 생성
 					setAlopexSession('mainParam',JSON.stringify(rtMsg));
@@ -304,6 +336,10 @@ function callBackSetGoing(){
 				'seq' : pushParams.seq
 		};
 		navigateGo('MNTQA0M1',rtMsg);
+	}else if(pushParams.PUSH_TYPE == 'G'){	// QnA ~7/14
+		
+		navigateGo('index');
+		
 	}else{
 //	        					alert('잘못된 PUSH 입니다.');
 //	        					if(device.osName == 'Android'){

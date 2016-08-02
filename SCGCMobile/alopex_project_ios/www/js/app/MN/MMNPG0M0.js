@@ -66,6 +66,8 @@ function init() {
 			params = JSON.parse(getAlopexSession('loginSession'));
 		} else {
 			params = JSON.parse(getAlopexCookie('loginCookie'));
+			//gclee login
+//			params = JSON.parse(getAlopexCookie('loginSession'));
 		}
 	} else {
 		// console.log('param okok');
@@ -1222,6 +1224,7 @@ function mainSetting(cb) {
 	
 	// setTimeout('setLoadSwiper()',10);
 	// ##################################################################
+		
 }
 
 // function setLoadSwiper(){

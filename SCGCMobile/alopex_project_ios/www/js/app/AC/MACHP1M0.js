@@ -20,6 +20,11 @@ var cb2_login = null;
 function mainStart(){
 	setDefault();
 	setEventListner();
+	
+	//gclee login
+	setAlopexCookie('joinStep', 'stepB');
+	setAlopexCookie('joinOK', 'false');
+	
 	if(isTest){
 		// 테스트
 		$('#uPhones').attr('readonly',false);
@@ -96,6 +101,7 @@ function setEventListner(){
 	});
 	// 가입버튼
 	$('#agree_both').click(function(){
+		
 		var isPrivacy = $('#agree_privacy').getValues();
 		var isAgreeProvideInfo = $('#agree_provide_info').getValues();
 		var isRefuseProvideInfo = $('#refuse_provide_info').getValues();
@@ -121,7 +127,13 @@ function setEventListner(){
     			speed: 300, 
     		});
 		}else{
+			
+			//gclee login
+			setAlopexCookie('joinStep', 'stepC');
+			setAlopexCookie('joinOK', 'true');
+			
 			if(isTest){
+				
 				var pnChk = getAlopexCookie('uPhone');
 				if(pnChk == 'undefined'){
 					var pn = codePhoneNM($('#uPhones').val());
@@ -134,6 +146,7 @@ function setEventListner(){
 				//navigation.goHome();
 				
 			}else{
+				
 				chkUSER();
 			}
 			
@@ -232,7 +245,7 @@ function getChkUser(pn){
 	httpSend("getAccInfo", param, httpSuccessCallback, httpErrorCallback);
 }
 
-function httpSuccessCallback(cb){
+function httpSuccessCallback(cb){ 
 	logf(JSON.stringify(cb));
 	logf(cb);
 	setAlopexSession('uInfo',cb);

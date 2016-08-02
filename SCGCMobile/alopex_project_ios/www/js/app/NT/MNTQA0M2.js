@@ -23,6 +23,8 @@ function mainStart(){
 		lc = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		lc = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		lc = JSON.parse(getAlopexCookie('loginSession'));
 	}
 	//console.log(lc);
 	BPCA = JSON.parse(getAlopexCookie('MainBPCA'));

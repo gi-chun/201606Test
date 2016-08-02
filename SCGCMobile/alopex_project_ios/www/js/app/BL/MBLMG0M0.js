@@ -122,6 +122,8 @@ function doPage(){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexSession('loginSession'));
 	}
 	var chkBPCA = getMainBPCA();
 	if(chkBPCA == 'undefined'){
@@ -521,6 +523,8 @@ function viewBillInfo(){
 						params = JSON.parse(getAlopexSession('loginSession'));
 					}else{
 						params = JSON.parse(getAlopexCookie('loginCookie'));
+						//gclee login
+//						params = JSON.parse(getAlopexSession('loginSession'));
 					}
 					var chkBPCA = getMainBPCA();
 					if(chkBPCA == 'undefined'){

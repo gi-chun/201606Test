@@ -68,7 +68,7 @@ function setEventListner(){
 //      "connectURL" : vConnectURL
 //      };
       
-      var option = {
+	  var option = {
     	      "ordername" : vOrderName,
     	      "ordernumber" : vOrderNumber,
     	      "amount" : vAmount,
@@ -262,27 +262,42 @@ function goMenuBLMG02(){
 	}
 	//check 과거건 부터 결제
 	//cb.list.resultList[i].FAEDN
-	var beforeDay = 30001230;
-	var tempDay = 0;
-	for(i=0;i<gUnpaiedList.list.resultList.length;i++){
-		tempDay = gUnpaiedList.list.resultList[i].FAEDN;
-		if(beforeDay > tempDay){
-			beforeDay = tempDay;
-		}	
-	}
-	logf('gclee MBLMG3M0 beforeDay  : ' + beforeDay);
+//	var beforeDay = 30001230;
+//	var tempDay = 0;
+//	for(i=0;i<gUnpaiedList.list.resultList.length;i++){
+//		tempDay = gUnpaiedList.list.resultList[i].FAEDN;
+//		if(beforeDay > tempDay){
+//			beforeDay = tempDay;
+//		}	
+//	}
+//	logf('gclee MBLMG3M0 beforeDay  : ' + beforeDay);
 	
 	var isNoOld = false;
-	tempDay = 0;
+	if($("input:checkbox[id=check0]").is(":checked")==false){
+		isNoOld = true;
+	}
+	
+	var tempIndex = 0;
+	var paymentList = new Array();
 	for(i=0;i<gUnpaiedList.list.resultList.length;i++){
 		tempStr = 'check' + i;
 		if($("input:checkbox[id="+tempStr+"]").is(":checked")){
-			tempDay = gUnpaiedList.list.resultList[i].FAEDN;
-			if(beforeDay < tempDay){
+			
+			if((i-tempIndex) > 1){
 				isNoOld = true;
 				break;
 			}
-		}	
+			paymentList.push(gUnpaiedList.list.resultList[i]);
+			tempIndex = i;
+			
+//			logf('222222222222222222');
+//			logf(gUnpaiedList.list.resultList[i]);
+//			tempDay = gUnpaiedList.list.resultList[i].FAEDN;
+//			if(beforeDay < tempDay){
+//				isNoOld = true;
+//				break;
+//			}
+		}
 	}
 	
 	logf('gclee MBLMG3M0 isNoOld  : ' + isNoOld);
@@ -298,20 +313,25 @@ function goMenuBLMG02(){
 	//test
 	//pCardCode = '0100';
 	
-	pCardCode = getRealCardCodeTest(pCardCode);
-	
-	//navigateBackToNaviGo('MBLMG1M0');
+	  pCardCode = getRealCardCodeTest(pCardCode);
 	  vConnectURL = getCardPayURL(pCardCode);
 
 	  var chkBPCA = getMainBPCA();
 	  var useBPCA = JSON.parse(chkBPCA);
 	  vBPCode = useBPCA.regiogroup;
+	  vBPCode = vBPCode.substring(0, 1) + "000";
+	  
+	  logf("vBPCode : "+vBPCode);
+	  
+	  vAmount = gUnpaiedList.list.resultList[0].BETRW;
+	  vGoodName = gUnpaiedList.list.resultList[0].BUTXT;
+	  vPhoneNo = getAlopexCookie('uPhone');
 	  
 //     var option = {
 //     "ordername" : vOrderName,
 //     "ordernumber" : vOrderNumber,
 //     "amount" : vAmount,
-//     "goodname" : vGoodName,
+//     "goodname" : vGoodName, //bpname
 //     "phoneno" : vPhoneNo,
 //     "cardCode" : vCardCode,
 //     "BPCode" : vBPCode,
@@ -319,15 +339,28 @@ function goMenuBLMG02(){
 //     };
      
      var option = {
-    	     "ordername" : "ordername_test",
-    	     "ordernumber" : "00001",
-    	     "amount" : "1004",
-    	     "goodname" : "goodName_test",
-    	     "phoneno" : "01000001111",
+    	     "ordername" : "",
+    	     "ordernumber" : "",
+    	     "amount" : vAmount,
+    	     "goodname" : vGoodName, //bpname
+    	     "phoneno" : vPhoneNo,
     	     "cardCode" : pCardCode,
-    	     "BPCode" : "B000",
-    	     "connectURL" : vConnectURL
+    	     "BPCode" : vBPCode,
+    	     "connectURL" : vConnectURL,
+    	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca
     	     };
+     
+
+//     var option = {
+//    	     "ordername" : "ordername_test",
+//    	     "ordernumber" : "00001",
+//    	     "amount" : "1004",
+//    	     "goodname" : "goodName_test",
+//    	     "phoneno" : "01000001111",
+//    	     "cardCode" : pCardCode,
+//    	     "BPCode" : "B000",
+//    	     "connectURL" : vConnectURL
+//    	     };
           
      logf("vPhoneNo : "+vPhoneNo);
      logf("vOrderName : "+vOrderName);
@@ -340,9 +373,9 @@ function goMenuBLMG02(){
      
      //gclee card 임시 결제완료, 결제실패, 이전
      if(device.osName != 'iOS'){
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
+   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
      }else{
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
      }    
      
      //gclee card - ing - 테스트시 사용
