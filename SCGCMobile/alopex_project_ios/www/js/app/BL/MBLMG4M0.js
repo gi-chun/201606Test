@@ -12,6 +12,18 @@ var ss = '';
 var params = '';
 var currentCa = '';
 var pinId = '';
+
+var gPaiedList;
+
+var vOrderName;
+var vOrderNumber;
+var vAmount;
+var vGoodName;
+var vPhoneNo;
+var vCardCode;
+var vBPCode;
+var vConnectURL;
+
 function mainStart(){
 	setEventListner();
 	
@@ -38,9 +50,223 @@ function setEventListner(){
 	
 };
 
+function refrash(){
+	navigateGo('MBLMG4M0');//MBLMG4M0
+}
+
+//gclee card - ing
+function popCardResult(ss){
+	
+	//1:취소(처음위치), 2:결제성공(결제목록화면이동), 3:결제실패(결제실패하였습니다. 다시 시도하십시요! alert)
+	
+	logf('popCardResult param = ' + ss);
+	
+	if(ss == '1'){
+		//1:취소(처음위치)
+		
+	}else if(ss == '2'){
+		//2:결제성공
+		navigateBackToNaviGo('MBLMG4M0');
+		
+	}else if(ss == '3'){
+		//3:결제실패
+		//alert
+		
+		popPayFail = $('.confirm_payFail').bPopup({
+			opacity : 0.6,
+			speed : 300,
+		});	
+		 
+	}    
+}
+
 function goMenuBLMG02(){
-	navigateBackToNaviGo('MBLMG1M0');
+	
+	//결제취소
+	var pCardCode = '';
+	
+	logf(gPaiedList);
+	logf(gPaiedList.list.resultList);
+	
+	logf('gclee MBLMG4M0 goMenuBLMG02 수납내역 : ' + gPaiedList.list.resultList);
+	
+	//여러 수납 선택건 확인
+	//check select
+	var checkCount = 0;
+	var tempStr;
+	var i=0;
+	
+	checkCount = $('[name=chkc0]:checked').length;
+	
+	logf('gclee MBLMG4M0 goMenuBLMG02 checked count : ' + checkCount);
+	
+	if( checkCount < 1){
+		notiPop('확인','결제취소대상을 선택해 주십시요.',true,false,null);
+		return;
+	}
+	
+	if( checkCount > 1){
+		notiPop('확인','결제취소 대상은 한건만 가능합니다. ',true,false,null);
+		return;
+	}
+	
+	var isNoOld = false;
+	
+	var tempIndex = 0;
+	var paymentList = new Array();
+	
+	var s1 = $('[name=chkc0]:checked')[0].value;
+	paymentList.push(gPaiedList.list.resultList[0]);
+	
+	  pCardCode = gPaiedList.list.resultList[0].CARDCOMPCD;
+	  pCardCode = getRealCardCodeTest(pCardCode);
+	  vConnectURL = getCardPayURL(pCardCode);
+
+	  var chkBPCA = getMainBPCA();
+	  var useBPCA = JSON.parse(chkBPCA);
+	  vBPCode = useBPCA.regiogroup;
+	  vBPCode = vBPCode.substring(0, 1) + "000";
+	  
+	  logf("vBPCode : "+vBPCode);
+	  
+	  vAmount = gPaiedList.list.resultList[0].BETRZ;
+	  vGoodName = gPaiedList.list.resultList[0].BUTXT;
+	  vPhoneNo = getAlopexCookie('uPhone');
+	
+     var option = {
+    	     "ordername" : "",
+    	     "ordernumber" : "",
+    	     "amount" : vAmount,
+    	     "goodname" : vGoodName, //bpname
+    	     "phoneno" : vPhoneNo,
+    	     "cardCode" : pCardCode,
+    	     "BPCode" : vBPCode,
+    	     "connectURL" : vConnectURL,
+    	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+    	     "TERM_ID" : gPaiedList.list.cardStoreInfoList[0].TERM_ID,
+    	     "installment" : gPaiedList.list.cardStoreInfoList[0].ALLO_MONTH,
+    	     "RGUBUN" : "07"
+    	     };
+     
+
+//     var option = {
+//    	     "ordername" : "ordername_test",
+//    	     "ordernumber" : "00001",
+//    	     "amount" : "1004",
+//    	     "goodname" : "goodName_test",
+//    	     "phoneno" : "01000001111",
+//    	     "cardCode" : pCardCode,
+//    	     "BPCode" : "B000",
+//    	     "connectURL" : vConnectURL
+//    	     };
+          
+     logf("vPhoneNo : "+vPhoneNo);
+     logf("vOrderName : "+vOrderName);
+     logf("vOrderNumber : "+vOrderNumber);
+     logf("vAmount : "+vAmount);
+     logf("vGoodName : "+vGoodName);
+     logf("vCardCode : "+vCardCode);
+     logf("vBPCode : "+vBPCode);
+     logf("vConnectURL : "+vConnectURL);
+    
+	if(device.osName != 'iOS'){
+	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
+	}else{
+	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash"); 
+	}    
+	
+	notiPop('확인','결제취소 완료되었습니다. .',true,false,null);
+	
+	
 };
+
+function getRealCardCodeTest(pCardCode){
+	
+//	01	비씨
+//	02	국민
+//	03	외환
+//	04	삼성
+//	05	신한
+//	08	현대
+//	09	롯데
+//	11	한미
+//	12	수협
+//	13	신세계
+//	14	우리(구 평화)
+//	15	농협
+//	16	제주
+//	17	광주
+//	18	전북
+//	20	롯데
+//	23	주택(구 동남)
+//	24	11	하나SK
+//	25	해외
+//	26	7	씨티(한미)
+//	27	월드패스카드
+//	28	신보람
+//	29	SK-OkCashBag
+//	30	SK리더스
+//	42	LG-telecom
+//	47	KTF-coupon
+//	59	사이버카드
+//	99	부산비씨  오전 11:36
+	
+	if( pCardCode == '01'){
+		return '0100';
+	}else if(pCardCode == '02'){
+		return '0204';
+	}else if(pCardCode == '03'){
+		return '1';
+	}else if(pCardCode == '04'){
+		return '2';
+	}else if(pCardCode == '05'){
+		return '6';
+	}else if(pCardCode == '08'){
+		return '4';
+	}else if(pCardCode == '09'){
+		return '5';
+	}else if(pCardCode == '11'){
+		return '7';
+	}else if(pCardCode == '12'){
+		return '1800';
+	}else if(pCardCode == '13'){
+		return '0100';  //신세계? 
+	}else if(pCardCode == '14'){
+		return '0100';
+	}else if(pCardCode == '15'){
+		return '14';
+	}else if(pCardCode == '16'){
+		return '0100';
+	}else if(pCardCode == '17'){
+		return '1500';
+	}else if(pCardCode == '18'){
+		return '1600';
+	}else if(pCardCode == '20'){
+		return '5';
+	}else if(pCardCode == '23'){
+		return '0100';
+	}else if(pCardCode == '24'){
+		return '11';
+	}else if(pCardCode == '25'){
+		return '0100';
+	}else if(pCardCode == '26'){
+		return '7';
+	}else if(pCardCode == '27'){
+		return '0100';
+	}else if(pCardCode == '28'){
+		return '0100';
+	}else if(pCardCode == '29'){
+		return '0100';
+	}else if(pCardCode == '30'){
+		return '0100';
+	}else if(pCardCode == '42'){
+		return '0100';
+	}else if(pCardCode == '47'){
+		return '0100';
+	}else if(pCardCode == '59'){
+		return '0100';
+	}
+}
 
 function onScreenBack(){
 	doPage();	
@@ -67,152 +293,66 @@ function doPage(){
 	
 	logf('jysjys',params);
 	
-	viewBillList();
+	viewPaidList();
 }
 
-function viewBillList(){
-	var buymInfo = getBuym(currentCa);
+function viewPaidList(){
+	
 	var box_type1Str = '<h3>납입자번호</h3>'+
 	'<span class="col_red">'+currentCa+'</span>';
-	if(Number(buymInfo.betrw) > 0) box_type1Str += '<span class="input input_no">미납</span>';
-	if(params.list.bpCaList.length > 1) box_type1Str += '<p class="small btn_input_num showPlus"><button id="button_input_num">납입자번호 선택하기</button></p>';
+	
 	$('.box_type1').html(box_type1Str);
-	//$('.topBoxCaList').html(Number(currentCa));
-
-	
-	if(params.list.bpCaList.length < 2){
-		$('.showPlus').hide();
-	}else{
-		var popCaListStr = '';
-    	for(var i=0;i<params.list.bpCaList.length;i++){
-    	//	var buymInfo = getBuym(cb.list.billResultList[i].CANO);
-    		popCaListStr += '<li class="'+(currentCa == Number(params.list.bpCaList[i].ca)?'key_':'')+'num goBillInfo"><input type="hidden" value="'+params.list.bpCaList[i].regiogroup+','+params.list.bpCaList[i].bp+','+params.list.bpCaList[i].ca+','+params.list.bpCaList[i].sernr+','+params.list.bpCaList[i].anlage+'"/><a href="javascript:void(0);">'+Number(params.list.bpCaList[i].ca)+'</a>';
-    		if(Number(params.list.bpCaList[i].betrw) > 0) popCaListStr += '<span class="input long input_no">미납</span>';
-    		popCaListStr += '</li>';
-    	}
-    	$('.popCaList').html(popCaListStr);
-	}
-	
-	$('.showPlus').click(function(){
-		//console.log('1111');
-		pinId = $('.pop_input_num').bPopup({
-			opacity: 0.6,
-			speed: 300,
-		});
-	});
-	
-	$('.goBillInfo').click(function(event){
-		var s1 = jQuery(event.currentTarget);
-//		var s2 = s1.children('a')[0].text;
-		//ss = s1;
-		var Str1 = s1.children('input')[0].value;
-		var Str2 = Str1.split(',');
-		var Str3 = {
-				bp : Str2[1],
-				ca : Str2[2],
-				sernr : Str2[3],
-				anlage : Str2[4],
-				regiogroup : Str2[0]
-		};
-		currentCa = Number(Str2[2]);
-		setAlopexSession('SessionBP',Str2[0]);
-		setAlopexSession('SessionBPCA',JSON.stringify(Str3));
-		putGlobalPreference('selectedBp', Str2[0]);
-		putGlobalPreference('selectedBpCa', JSON.stringify(Str3));
+	$('.showPlus').hide();
 		
-		viewBillList();
-		pinId.close();
-	});
-
-	viewBillInfo();
-}
-
-function viewBillInfo(){
-	//gclee login token
-	var param = {
-//			"bp" : '14641452',	"ca" : '15527726'
-			"bp" : String(Number(params.list.bpCaList[0].bp)),	
-			"ca" : String(Number(params.list.bpCaList[0].ca)),
-			"token" : getAlopexCookie('loginToken')
-	};
+	//gclee card 2
+	var mbp = getMainBP();
+	logf('gclee setting mbp: ' + JSON.stringify(mbp));
+	var pMbp = mbp.substring(0,1) + '000';
+	logf('gclee substring mbp: ' + JSON.stringify(pMbp));
+	
 //	var param = {
-////			"bp" : '14641452',	"ca" : '15527726'
-//			"bp" : String(Number(params.list.bpCaList[0].bp)),	
-//			"ca" : String(Number(params.list.bpCaList[0].ca))
+//			"COMPCD" : pMbp,	
+//			"GUBUN" : '03',
+//			"CANO" : currentCa //test
 //	};
 	
-	//gclee login token
+	var param = {
+			"COMPCD" : 'B000',	
+			"GUBUN" : '06',
+			"CANO" : '15979102' //test
+//			"CANO" : String(Number(params.list.bpCaList[0].ca))
+	};
+	
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));
 	
-	var param2 = JSON.parse(JSON.stringify(param));
-	param2.list = [{'bpCaList' : []}];
-	for(var i=0;i<params.list.bpCaList.length;i++){
-		param2.list[0].bpCaList[i] = {
-				"bp" : String(Number(params.list.bpCaList[i].bp)),	
-				"ca" : String(Number(params.list.bpCaList[i].ca))
-		};
-		if(Number(params.list.bpCaList[i].ca) == currentCa){
-			param2.bp = String(Number(params.list.bpCaList[i].bp));
-			param2.ca = String(Number(params.list.bpCaList[i].ca));
-		}
-	}
-	logf(param2);
 	setDefault();
 	
-	httpSend("getBillList", param2, function(cb){
+	httpSend("getPayList", param, function(cb){
+		gPaiedList = cb;
 		logf(cb);
-		logf(cb.list.billResultList);
+		logf(cb.resultList);
 		
-		logf('gclee MBLMG0M0 isTokenTrue: ' + cb.isTokenTrue);
+		logf('gclee MBLMG4M0 수납내역 : ' + cb.resultList);
 		
-		//gclee login token
-		if(cb.isTokenTrue == 'false'){
-			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-			navigateGo('MACHP0M0');
-			return;
-		}
-		//gclee login token end
-		
-		if(cb.list.billResultList == undefined){
-			//console.log('################################################');
-			//<input type='checkbox' id='check_all' class='input_check' />
-			//'<p class="form_title"><input typeclass="Checkbox" name="'+i+'" value='+i+'>&nbsp;&nbsp;결제선택</p>'+
-			var contStr = '<li class="view_cont">청구 내역이 없습니다.</li>';
-			$('.boxList').html(contStr);
+		if(cb.list.resultList == undefined){
+			
+			var caList = '<p class="pb10">  수납 내역이 없습니다.</p>';
+			$('.box_CaList').html(caList);
+			
 		}else{
-			var contStr = '';
-			for(var i=0;i<cb.list.billResultList.length;i++){
-				var buymInfo = getBuym(cb.list.billResultList[i].CANO);
-				contStr += '<li class="view_cont">'+
-				'<div>'+
-				'<p class="form_title"><input type="checkbox" id="check'+i+'" class="input'+i+'" />&nbsp;&nbsp;결제취소선택</p>'+
-			    '</div>'+
-				'		<div>'+
-				'			<p class="form_title">'+cb.list.billResultList[i].BUDAT_YEAR+'년 '+cb.list.billResultList[i].BUDAT_MONTH+'월 청구서</p>'+
-				'			<p class="form_view px0">'+chkBillNo(cb.list.billResultList[i].DOC_HEADER_OPBEL)+'</p>'+
-				'		</div>';
-				
-				contStr += '</li>';
+			
+			var caList = '<p class="pb10">  취소는 한 건씩만 가능합니다.</p>';
+
+			for(var i=0;i<cb.list.resultList.length;i++){
+				caList += '<div class="bill">'+
+				'<input type="hidden" value="'+' '+','+' '+'"/>'+
+				'<p><strong>승인일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].CSI_DATE)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" checked="checked" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+
+				'<p><strong>고객명</strong><span class="txt">'+cb.list.resultList[i].NAME_LAST+'&nbsp;</span></p>'+
+				'<p><strong>수납금액</strong><span class="txt">'+chgNumberToMoney(cb.list.resultList[i].BETRZ)+'원'+'&nbsp;</span></p>'+
+				'</div>';
 			}
+			$('.box_CaList').html(caList);
 			
-			$('.boxList').html(contStr);
-			
-			$('.view_cont_Detail').click(function(th){
-				//ss = th;
-				//gclee bill
-				logf(th.currentTarget.childNodes[0].value);
-				var param = {
-						bp : param2.bp,
-						ca : param2.ca,
-						DOC_HEADER_OPBEL : th.currentTarget.childNodes[0].value
-//						'isCertiPass' : '1'
-				};
-//				navigateGo('MBLMG0M2',param);
-				navigateBackToNaviParamGo('MBLMG0M2',param);
-				
-				//gclee bill end
-				
-		    });
 		};
 		
 	}, function(errorCode, errorMessage){
@@ -224,31 +364,7 @@ function viewBillInfo(){
 	});
 }
 
-function getBuym(ca){
-	try{
-		for(var i=0;i<params.list.bpCaList.length;i++){
-			if(Number(params.list.bpCaList[i].ca) == Number(ca)){
-				var rt = {
-						'buym' : params.list.bpCaList[i].buym,
-						'betrw' : params.list.bpCaList[i].betrw
-				};
-				
-				return rt;
-			}
-		}
-		var rt = {
-				'buym' : '',
-				'betrw' : '0'
-		};
-		return rt;
-	}catch(e){
-		var rt = {
-				'buym' : '',
-				'betrw' : '0'
-		};
-		return rt;
-	};
-}
+
 
 $a.page(function(){
 	

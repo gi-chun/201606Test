@@ -171,7 +171,7 @@ function setEventListner(){
 //			setAlopexCookie('MainBP','undefined');
 //			setAlopexCookie('MainBPCA','undefined');
 			//navigation.goHome();
-			killAllSession();
+			//killAllSession();
 			//gclee login
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			var pn = getAlopexCookie('uPhone');
@@ -196,7 +196,7 @@ function setEventListner(){
 				setAlopexCookie(results.list.Results[i].lsc, JSON.stringify(jsonResult) );
 			}	
 			
-			setAlopexCookie('joinStep', 'stepC');
+			//setAlopexCookie('joinStep', 'stepC');
 			///////////////////////////////////////////////////////////////////////////////////////////////
 			navigateGo('index');
 			

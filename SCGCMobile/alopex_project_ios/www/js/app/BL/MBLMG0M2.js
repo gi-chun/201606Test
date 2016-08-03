@@ -363,13 +363,14 @@ function doPage(opbelNo){
 			var buymInfo = getBuym(currentCa);
 			//gclee card 테스트위해 betrw값 있다고 가정
 			if(Number(buymInfo.betrw) > 0){
-				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></span>';
 			}else{
-				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red goPayList" >수납내역보기</a></span>';
 			}
 			
 			//gclee card 테스트할때 아래 부분 사용하자 
-			middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
+			middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></span>';
 			//gclee end
 			
 		}
@@ -378,6 +379,10 @@ function doPage(opbelNo){
 		//gclee
 		$('.goPayPage').click(function(){
 			navigateBackToNaviGo('MBLMG1M0');
+		});
+		
+		$('.goPayList').click(function(){
+			navigateBackToNaviGo('MBLMG4M0');
 		});
 		
 		//tab1_1 ok

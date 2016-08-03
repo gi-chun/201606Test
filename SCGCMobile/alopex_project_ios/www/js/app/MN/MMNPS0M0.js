@@ -14,10 +14,6 @@ var pushParams = '';
 //var _cb = '';
 //var _rtCB = '';
 
-function onScreenBack(){
-    init();
-}
-
 function init(){
 	
 	//gclee push
@@ -233,7 +229,7 @@ function mainSetting(ccb){
 	setAlopexSession('mainPage',JSON.stringify(ccb));
 	logf(ccb);
 	// 자가검침이 입력된 경우 체크
-	if(ccb.custReadingresult == ""){ 
+	if (ccb.custReadingresult == "0" ||cb.custReadingresult == "null") {
 		endME = false;
 		setAlopexSession('endME',endME);
 	}else{

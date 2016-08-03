@@ -30,6 +30,7 @@ static DataManager *dataManager = nil;
 
 @implementation PaymentJSNI
 
+
 - (void)setPushToken:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     
     NSLog(@"from arguments values ==>%@", arguments);

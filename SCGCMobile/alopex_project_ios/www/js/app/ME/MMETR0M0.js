@@ -212,18 +212,18 @@ function pageSetting(cb){
 	if(cb.list.userInfoResult != null) {
 		
 		// 다수 ca 고객의 경우, 선택된 ca에 따른 주소 표기
-//		var meAddr = loginSessionInfo.list.bpCaList[0].addr;
-//		for(var i=0; i < loginSessionInfo.list.bpCaList.length; i++){
-//			if(loginSessionInfo.list.bpCaList[i].ca==meNo){
-//				meAddr = loginSessionInfo.list.bpCaList[i].addr;
-//			}
-//		}
+		var meAddr = loginSessionInfo.list.bpCaList[0].addr;
+		for(var i=0; i < loginSessionInfo.list.bpCaList.length; i++){
+			if(loginSessionInfo.list.bpCaList[i].ca==meNo){
+				meAddr = loginSessionInfo.list.bpCaList[i].addr;
+			}
+		}
 		// --
 		
 		infoStr += '<ul>';
 		infoStr += '	<li><strong>고객명</strong>'+ascUserNM(cb.list.userInfoResult[0].BUS_PART_NAME)+'</li>';
-		infoStr += '	<li><strong>고객주소</strong>'+cb.list.userInfoResult[0].CONT_ADDRESS+'</li>';
-//		infoStr += '	<li><strong>고객주소</strong>'+meAddr+'</li>';
+//		infoStr += '	<li><strong>고객주소</strong>'+cb.list.userInfoResult[0].CONT_ADDRESS+'</li>';
+		infoStr += '	<li><strong>고객주소</strong>'+meAddr+'</li>';
 		infoStr += '</ul>';
 	}
 	

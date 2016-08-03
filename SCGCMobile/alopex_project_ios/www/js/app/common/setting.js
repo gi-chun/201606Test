@@ -1312,15 +1312,17 @@
 	function logf(conV){
 //		logfV('SCGC_Mobile',conV);
 		console.log(conV);
+        log.log(conV);
+        
 	}
 	function logfV(ti, conV){
 		try{
 			//gclee log
-//			if(device.osName == 'iOS'){
-//				log.log(conV);
-//			}else{
-//				console.log(conV);
-//			}
+			if(device.osName == 'iOS'){
+				log.log(conV);
+			}else{
+				console.log(conV);
+			}
 			console.log(conV);
 		
 		}catch(e){

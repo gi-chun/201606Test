@@ -731,13 +731,13 @@ function mainSetting(cb) {
 			setAlopexCookie('selfChkSideOutCookie', selfChkSideOut);
 			// 자가검침이 note 10 외부지시부
 			// }else if(isOverChkDate(cb.e_adatsoll1,cb.s_adatsoll1)){
-		} else if (isOverChkDateSpc(cb.e_adatsoll1, cb.s_adatsoll1,
-				cb.adatsoll1, mbc.regiogroup)) {
-			chkstr += '5';
-			console.log('#################################################1');
-			selfChk = true;
-			setAlopexSession('selfChk', selfChk);
-			setAlopexCookie('selfChkCookie', selfChk);
+//		} else if (isOverChkDateSpc(cb.e_adatsoll1, cb.s_adatsoll1,
+//				cb.adatsoll1, mbc.regiogroup)) {
+//			chkstr += '5';
+//			console.log('#################################################1');
+//			selfChk = true;
+//			setAlopexSession('selfChk', selfChk);
+//			setAlopexCookie('selfChkCookie', selfChk);
 		} else {
 			chkstr += '6';
 			selfChkSideOut = false;

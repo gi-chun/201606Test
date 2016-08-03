@@ -618,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.payment/PaymentJSNI.m"
-            timestampString = "490952081.197473"
+            timestampString = "491834144.828861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "-setPushToken:withDict:"
             landmarkType = "5">
          </BreakpointContent>
