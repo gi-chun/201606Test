@@ -21,6 +21,7 @@ static DataManager *dataManager = nil;
     paymentCtl *_paymentCtl;
     NSString *_successCallback;
     NSMutableDictionary *userParam;
+    NSMutableDictionary *userParam2;
 }
 
 @property (nonatomic, retain) UIViewController *paymentCtl;
@@ -112,19 +113,20 @@ static DataManager *dataManager = nil;
 //    NSMutableDictionary *userParam = nil;
     
     //Use popover view
-    if (arguments.count==2) {
+    if (arguments.count==3) {
         userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
-        
         NSLog(@"from script userParam values ==>%@", userParam);
+        userParam2 = [[arguments objectAtIndex:1] JSONFragmentValue];
+        NSLog(@"from script userParam2 values ==>%@", userParam2);
         
-        self.successCallback = [arguments objectAtIndex:1];
+        self.successCallback = [arguments objectAtIndex:2];
         
-        NSLog(@"from script successCallback values ==>%@", [arguments objectAtIndex:1]);
+        NSLog(@"from script successCallback values ==>%@", [arguments objectAtIndex:2]);
     }
     
     self.paymentCtl = [[[paymentCtl alloc] init] autorelease];
     ((paymentCtl*)self.paymentCtl).delegate = self;
-    [((paymentCtl*)self.paymentCtl) setParam:userParam];
+    [((paymentCtl*)self.paymentCtl) setParam:userParam pUserParam2:userParam2];
     [topViewController presentViewController:self.paymentCtl animated:YES completion:nil];
     
 }

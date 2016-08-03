@@ -416,7 +416,22 @@
 			return MPI_TEST_URL;
 		}
 	}
-	
+
+//gclee card
+/**
+ * 카드결제시 정해진 카드코드로 MPI vs ISP 결제타입 반환
+ * @param nm
+ * @returns {String}
+ */
+function getPayType(nm){
+    
+    if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
+        return "ISP";
+    }else{	           // 2자리 코드
+        return "MPI";
+    }
+}
+
 	/**
 	 * 상단 BP로고 가져오기
 	 * @returns

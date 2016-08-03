@@ -43,6 +43,7 @@ function popCardResult(ss){
 	
 	if(ss == '1'){
 		//1:취소(처음위치)
+        //1:결제실패
 		
 	}else if(ss == '2'){
 		//2:결제성공
@@ -221,6 +222,7 @@ function goMenuBLMG02(){
 	
 	  pCardCode = getRealCardCodeTest(pCardCode);
 	  vConnectURL = getCardPayURL(pCardCode);
+    var vPayType = getPayType(pCardCode);
 
 	  var chkBPCA = getMainBPCA();
 	  var useBPCA = JSON.parse(chkBPCA);
@@ -241,7 +243,8 @@ function goMenuBLMG02(){
 //     "phoneno" : vPhoneNo,
 //     "cardCode" : vCardCode,
 //     "BPCode" : vBPCode,
-//     "connectURL" : vConnectURL
+//     "connectURL" : vConnectURL,
+//     "payType: : vPayType
 //     };
      
      var option = {
@@ -256,7 +259,8 @@ function goMenuBLMG02(){
     	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
     	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
     	     "installment" : $("#installment option:selected").val(),
-    	     "RGUBUN" : "03"
+    	     "RGUBUN" : "04",
+         "payType" : vPayType
     	     };
      
 
@@ -268,7 +272,8 @@ function goMenuBLMG02(){
 //    	     "phoneno" : "01000001111",
 //    	     "cardCode" : pCardCode,
 //    	     "BPCode" : "B000",
-//    	     "connectURL" : vConnectURL
+//    	     "connectURL" : vConnectURL,
+//           "payType:    :
 //    	     };
           
      logf("vPhoneNo : "+vPhoneNo);
@@ -282,10 +287,13 @@ function goMenuBLMG02(){
      
      //gclee card 임시 결제완료, 결제실패, 이전
      //잠시 주석
+    
+    //sniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
+    
      if(device.osName != 'iOS'){
    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
      }else{
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash"); 
+   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
      }    
      
      //gclee card - ing - 테스트시 사용

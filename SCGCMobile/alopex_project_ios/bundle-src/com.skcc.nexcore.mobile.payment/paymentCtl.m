@@ -15,16 +15,17 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
 @interface paymentCtl (){
     
     NSMutableDictionary *userParam;
-    
+    NSMutableDictionary *userParam2;
 }
 
 @end
 
 @implementation paymentCtl
 
-- (void)setParam:(NSMutableDictionary *)pUserParam
+- (void)setParam:(NSMutableDictionary *)pUserParam pUserParam2:(NSMutableDictionary *)pUserParam2
 {
     userParam = pUserParam;
+    userParam2 = pUserParam2;
 }
 
 - (void)viewDidLoad
@@ -41,43 +42,70 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         [self.view addSubview:self.webView];
         
         NSLog(@"in userParam values ==>%@", userParam);
+        NSLog(@"in userParam2 values ==>%@", userParam2);
       
         NSURL *url = [NSURL URLWithString: [userParam objectForKey:@"connectURL"]];
-
-//        var option = {
-//            "ordername" : vOrderName,
-//            "ordernumber" : vOrderNumber,
-//            "amount" : vAmount,
-//            "goodname" : vGoodName,
-//            "phoneno" : vPhoneNo,
-//            "cardCode" : vCardCode,
-//            "BPCode" : vBPCode,
-//            "connectURL" : vConnectURL
-//        };
+        NSString* sPayType = [userParam objectForKey:@"payType"];
+        NSMutableString *body = [[NSMutableString alloc] init];
         
-        NSString *body = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@",
-                          [userParam objectForKey:@"ordername"],
-                          [userParam objectForKey:@"ordernumber"],
-                          [userParam objectForKey:@"amount"],
-                          [userParam objectForKey:@"goodname"],
-                          [userParam objectForKey:@"phoneno"],
-                          [userParam objectForKey:@"cardCode"],
-                          [userParam objectForKey:@"BPCode"]
-                          ];
+        if([sPayType isEqualToString:@"MPI"]){
         
-        NSLog(@"url parameter values ==>%@", body);
+            
+            NSString *firstBody = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@&CANO=%@&DATA_TOTAL=%@&TERM_ID=%@&installment=%@",
+                                   [userParam objectForKey:@"ordername"],
+                                   [userParam objectForKey:@"ordernumber"],
+                                   [userParam objectForKey:@"amount"],
+                                   [userParam objectForKey:@"goodname"],
+                                   [userParam objectForKey:@"phoneno"],
+                                   [userParam objectForKey:@"cardCode"],
+                                   [userParam objectForKey:@"BPCode"],
+                                   [userParam objectForKey:@"CANO"],
+                                   [userParam objectForKey:@"DATA_TOTAL"],
+                                   [userParam objectForKey:@"TERM_ID"],
+                                   [userParam objectForKey:@"installment"]
+                                   ];
+            
+            [body appendString:firstBody];
+            
+            NSArray *dataArray = userParam2[@"paymentList"];
+            
+            if (dataArray) {
+                for (NSInteger i=0; i<[dataArray count]; i++) {
+                    if(i==0){
+                        [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", dataArray[i][@"RGUBUN"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BP_ADDRESS=%@", dataArray[i][@"BP_ADDRESS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&NAME_LAST=%@", dataArray[i][@"NAME_LAST"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BUKRS=%@", dataArray[i][@"BUKRS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BUTXT=%@", dataArray[i][@"BUTXT"]]];
+                        [body appendString:[NSString stringWithFormat:@"&STCD2=%@", dataArray[i][@"STCD2"]]];
+                        [body appendString:[NSString stringWithFormat:@"&COM_ADDRESS=%@", dataArray[i][@"COM_ADDRESS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&TEL_NUMBER=%@", dataArray[i][@"TEL_NUMBER"]]];
+                        [body appendString:[NSString stringWithFormat:@"&TOTAL_CARD_AM=%@", dataArray[i][@"TOTAL_CARD_AM"]]];
+                    }
+                    
+                    [body appendString:[NSString stringWithFormat:@"&LDO_CODE=%@", dataArray[i][@"LDO_CODE"]]];
+                    [body appendString:[NSString stringWithFormat:@"&SEQ=%@", dataArray[i][@"SEQ"]]];
+                    [body appendString:[NSString stringWithFormat:@"&GPART=%@", dataArray[i][@"GPART"]]];
+                    [body appendString:[NSString stringWithFormat:@"&VKONT=%@", dataArray[i][@"VKONT"]]];
+                    [body appendString:[NSString stringWithFormat:@"&OPBEL=%@", dataArray[i][@"OPBEL"]]];
+                    [body appendString:[NSString stringWithFormat:@"&FAEDN=%@", dataArray[i][@"FAEDN"]]];
+                    [body appendString:[NSString stringWithFormat:@"&STATUS=%@", dataArray[i][@"STATUS"]]];
+                    [body appendString:[NSString stringWithFormat:@"&BETRW=%@", dataArray[i][@"BETRW"]]];
+                }
+            }
+            
+            NSLog(@"url parameter values ==>%@", body);
+            
+        }else{ //ISP
+            
+        }
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url];
-        
         [request setHTTPMethod: @"POST"];
-        
         [request setHTTPBody: [body dataUsingEncoding: NSUTF8StringEncoding]];
-        
         [self.webView loadRequest: request];
         
     }
-
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -138,17 +166,23 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
     
     if([reqUrl rangeOfString:@"scgcmobile://before"].location != NSNotFound)
     {
-        //scgcmobile://before?param=rParam
-        
         NSLog(@"navigate before page.==>%@",reqUrl);
         
-        //reqUrl = @"scgcmobile://before?param=1";
-        NSRange range = [reqUrl rangeOfString:@"="];
-        range.location = range.location + 1;
-        NSString* param = [reqUrl substringFromIndex:range.location];
+        NSString* param = @"1";
         
         NSLog(@"param url==>%@", param);
-//        [self.delegate touchCloseButton];
+        [self.delegate paymentCtlSuccessCallback:param];
+        
+        return NO;
+    }
+    
+    if([reqUrl rangeOfString:@"scgcmobile://payment_success"].location != NSNotFound)
+    {
+        NSLog(@"navigate before page.==>%@",reqUrl);
+        
+        NSString* param = @"2";
+        
+        NSLog(@"param url==>%@", param);
         [self.delegate paymentCtlSuccessCallback:param];
         
         return NO;

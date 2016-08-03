@@ -65,7 +65,7 @@ function popCardResult(ss){
 		//1:취소(처음위치)
 		
 	}else if(ss == '2'){
-		//2:결제성공
+		//2:결제취소성공
 		navigateBackToNaviGo('MBLMG4M0');
 		
 	}else if(ss == '3'){
@@ -172,7 +172,7 @@ function goMenuBLMG02(){
 	if(device.osName != 'iOS'){
 	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
 	}else{
-	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash"); 
+	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
 	}    
 	
 	notiPop('확인','결제취소 완료되었습니다. .',true,false,null);
