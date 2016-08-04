@@ -65,7 +65,7 @@ function popCardResult(ss){
 		//1:취소(처음위치)
 		
 	}else if(ss == '2'){
-		//2:결제취소성공
+		//2:결제성공
 		navigateBackToNaviGo('MBLMG4M0');
 		
 	}else if(ss == '3'){
@@ -118,7 +118,7 @@ function goMenuBLMG02(){
 	var s1 = $('[name=chkc0]:checked')[0].value;
 	paymentList.push(gPaiedList.list.resultList[0]);
 	
-	  pCardCode = gPaiedList.list.resultList[0].CARDCOMPCD;
+	  pCardCode = gPaiedList.list.resultList[0].CCINS;
 	  pCardCode = getRealCardCodeTest(pCardCode);
 	  vConnectURL = getCardPayURL(pCardCode);
 
@@ -145,10 +145,10 @@ function goMenuBLMG02(){
     	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
     	     "TERM_ID" : gPaiedList.list.cardStoreInfoList[0].TERM_ID,
     	     "installment" : gPaiedList.list.cardStoreInfoList[0].ALLO_MONTH,
-    	     "RGUBUN" : "07"
+    	     "RGUBUN" : "07",
+    	     "payListCount" : paymentList.length
     	     };
      
-
 //     var option = {
 //    	     "ordername" : "ordername_test",
 //    	     "ordernumber" : "00001",
@@ -172,7 +172,7 @@ function goMenuBLMG02(){
 	if(device.osName != 'iOS'){
 	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
 	}else{
-	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
+	   	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
 	}    
 	
 	notiPop('확인','결제취소 완료되었습니다. .',true,false,null);
@@ -310,19 +310,19 @@ function viewPaidList(){
 	var pMbp = mbp.substring(0,1) + '000';
 	logf('gclee substring mbp: ' + JSON.stringify(pMbp));
 	
-//	var param = {
-//			"COMPCD" : pMbp,	
-//			"GUBUN" : '03',
-//			"CANO" : currentCa //test
-//	};
-	
 	var param = {
-			"COMPCD" : 'B000',	
+			"COMPCD" : pMbp,	
 			"GUBUN" : '06',
-			"CANO" : '15979102' //test
-//			"CANO" : String(Number(params.list.bpCaList[0].ca))
+			"CANO" : String(Number(currentCa))
 	};
 	
+//	var param = {
+//			"COMPCD" : 'B000',	
+//			"GUBUN" : '06',
+//			"CANO" : '15979102' //test
+////			"CANO" : String(Number(params.list.bpCaList[0].ca))
+//	};
+//	
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));
 	
 	setDefault();

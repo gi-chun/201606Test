@@ -43,7 +43,6 @@ function popCardResult(ss){
 	
 	if(ss == '1'){
 		//1:취소(처음위치)
-        //1:결제실패
 		
 	}else if(ss == '2'){
 		//2:결제성공
@@ -222,7 +221,6 @@ function goMenuBLMG02(){
 	
 	  pCardCode = getRealCardCodeTest(pCardCode);
 	  vConnectURL = getCardPayURL(pCardCode);
-    var vPayType = getPayType(pCardCode);
 
 	  var chkBPCA = getMainBPCA();
 	  var useBPCA = JSON.parse(chkBPCA);
@@ -243,8 +241,7 @@ function goMenuBLMG02(){
 //     "phoneno" : vPhoneNo,
 //     "cardCode" : vCardCode,
 //     "BPCode" : vBPCode,
-//     "connectURL" : vConnectURL,
-//     "payType: : vPayType
+//     "connectURL" : vConnectURL
 //     };
      
      var option = {
@@ -259,8 +256,8 @@ function goMenuBLMG02(){
     	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
     	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
     	     "installment" : $("#installment option:selected").val(),
-    	     "RGUBUN" : "04",
-         "payType" : vPayType
+    	     "RGUBUN" : "03",
+    	     "payListCount" : paymentList.length
     	     };
      
 
@@ -272,8 +269,7 @@ function goMenuBLMG02(){
 //    	     "phoneno" : "01000001111",
 //    	     "cardCode" : pCardCode,
 //    	     "BPCode" : "B000",
-//    	     "connectURL" : vConnectURL,
-//           "payType:    :
+//    	     "connectURL" : vConnectURL
 //    	     };
           
      logf("vPhoneNo : "+vPhoneNo);
@@ -287,19 +283,16 @@ function goMenuBLMG02(){
      
      //gclee card 임시 결제완료, 결제실패, 이전
      //잠시 주석
-    
-    //sniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-    
      if(device.osName != 'iOS'){
    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
      }else{
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
+   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
      }    
      
      //gclee card - ing - 테스트시 사용
 //     popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
      
-     refrash();
+//     refrash();
      
      
 };
@@ -349,18 +342,18 @@ function viewUnpaidList(){
 	var pMbp = mbp.substring(0,1) + '000';
 	logf('gclee substring mbp: ' + JSON.stringify(pMbp));
 	
-//	var param = {
-//			"COMPCD" : pMbp,	
-//			"GUBUN" : '04',
-//			"CANO" : currentCa
-//	};
-//	
 	var param = {
-			"COMPCD" : 'B000',	
+			"COMPCD" : pMbp,	
 			"GUBUN" : '04',
-			"CANO" : '15979102' //test
-//			"CANO" : String(Number(params.list.bpCaList[0].ca))
+			"CANO" : String(Number(currentCa))
 	};
+	
+//	var param = {
+//			"COMPCD" : 'B000',	
+//			"GUBUN" : '04',
+//			"CANO" : '15979102' //test
+////			"CANO" : String(Number(params.list.bpCaList[0].ca))
+//	};
 	
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));
 	

@@ -23,7 +23,7 @@
 @property(nonatomic, assign) id<paymentCtlDelegate> delegate;
 @property (nonatomic, strong) UIWebView *webView;
 
-- (void)setParam:(NSMutableDictionary *)pUserParam pUserParam2:(NSMutableDictionary *)pUserParam2;
+- (void)setParam:(NSMutableDictionary *)pUserParam pUserParam2:(NSArray *)pUserParam2;
 
 
 @end

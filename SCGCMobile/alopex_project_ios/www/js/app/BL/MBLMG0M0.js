@@ -471,6 +471,9 @@ function viewBillInfo(){
 	var param2 = JSON.parse(JSON.stringify(param));
 	param2.list = [{'bpCaList' : []}];
 	for(var i=0;i<params.list.bpCaList.length;i++){
+		if(i==0){
+			param2.mbtlnum = getAlopexCookie('uPhone');
+		}
 		param2.list[0].bpCaList[i] = {
 				"bp" : String(Number(params.list.bpCaList[i].bp)),	
 				"ca" : String(Number(params.list.bpCaList[i].ca))

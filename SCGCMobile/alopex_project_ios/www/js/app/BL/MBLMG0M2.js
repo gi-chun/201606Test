@@ -256,6 +256,7 @@ function doPage(opbelNo){
 		saveBillNo(params.DOC_HEADER_OPBEL);
 		//gclee login token
 		param = {
+				"mbtlnum" : getAlopexCookie('uPhone'),
 				"doc_header_opbel" : params.DOC_HEADER_OPBEL,
 				"bp" : String(Number(navigation.parameters.bp)),	
 				"ca" : String(Number(navigation.parameters.ca)),
@@ -273,6 +274,7 @@ function doPage(opbelNo){
 		
 		//gclee login token
 		param = {
+				"mbtlnum" : getAlopexCookie('uPhone'),
 				"doc_header_opbel" : opbelNo,
 				"bp" : String(Number(navigation.parameters.bp)),	
 				"ca" : String(Number(navigation.parameters.ca)),

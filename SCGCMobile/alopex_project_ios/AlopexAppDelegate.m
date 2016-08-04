@@ -383,7 +383,9 @@ NSString *pushServerIp_App = @"168.154.182.41";
                 
                 //Navigation *navigation = [Navigation getInstance];
                 //[[Navigation getIncetance] backToOrNavigate:pageInfo];
-                [[Navigation getIncetance] backToOrNavigate:pageInfo];
+                
+//                [[Navigation getIncetance] backToOrNavigate:pageInfo];
+                
                 //[self appDelegate].mNavigationManager.mNavController = nil;
                 
                 //[navigation backToOrNavigate:pageInfo];

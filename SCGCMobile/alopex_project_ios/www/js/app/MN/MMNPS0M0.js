@@ -20,8 +20,10 @@ function init(){
 	var pn = getAlopexCookie('uPhone');
 	var loginToken = getAlopexCookie('loginToken');
 	var lscDB = getAlopexCookie('lscDB');
-	var lscDB2 = getAlopexCookie('lscDB2')
-	var lscDB2All = getAlopexCookie('lscDB2All')
+	var lscDB2 = getAlopexCookie('lscDB2');
+	var lscDB2All = getAlopexCookie('lscDB2All');
+	var MainBP = getAlopexCookie('MainBP');
+	var MainBPCA = getAlopexCookie('MainBPCA');
 	
 	killAllSession();
 	killAllCookie();
@@ -33,6 +35,8 @@ function init(){
 	setAlopexCookie('lscDB',lscDB);
 	setAlopexCookie('lscDB2',lscDB2);
 	setAlopexCookie('lscDB2All',lscDB2All);
+	setAlopexCookie('MainBP', MainBP);
+	setAlopexCookie('MainBPCA', MainBPCA);
 	
 	var results = JSON.parse(lscDB2All);
 	var jsonResult = '';
@@ -229,7 +233,7 @@ function mainSetting(ccb){
 	setAlopexSession('mainPage',JSON.stringify(ccb));
 	logf(ccb);
 	// 자가검침이 입력된 경우 체크
-	if (ccb.custReadingresult == "0" ||cb.custReadingresult == "null") {
+	if (ccb.custReadingresult == "0" ||ccb.custReadingresult == "null") {
 		endME = false;
 		setAlopexSession('endME',endME);
 	}else{

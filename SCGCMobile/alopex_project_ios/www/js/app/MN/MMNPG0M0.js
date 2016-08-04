@@ -715,12 +715,13 @@ function mainSetting(cb) {
 	// 대표 BP 셋팅
 	// 메인 로고
 	// 센터 전화, 명
-
 	// 자가검침
 	if (selfChk) {
+
 		var mainBPCA = getMainBPCA();
 		var mbc = JSON.parse(mainBPCA);
 		chkstr += '3';
+		
 		if (cb.v_ablhinw == "10") {
 			chkstr += '4';
 			console
@@ -731,13 +732,13 @@ function mainSetting(cb) {
 			setAlopexCookie('selfChkSideOutCookie', selfChkSideOut);
 			// 자가검침이 note 10 외부지시부
 			// }else if(isOverChkDate(cb.e_adatsoll1,cb.s_adatsoll1)){
-//		} else if (isOverChkDateSpc(cb.e_adatsoll1, cb.s_adatsoll1,
-//				cb.adatsoll1, mbc.regiogroup)) {
-//			chkstr += '5';
-//			console.log('#################################################1');
-//			selfChk = true;
-//			setAlopexSession('selfChk', selfChk);
-//			setAlopexCookie('selfChkCookie', selfChk);
+		} else if (isOverChkDateSpc(cb.e_adatsoll1, cb.s_adatsoll1,
+				cb.adatsoll1, mbc.regiogroup)) {
+			chkstr += '5';
+			console.log('#################################################1');
+			selfChk = true;
+			setAlopexSession('selfChk', selfChk);
+			setAlopexCookie('selfChkCookie', selfChk);
 		} else {
 			chkstr += '6';
 			selfChkSideOut = false;

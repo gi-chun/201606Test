@@ -15,14 +15,14 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
 @interface paymentCtl (){
     
     NSMutableDictionary *userParam;
-    NSMutableDictionary *userParam2;
+    NSArray *userParam2;
 }
 
 @end
 
 @implementation paymentCtl
 
-- (void)setParam:(NSMutableDictionary *)pUserParam pUserParam2:(NSMutableDictionary *)pUserParam2
+- (void)setParam:(NSMutableDictionary *)pUserParam pUserParam2:(NSArray *)pUserParam2
 {
     userParam = pUserParam;
     userParam2 = pUserParam2;
@@ -46,11 +46,19 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
       
         NSURL *url = [NSURL URLWithString: [userParam objectForKey:@"connectURL"]];
         NSString* sPayType = [userParam objectForKey:@"payType"];
+        NSString* sPayListCount = [userParam objectForKey:@"payListCount"];
         NSMutableString *body = [[NSMutableString alloc] init];
         
-        if([sPayType isEqualToString:@"MPI"]){
+        NSLog(@"url sPayListCount values ==>%@", sPayListCount);
         
-            
+//        if([sPayType isEqualToString:@"MPI"]){
+        
+        
+//        if ([details objectForKey:@"My Data"] == [NSNull null]) {
+//            // Display the alert
+//        }
+        
+        
             NSString *firstBody = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@&CANO=%@&DATA_TOTAL=%@&TERM_ID=%@&installment=%@",
                                    [userParam objectForKey:@"ordername"],
                                    [userParam objectForKey:@"ordernumber"],
@@ -66,39 +74,43 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
                                    ];
             
             [body appendString:firstBody];
-            
-            NSArray *dataArray = userParam2[@"paymentList"];
-            
-            if (dataArray) {
-                for (NSInteger i=0; i<[dataArray count]; i++) {
+        
+             NSLog(@"url firstBody values ==>%@", body);
+        
+        NSInteger NSdiff = [sPayListCount intValue];
+        
+        
+            if (userParam2) {
+                for (NSInteger i=0; i<[userParam2 count]; i++) {
                     if(i==0){
-                        [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", dataArray[i][@"RGUBUN"]]];
-                        [body appendString:[NSString stringWithFormat:@"&BP_ADDRESS=%@", dataArray[i][@"BP_ADDRESS"]]];
-                        [body appendString:[NSString stringWithFormat:@"&NAME_LAST=%@", dataArray[i][@"NAME_LAST"]]];
-                        [body appendString:[NSString stringWithFormat:@"&BUKRS=%@", dataArray[i][@"BUKRS"]]];
-                        [body appendString:[NSString stringWithFormat:@"&BUTXT=%@", dataArray[i][@"BUTXT"]]];
-                        [body appendString:[NSString stringWithFormat:@"&STCD2=%@", dataArray[i][@"STCD2"]]];
-                        [body appendString:[NSString stringWithFormat:@"&COM_ADDRESS=%@", dataArray[i][@"COM_ADDRESS"]]];
-                        [body appendString:[NSString stringWithFormat:@"&TEL_NUMBER=%@", dataArray[i][@"TEL_NUMBER"]]];
-                        [body appendString:[NSString stringWithFormat:@"&TOTAL_CARD_AM=%@", dataArray[i][@"TOTAL_CARD_AM"]]];
+                        [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", userParam2[i][@"RGUBUN"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BP_ADDRESS=%@", userParam2[i][@"BP_ADDRESS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&NAME_LAST=%@", userParam2[i][@"NAME_LAST"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BUKRS=%@", userParam2[i][@"BUKRS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BUTXT=%@", userParam2[i][@"BUTXT"]]];
+                        [body appendString:[NSString stringWithFormat:@"&STCD2=%@", userParam2[i][@"STCD2"]]];
+                        [body appendString:[NSString stringWithFormat:@"&COM_ADDRESS=%@", userParam2[i][@"COM_ADDRESS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&TEL_NUMBER=%@", userParam2[i][@"TEL_NUMBER"]]];
+                        [body appendString:[NSString stringWithFormat:@"&TOTAL_CARD_AM=%@", userParam2[i][@"TOTAL_CARD_AM"]]];
                     }
                     
-                    [body appendString:[NSString stringWithFormat:@"&LDO_CODE=%@", dataArray[i][@"LDO_CODE"]]];
-                    [body appendString:[NSString stringWithFormat:@"&SEQ=%@", dataArray[i][@"SEQ"]]];
-                    [body appendString:[NSString stringWithFormat:@"&GPART=%@", dataArray[i][@"GPART"]]];
-                    [body appendString:[NSString stringWithFormat:@"&VKONT=%@", dataArray[i][@"VKONT"]]];
-                    [body appendString:[NSString stringWithFormat:@"&OPBEL=%@", dataArray[i][@"OPBEL"]]];
-                    [body appendString:[NSString stringWithFormat:@"&FAEDN=%@", dataArray[i][@"FAEDN"]]];
-                    [body appendString:[NSString stringWithFormat:@"&STATUS=%@", dataArray[i][@"STATUS"]]];
-                    [body appendString:[NSString stringWithFormat:@"&BETRW=%@", dataArray[i][@"BETRW"]]];
+                    [body appendString:[NSString stringWithFormat:@"&LDO_CODE=%@", userParam2[i][@"LDO_CODE"]]];
+                    [body appendString:[NSString stringWithFormat:@"&SEQ=%@", userParam2[i][@"SEQ"]]];
+                    [body appendString:[NSString stringWithFormat:@"&GPART=%@", userParam2[i][@"GPART"]]];
+                    [body appendString:[NSString stringWithFormat:@"&VKONT=%@", userParam2[i][@"VKONT"]]];
+                    [body appendString:[NSString stringWithFormat:@"&OPBEL=%@", userParam2[i][@"OPBEL"]]];
+                    [body appendString:[NSString stringWithFormat:@"&FAEDN=%@", userParam2[i][@"FAEDN"]]];
+                    [body appendString:[NSString stringWithFormat:@"&STATUS=%@", userParam2[i][@"STATUS"]]];
+                    [body appendString:[NSString stringWithFormat:@"&BETRW=%@", userParam2[i][@"BETRW"]]];
                 }
             }
             
+            
             NSLog(@"url parameter values ==>%@", body);
             
-        }else{ //ISP
-            
-        }
+//        }else{ //ISP
+//            
+//        }
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url];
         [request setHTTPMethod: @"POST"];

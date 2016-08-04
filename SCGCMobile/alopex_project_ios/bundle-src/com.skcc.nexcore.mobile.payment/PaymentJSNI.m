@@ -22,6 +22,7 @@ static DataManager *dataManager = nil;
     NSString *_successCallback;
     NSMutableDictionary *userParam;
     NSMutableDictionary *userParam2;
+    NSArray *dataArray;
 }
 
 @property (nonatomic, retain) UIViewController *paymentCtl;
@@ -116,8 +117,12 @@ static DataManager *dataManager = nil;
     if (arguments.count==3) {
         userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
         NSLog(@"from script userParam values ==>%@", userParam);
-        userParam2 = [[arguments objectAtIndex:1] JSONFragmentValue];
-        NSLog(@"from script userParam2 values ==>%@", userParam2);
+        
+        NSLog(@"from script arguments values ==>%@", [arguments objectAtIndex:1]);
+        
+        dataArray = [[arguments objectAtIndex:1] JSONValue];
+        
+        NSLog(@"from script dataArray values ==>%@", dataArray[0][@"RGUBUN"]);
         
         self.successCallback = [arguments objectAtIndex:2];
         
@@ -126,7 +131,7 @@ static DataManager *dataManager = nil;
     
     self.paymentCtl = [[[paymentCtl alloc] init] autorelease];
     ((paymentCtl*)self.paymentCtl).delegate = self;
-    [((paymentCtl*)self.paymentCtl) setParam:userParam pUserParam2:userParam2];
+    [((paymentCtl*)self.paymentCtl) setParam:userParam pUserParam2:dataArray];
     [topViewController presentViewController:self.paymentCtl animated:YES completion:nil];
     
 }
