@@ -60,7 +60,7 @@ function init(){
 //						logf("per json data : \n");
 //						logf( JSON.stringify(jsonResult));
 						//gclee push
-						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+						//logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
 						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
 					}
 					loge('@@@@@@@@gclee \n save lscDB2 \n');
@@ -144,28 +144,35 @@ function popPhone(pn){
 			
 			//gclee login token
 			//토큰이 없다면 sms인증 화면으로
-//			var chkLoginToken = getAlopexCookie('loginToken');
-//			logf('gclee MMNST0M0 chkLoginToken' + chkLoginToken);
-//			
-//			if(chkLoginToken == 'undefined' || chkLoginToken.length < 1){
-//				logf('gclee MMNST0M0 chkLoginToken #2' + chkLoginToken);
-//				navigateGo('MACHP0M0');
-//				return;
-//			}
+			var chkLoginToken = getAlopexCookie('loginToken');
+			logf('gclee MMNST0M0 chkLoginToken' + chkLoginToken);
+			
+			if(chkLoginToken == 'undefined' || chkLoginToken.length < 1){
+				logf('gclee MMNST0M0 chkLoginToken #2' + chkLoginToken);
+				chkLoginToken = '';
+//				navigateGo('MACHP0M0'); //오픈 후 일정기간 지난 뒤에 로그인 토큰 체크하도록 변경해야 함
+				return;
+			}
 			
 //			logf('gclee MMNST0M0 chkLoginToken #3' + chkLoginToken);
 			
 				//gclee login 80번은 신규
 				var param = {
-					"phoneNum" : vPn, "gubun" : "80"
+					"phoneNum" : vPn, "gubun" : "80", "token" : chkLoginToken
 				};
 				
 				logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
 				
 				httpSend("getAccInfo", param, function(cb){
-							
+					
 		    		logf("getAccInfo: " + cb);
 		    		logf("getAccInfo:joinCode: " + cb.joinCode);
+
+//		    		오픈 후 일정기간 지난 뒤에 로그인 토큰 체크하도록 변경해야 함
+//		    		if(cb.isTokenTrue == 'false'){
+//		    			navigateGo('MACHP0M0');
+//		    			return;
+//		    		}
 		    		
 		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
@@ -398,14 +405,28 @@ function contiLogin(){
 		//navigateGo('MACHP1M0');
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+//			navigateGo('MACHP0M0');
+			loginToken = '';
+			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		// 계량기 여러대
     		// 일치
     		
@@ -716,7 +737,7 @@ function runMainGo(rtCB){
 //	    	});
 //		}else{
 //			alert('변경 안함');
-		//gclee push test 잠시 주석	
+
 		navigateGo('MMNPG0M0',rtCB);
 			
 			//gclee push test

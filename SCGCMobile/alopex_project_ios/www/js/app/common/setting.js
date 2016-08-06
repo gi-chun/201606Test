@@ -417,6 +417,21 @@
 		}
 	}
 	
+	//gclee card
+	/**
+	 * 카드결제시 정해진 카드코드로 MPI vs ISP 구분
+	 * @param nm
+	 * @returns {String}
+	 */
+	function getPayType(nm){
+		 
+		if(nm.length > 2){ // 2자리 보다 크면 ISP (4자리 코드)
+			return "ISP";
+		}else{	           // 2자리 코드
+			return "MPI";
+		}
+	}
+	
 	/**
 	 * 상단 BP로고 가져오기
 	 * @returns
@@ -1262,6 +1277,47 @@
 //		}else{
 //			console.log("### clear cookie - end ###");
 //		}
+	}
+	
+	function killAllCookie(){
+		var uPhone = getAlopexCookie('uPhone');
+		var chkDisablePop = getAlopexCookie('chkDisablePop');
+		var change21_20150917 = getAlopexCookie('change21_20150917');
+		
+//		var b2 = getAlopexSession("CookieList");
+	//	var resetFlag = getAlopexCookie("resetFlag150817");
+//		if(resetFlag != 'true'){
+//			b2 = b2.split(',');
+//			for(var j=0;j<b2.length;j++){
+////				if(b2[j] == 'uPhone' || b2[j] == 'resetFlag' || b2[j] == 'pushID'){
+////					
+////				}else{
+//					setCookieKill(b2[j]);
+////				}
+//			}
+			preference.removeAll();
+			setSessionKill("CookieList");
+//			setAlopexCookie("resetFlag150817","true");
+			console.log("### clear cookie - complete ###");
+			setAlopexCookie('change21_20150917',change21_20150917);
+			setAlopexCookie('uPhone',uPhone);
+			setAlopexCookie('chkDisablePop',chkDisablePop);
+//		}else{
+//			console.log("### clear cookie - end ###");
+//		}
+	}
+	
+	function killAllCookieAndExceptLscDb(){
+		var b2 = getAlopexSession("CookieList");
+		b2 = b2.split(',');
+		for(var j=0;j<b2.length;j++){
+			logf(b2[j]);
+			if(b2[j] == 'uPhone' || b2[j] == 'loginToken' || b2[j] == 'lscDB' || b2[j] == 'lscDB2' || b2[j] == 'lscDB2All' || b2[j] == 'MainBP' || b2[j] == 'MainBPCA'){
+				
+			}else{
+				setCookieKill(b2[j]);
+			}
+		}
 	}
 	
 	function killAllExitCookie(){

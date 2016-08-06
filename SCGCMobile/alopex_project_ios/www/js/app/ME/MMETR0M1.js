@@ -56,6 +56,7 @@ function doPage(){
 		mainParam = getAlopexCookie('mainParamCookie');
 	}
 	var param = JSON.parse(mainParam);
+	param.mbtlnum = getAlopexCookie('uPhone');
 	
 	logf('gclee getMrSelfOrderInfo mainParam::'+mainParam);
 	setDefault();
@@ -74,11 +75,11 @@ function pageSetting(cb){
 //	var pr = params;
 	
 	//gclee login token
-	if(cb.isTokenTrue == 'false'){
-		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-		navigateGo('MACHP0M0');
-		return;
-	}
+//	if(cb.isTokenTrue == 'false'){
+//		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//		navigateGo('MACHP0M0');
+//		return;
+//	}
 	//gclee login token end
 	
 	logf(params);

@@ -291,11 +291,11 @@ function doPage(opbelNo){
 		var returnStr = JSON.stringify(cb);
 		
 		//gclee login token
-		if(cb.isTokenTrue == 'false'){
-			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-			navigateGo('MACHP0M0');
-			return;
-		}
+//		if(cb.isTokenTrue == 'false'){
+//			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//			navigateGo('MACHP0M0');
+//			return;
+//		}
 		//gclee login token end
 		
 		// 이전월 다음월

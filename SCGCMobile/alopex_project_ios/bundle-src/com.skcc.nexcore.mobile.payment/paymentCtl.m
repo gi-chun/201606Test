@@ -43,6 +43,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         
         NSLog(@"in userParam values ==>%@", userParam);
         NSLog(@"in userParam2 values ==>%@", userParam2);
+        NSLog(@"in URL values ==>%@", [userParam objectForKey:@"connectURL"]);
       
         NSURL *url = [NSURL URLWithString: [userParam objectForKey:@"connectURL"]];
         NSString* sPayType = [userParam objectForKey:@"payType"];
@@ -58,6 +59,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
 //            // Display the alert
 //        }
         
+            NSString *strListCount = [NSString stringWithFormat:@"%lu", (unsigned long)[userParam2 count]];
         
             NSString *firstBody = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@&CANO=%@&DATA_TOTAL=%@&TERM_ID=%@&installment=%@",
                                    [userParam objectForKey:@"ordername"],
@@ -68,7 +70,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
                                    [userParam objectForKey:@"cardCode"],
                                    [userParam objectForKey:@"BPCode"],
                                    [userParam objectForKey:@"CANO"],
-                                   [userParam objectForKey:@"DATA_TOTAL"],
+                                   strListCount,
                                    [userParam objectForKey:@"TERM_ID"],
                                    [userParam objectForKey:@"installment"]
                                    ];
@@ -83,7 +85,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
             if (userParam2) {
                 for (NSInteger i=0; i<[userParam2 count]; i++) {
                     if(i==0){
-                        [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", userParam2[i][@"RGUBUN"]]];
+                        [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", [userParam objectForKey:@"RGUBUN"]]];
                         [body appendString:[NSString stringWithFormat:@"&BP_ADDRESS=%@", userParam2[i][@"BP_ADDRESS"]]];
                         [body appendString:[NSString stringWithFormat:@"&NAME_LAST=%@", userParam2[i][@"NAME_LAST"]]];
                         [body appendString:[NSString stringWithFormat:@"&BUKRS=%@", userParam2[i][@"BUKRS"]]];
@@ -92,12 +94,25 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
                         [body appendString:[NSString stringWithFormat:@"&COM_ADDRESS=%@", userParam2[i][@"COM_ADDRESS"]]];
                         [body appendString:[NSString stringWithFormat:@"&TEL_NUMBER=%@", userParam2[i][@"TEL_NUMBER"]]];
                         [body appendString:[NSString stringWithFormat:@"&TOTAL_CARD_AM=%@", userParam2[i][@"TOTAL_CARD_AM"]]];
+                        [body appendString:[NSString stringWithFormat:@"&TOTAL_AMOUNT=%@", userParam2[i][@"TOTAL_AMOUNT"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CCDNO=%@", userParam2[i][@"CCDNO"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CSINO=%@", userParam2[i][@"CSINO"]]];
+                        [body appendString:[NSString stringWithFormat:@"&VAN_TR=%@", userParam2[i][@"VAN_TR"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CDSNG=%@", userParam2[i][@"CDSNG"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CCINS=%@", userParam2[i][@"CCINS"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CUHYY=%@", userParam2[i][@"CUHYY"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CUHMM=%@", userParam2[i][@"CUHMM"]]];
+                        [body appendString:[NSString stringWithFormat:@"&ALLO_MONTH=%@", userParam2[i][@"ALLO_MONTH"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CSI_DATE=%@", userParam2[i][@"CSI_DATE"]]];
+                        [body appendString:[NSString stringWithFormat:@"&CSI_TIME=%@", userParam2[i][@"CSI_TIME"]]];
+                        [body appendString:[NSString stringWithFormat:@"&BETRZ=%@", userParam2[i][@"BETRZ"]]];
+                        
                     }
                     
                     [body appendString:[NSString stringWithFormat:@"&LDO_CODE=%@", userParam2[i][@"LDO_CODE"]]];
                     [body appendString:[NSString stringWithFormat:@"&SEQ=%@", userParam2[i][@"SEQ"]]];
                     [body appendString:[NSString stringWithFormat:@"&GPART=%@", userParam2[i][@"GPART"]]];
-                    [body appendString:[NSString stringWithFormat:@"&VKONT=%@", userParam2[i][@"VKONT"]]];
+                    [body appendString:[NSString stringWithFormat:@"&VKONT=%@", userParam2[i][@"DVKONT"]]];
                     [body appendString:[NSString stringWithFormat:@"&OPBEL=%@", userParam2[i][@"OPBEL"]]];
                     [body appendString:[NSString stringWithFormat:@"&FAEDN=%@", userParam2[i][@"FAEDN"]]];
                     [body appendString:[NSString stringWithFormat:@"&STATUS=%@", userParam2[i][@"STATUS"]]];

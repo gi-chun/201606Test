@@ -167,15 +167,29 @@ function contiLogin(){
 		//navigateGo('MACHP1M0');
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+//			navigateGo('MACHP0M0');
+			loginToken = '';
+			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee getAccInfo MACHP1S0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		// 계량기 여러대
     		// 일치
     		

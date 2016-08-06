@@ -89,10 +89,58 @@ function initStart(st) {
 	// var mbp = getMainBP();
 	// bpInfo = JSON.parse(getAlopexCookie(mbp));
 	var mbp = JSON.parse(getMainBPCA());
-	bpInfo = JSON.parse(getAlopexCookie(mbp.regiogroup));
-	console.log(bpInfo);
-	setMainBP(bpInfo);
-	getMain();
+	try{
+		bpInfo = JSON.parse(getAlopexCookie(mbp.regiogroup));
+		setMainBP(bpInfo);
+		getMain();
+	}catch(e){
+		httpSend("getLscData", param, function(Mcb){
+			jsonResult = JSON.stringify(Mcb.list.Results);
+			logf("getLscData json data : \n");
+			logf(jsonResult);
+			setAlopexCookie('lscDB',jsonResult);
+			//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
+			//setAlopexCookie('lscDB',Mcb.list.Results);
+			loge('@@@@@@@@gclee \n save lscDB \n');
+			
+				// gclee lsc next /////////////////////////////////////////////////////////
+				 param = {
+						"lsc" : "test",
+					};
+		
+				httpSend("getLscNextData", param, function(Mcb){
+					jsonResult = JSON.stringify(Mcb.list.Results);
+					logf("getLscNextData json data : \n");
+					logf(jsonResult);
+					setAlopexCookie('lscDB2',jsonResult);
+					setAlopexCookie('lscDB2All', JSON.stringify(Mcb));
+					
+					for(var i=0;i<Mcb.list.Results.length;i++){
+						jsonResult = Mcb.list.Results[i];
+						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
+					}
+					loge('@@@@@@@@gclee \n save lscDB2 \n');
+					setMainBP(bpInfo);
+					getMain();
+					
+				}, function(errorCode, errorMessage){
+					if (errorCode == "9999") {
+						loge('error :: 9999 :: main');
+					} else {
+						loge('error :: other :: main');
+					}
+				});
+				/////////////////////////////////////////////////////////////////////////////
+			
+		}, function(errorCode, errorMessage){
+			if (errorCode == "9999") {
+				loge('error :: 9999 :: main');
+			} else {
+				loge('error :: other :: main');
+			}
+		});
+	}
 }
 
 function backTEST() {
@@ -764,10 +812,12 @@ function mainSetting(cb) {
 	if (!selfChk) {
 		chkstr += '9';
 		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0');
+		logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$0');
 		if (selfChkMulti) {
 			chkstr += 'a';
 			console
-					.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1');
+					.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1')
+		logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1');;
 			var adatsollStr = '<div>' + '	<h3>자가검침</h3>'
 					+ '	<p class="notime">자가검침 대상이<br />아닙니다.</p>' + '</div>';
 			$('#cont1_left').html(adatsollStr);
@@ -775,6 +825,7 @@ function mainSetting(cb) {
 			chkstr += 'b';
 			console
 					.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2');
+			logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2');
 			var adatsollStr = '<div>' + '	<h3>자가검침</h3>'
 					+ '	<p class="notime">자가검침 대상이<br />아닙니다.</p>' + '</div>';
 			$('#cont1_left').html(adatsollStr);
@@ -782,6 +833,7 @@ function mainSetting(cb) {
 			chkstr += 'c';
 			console
 					.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2');
+			logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3');
 			var adatsollStr = '<div>' + '	<h3>자가검침</h3>'
 					+ '	<p class="notime">자가검침 대상이<br />아닙니다.</p>' + '</div>';
 			$('#cont1_left').html(adatsollStr);
@@ -789,6 +841,7 @@ function mainSetting(cb) {
 			chkstr += 'd';
 			console
 					.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3');
+			logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4');
 			var adatsollStr = '<div>' + '	<h3>자가검침</h3>'
 					+ '	<p class="notime">자가검침 기간이<br />아닙니다.</p>' + '</div>';
 			$('#cont1_left').html(adatsollStr);
@@ -798,15 +851,18 @@ function mainSetting(cb) {
 	} else if (cb.adatsoll1 == '') {
 		chkstr += 'f';
 		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4');
+		logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5');
 		// 검침기간이 아닙니다.
 		logf('자가검침 no');
 	} else if (isChkEnd(cb.e_adatsoll1)) {
 		chkstr += 'g';
 		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5');
+		logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$6');
 		logf('자가검침 no111');
 	} else {
 		chkstr += 'h';
 		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7');
+		logf('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7');
 		var adatsollStr = '<div>' + '<h3 class="new">자가검침</h3>'
 				+ '<p class="dday"><span>' + getDDay(cb.e_adatsoll1)
 				+ '</span></p>' + '<p class="date">'
@@ -1150,6 +1206,8 @@ function mainSetting(cb) {
 //		}
 //	}
 	//gclee login end
+	
+	
 	var paramSS = {
 			'list' : [ {
 				'bpCaReqList' : []

@@ -9,7 +9,7 @@
 			<string>com.skens.scgc</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>scgcgass</string>
+				<string>scgcmobile</string>
 			</array>
 		</dict>
 	</array>

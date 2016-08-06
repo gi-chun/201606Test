@@ -208,14 +208,27 @@ function setEventListner(){
 
 function goLogin(){
 
+	//토큰이 없다면 sms인증 화면으로
+	var loginToken = getAlopexCookie('loginToken');
+	if(loginToken == 'undefined' || loginToken.length < 1){
+//		navigateGo('MACHP0M0');
+		loginToken = '';
+		return;
+	}
+	
 	var param = {
-		"phoneNum" : uPhone, "gubun" : "10"
+		"phoneNum" : uPhone, "gubun" : "10", "token" : loginToken
 	};
 
 	logf('gclee getAccInfo MACHP1M1 ' + JSON.stringify(param));
 
 	httpSend("getAccInfo", param, function(cb){
 		logf('cb',cb);
+		
+//		if(cb.isTokenTrue == 'false'){
+//			navigateGo('MACHP0M0');
+//			return;
+//		}
 		
 		var rtCB = clopCB(cb);
 //		if(cb.list.bpCaList[0].retCd == 'F'){

@@ -399,6 +399,16 @@ NSString *pushServerIp_App = @"168.154.182.41";
     
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    //scgcmobile://isp_success
+    //call page 수납
+    //scgcmobile://isp_fail
+    //call page 미수납 alert
+    NSLog(@"url recieved: %@", url);
+    
+    return YES;
+}
 
 
 @end

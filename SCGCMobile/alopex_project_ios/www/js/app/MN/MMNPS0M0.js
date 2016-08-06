@@ -17,27 +17,29 @@ var pushParams = '';
 function init(){
 	
 	//gclee push
-	var pn = getAlopexCookie('uPhone');
-	var loginToken = getAlopexCookie('loginToken');
-	var lscDB = getAlopexCookie('lscDB');
-	var lscDB2 = getAlopexCookie('lscDB2');
-	var lscDB2All = getAlopexCookie('lscDB2All');
-	var MainBP = getAlopexCookie('MainBP');
-	var MainBPCA = getAlopexCookie('MainBPCA');
+//	var pn = getAlopexCookie('uPhone');
+//	var loginToken = getAlopexCookie('loginToken');
+//	var lscDB = getAlopexCookie('lscDB');
+//	var lscDB2 = getAlopexCookie('lscDB2');
+//	var lscDB2All = getAlopexCookie('lscDB2All');
+//	var MainBP = getAlopexCookie('MainBP');
+//	var MainBPCA = getAlopexCookie('MainBPCA');
 	
 	killAllSession();
-	killAllCookie();
+//	killAllCookie();
+	killAllCookieAndExceptLscDb();
 	
 	pushParams = alopexController.parameters;  // push 파라미터 받기
 	
-	setAlopexCookie('uPhone',pn);
-	setAlopexCookie('loginToken',loginToken);
-	setAlopexCookie('lscDB',lscDB);
-	setAlopexCookie('lscDB2',lscDB2);
-	setAlopexCookie('lscDB2All',lscDB2All);
-	setAlopexCookie('MainBP', MainBP);
-	setAlopexCookie('MainBPCA', MainBPCA);
+//	setAlopexCookie('uPhone',pn);
+//	setAlopexCookie('loginToken',loginToken);
+//	setAlopexCookie('lscDB',lscDB);
+//	setAlopexCookie('lscDB2',lscDB2);
+//	setAlopexCookie('lscDB2All',lscDB2All);
+//	setAlopexCookie('MainBP', MainBP);
+//	setAlopexCookie('MainBPCA', MainBPCA);
 	
+	var lscDB2All = getAlopexCookie('lscDB2All');
 	var results = JSON.parse(lscDB2All);
 	var jsonResult = '';
 	for(var i=0;i<results.list.Results.length;i++){
@@ -97,14 +99,27 @@ function contiLogin(){
 		alopexController.exit();
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+			navigateGo('MACHP0M0');
+			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee MMNPS0M0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
     		logf('gclee MMNPS0M0 getAccInfo result: ', JSON.stringify(cb));
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		var rtCB = clopCB(cb);
     		logf('gclee MMNPS0M0 getAccInfo result rtCB : ', JSON.stringify(rtCB));
     		

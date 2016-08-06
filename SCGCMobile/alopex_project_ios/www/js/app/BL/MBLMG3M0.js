@@ -22,8 +22,18 @@ var vPhoneNo;
 var vCardCode;
 var vBPCode;
 var vConnectURL;
+var vInstallment;
+
+var pCardCode;
+var tAmount = 0;
+var paymentList = new Array();
+var ISP_TID = '';
 
 function mainStart(){
+	
+	settingLoading();
+	$('.imgloading').show();
+	
 	setEventListner();
 	
 	doPage();
@@ -57,8 +67,113 @@ function popCardResult(ss){
 			speed : 300,
 		});	
 		 
-	}    
+	}else if(ss == '4'){
+		//4:카드승인완료 후 결제요청
+		goRequestISPPay();
+	}        
 }
+
+function goRequestISPPay(){
+	//gclee card
+	logf(gUnpaiedList);
+	logf(gUnpaiedList.list.resultList);
+	logf('gclee MBLMG3M0 goRequestISPPay 결제요청 : ' + gUnpaiedList.list.resultList);
+
+//     logf("vPhoneNo : "+vPhoneNo);
+//     logf("vOrderName : "+vOrderName);
+//     logf("vOrderNumber : "+vOrderNumber);
+//     logf("vAmount : "+vAmount);
+//     logf("vGoodName : "+vGoodName);
+//     logf("vBPCode : "+vBPCode);
+//     logf("vConnectURL : "+vConnectURL);
+  	showProgressBarMsg('정보를 처리중입니다.');
+	
+  	var vExpYear = '2049';
+	var vExpMon = '12';
+	
+	var param = {
+				"certiGubun" : 'I',	
+				"RGUBUN" : '03',
+				"CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+				"expyear" : vExpYear,
+				"expmon" : vExpMon,
+				"installment" : vInstallment,
+				"amount" : tAmount,
+				"expdt" :  vExpYear.substring(2) + vExpMon,
+				"clientIp" : '',
+				"termID" : paymentList[0].TERM_ID,
+				"TID" : ISP_TID
+	};
+	
+	//gclee login token
+	logf('gclee goRequestISPPay MBLMG3M0 ' + JSON.stringify(param));
+	
+	var param2 = JSON.parse(JSON.stringify(param));
+	param2.list = [{'payList' : []}];
+	
+	for(var i=0;i<paymentList.length;i++){
+		
+		param2.list[0].payList[i] = {
+				"BP_ADDRESS" : paymentList[0].BP_ADDRESS,	
+				"NAME_LAST" : paymentList[0].NAME_LAST,
+				"DATA_TOTAL" : paymentList[0].DATA_TOTAL,
+				"TOTAL_AMOUNT" : paymentList[0].TOTAL_AMOUNT,
+				"TOTAL_CARD_AM" : paymentList[0].TOTAL_CARD_AM,
+				"BUKRS" : paymentList[0].BUKRS,
+				"BUTXT" : paymentList[0].BUTXT,
+				"STCD2" : paymentList[0].STCD2,
+				"COM_ADDRESS" : paymentList[0].COM_ADDRESS,
+				"TEL_NUMBER" : paymentList[0].TEL_NUMBER,
+				"LDO_CODE" : paymentList[0].LDO_CODE,
+				"SEQ" : paymentList[0].SEQ,
+				"GPART" : paymentList[0].GPART,
+				"VKONT" : paymentList[0].VKONT,
+				"OPBEL" : paymentList[0].OPBEL,
+				"FAEDN" : paymentList[0].FAEDN,
+				"STATUS" : paymentList[0].STATUS,
+				"BETRW" : paymentList[0].BETRW,
+				"BETRZ" : paymentList[0].BETRZ,
+				"CDSNG" : paymentList[0].CDSNG,
+				"CCINS" : paymentList[0].CCINS,
+				"CCDNO" : paymentList[0].CCDNO,
+				"CSI_DATE" : paymentList[0].CSI_DATE,
+				"CSI_TIME" : paymentList[0].CSI_TIME,
+				"CSINO" : paymentList[0].CSINO,
+				"CUHYY" : paymentList[0].CUHYY,
+				"CUHMM" : paymentList[0].CUHMM,
+				"ALLO_MONTH" : paymentList[0].ALLO_MONTH,
+				"VAN_TR" : paymentList[0].VAN_TR
+		};
+		
+	}
+
+	httpSend("putPayList", param, function(cb2){
+
+//		getCheckAccCodeSms
+//		if(Mcb.isSuccess == 'true'){
+//			
+//		}
+		if(cb2.resultYn == 'Y'){
+			
+			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
+			navigateBackToNaviGo('MBLMG4M0');
+			
+		}else{
+			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
+			
+		}
+		
+	}, function(errorCode, errorMessage){
+		if (errorCode == "9999") {
+			loge('error :: 9999 :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		} else {
+			loge('error :: other :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		}
+	});
+
+};
 
 function getRealCardCode(pCardCode){
 	
@@ -165,7 +280,7 @@ function getRealCardCodeTest(pCardCode){
 
 function goMenuBLMG02(){
 	//gclee card
-	var pCardCode = $("#cardSelect option:selected").val();
+	pCardCode = $("#cardSelect option:selected").val();
 	
 	logf(gUnpaiedList);
 	logf(gUnpaiedList.list.resultList);
@@ -195,8 +310,8 @@ function goMenuBLMG02(){
 	
 	var tempIndex = 0;
 	var tempCuIndex = 0;
-	var paymentList = new Array();
-	
+	//var paymentList = new Array();
+	tAmount = 0;
 	for(var i=0;i<$('[name=chkc0]:checked').length;i++){
 		
 		var s1 = $('[name=chkc0]:checked')[i].value;
@@ -209,6 +324,8 @@ function goMenuBLMG02(){
 			break;
 		}
 		paymentList.push(gUnpaiedList.list.resultList[s1]);
+		
+		tAmount += parseInt(gUnpaiedList.list.resultList[s1].BETRW);
 		tempIndex = tempCuIndex;
 	}
 	
@@ -228,66 +345,160 @@ function goMenuBLMG02(){
 	  vBPCode = vBPCode.substring(0, 1) + "000";
 	  
 	  logf("vBPCode : "+vBPCode);
-	  
-	  vAmount = gUnpaiedList.list.resultList[0].BETRW;
+	 
 	  vGoodName = gUnpaiedList.list.resultList[0].BUTXT;
 	  vPhoneNo = getAlopexCookie('uPhone');
+     
+	  vAmount = tAmount;
 	  
-//     var option = {
-//     "ordername" : vOrderName,
-//     "ordernumber" : vOrderNumber,
-//     "amount" : vAmount,
-//     "goodname" : vGoodName, //bpname
-//     "phoneno" : vPhoneNo,
-//     "cardCode" : vCardCode,
-//     "BPCode" : vBPCode,
-//     "connectURL" : vConnectURL
-//     };
-     
-     var option = {
-    	     "ordername" : "",
-    	     "ordernumber" : "",
-    	     "amount" : vAmount,
-    	     "goodname" : vGoodName, //bpname
-    	     "phoneno" : vPhoneNo,
-    	     "cardCode" : pCardCode,
-    	     "BPCode" : vBPCode,
-    	     "connectURL" : vConnectURL,
-    	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
-    	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
-    	     "installment" : $("#installment option:selected").val(),
-    	     "RGUBUN" : "03",
-    	     "payListCount" : paymentList.length
-    	     };
-     
+	 //MPI or ISP 분리
+	  var vPayType = getPayType(pCardCode);
+	  vInstallment = $("#installment option:selected").val();
+		
+	if( vPayType == 'MPI'){
+		
+		var option = {
+	    	     "ordername" : "",
+	    	     "ordernumber" : "",
+	    	     "amount" : vAmount,
+	    	     "goodname" : vGoodName, //bpname
+	    	     "phoneno" : vPhoneNo,
+	    	     "cardCode" : pCardCode,
+	    	     "BPCode" : vBPCode,
+	    	     "connectURL" : vConnectURL,
+	    	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+	    	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
+	    	     "installment" : vInstallment,
+	    	     "RGUBUN" : "03",
+	    	     "payListCount" : paymentList.length
+	    	     };
 
-//     var option = {
-//    	     "ordername" : "ordername_test",
-//    	     "ordernumber" : "00001",
-//    	     "amount" : "1004",
-//    	     "goodname" : "goodName_test",
-//    	     "phoneno" : "01000001111",
-//    	     "cardCode" : pCardCode,
-//    	     "BPCode" : "B000",
-//    	     "connectURL" : vConnectURL
-//    	     };
-          
-     logf("vPhoneNo : "+vPhoneNo);
-     logf("vOrderName : "+vOrderName);
-     logf("vOrderNumber : "+vOrderNumber);
-     logf("vAmount : "+vAmount);
-     logf("vGoodName : "+vGoodName);
-     logf("vCardCode : "+vCardCode);
-     logf("vBPCode : "+vBPCode);
-     logf("vConnectURL : "+vConnectURL);
-     
-     //gclee card 임시 결제완료, 결제실패, 이전
-     //잠시 주석
-     if(device.osName != 'iOS'){
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
-     }else{
-   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
-     }    
+	     logf("vPhoneNo : "+vPhoneNo);
+	     logf("vOrderName : "+vOrderName);
+	     logf("vOrderNumber : "+vOrderNumber);
+	     logf("vAmount : "+vAmount);
+	     logf("vGoodName : "+vGoodName);
+	     logf("vBPCode : "+vBPCode);
+	     logf("vConnectURL : "+vConnectURL);
+	     logf("vInstallment : "+vInstallment);
+	     
+	     //gclee card 임시 결제완료, 결제실패, 이전
+	     //잠시 주석
+	     if(device.osName != 'iOS'){
+	   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
+	     }else{
+	   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
+	     }    
+			
+	}else{ //ISP
+		
+		var Now = new Date();
+		var NowTime = Now.getFullYear()+"";
+		NowTime += NowTime.substring(2);
+		NowTime += Now.getMonth() + 1 ;
+		NowTime += Now.getDate();
+		NowTime += Now.getHours();
+		NowTime += Now.getMinutes();
+		NowTime += Now.getSeconds();
+		
+		//M1111_16072609337_00001
+		
+		ISP_TID = 'M'+gUnpaiedList.list.resultList[0].DVKONT+'_'+NowTime+'_'+'00001';
+		 
+		showProgressBarMsg('정보를 처리중입니다.');
+		  
+		setAlopexCookie('ISP_TID',ISP_TID);
+		
+		//gclee card -K0024 - A0029
+		//realform.KVP_PGID.value = "K0024";
+		var param = {
+				"PgId" : 'K0024',
+				"GoodName" : vGoodName,
+				"Price" : vAmount,
+				"Currency" : 'WON',
+				"NoInt" : String(Number(currentCa)),
+				"Noint_Inf" : String(Number(currentCa)),
+				"TID" : ISP_TID,
+				"CardCode" : pCardCode
+		};
+		
+		logf('gclee getIspCertResult MBLMG3M0 ' + param);
+	//	
+		httpSend("getIspSertResult", param, function(cb2){
+			
+			if(cb2.resultYn == 'N'){
+				
+				notiPop('확인','ISP 카드승인 요청이 실패했습니다.',true,false,null);
+				return;
+				
+			}
+			
+	
+			var gdnvUrl = '';
+			var gdnvId = '';
+			if (device.osName == 'Android') {
+				gdnvUrl = 'http://mobile.vpay.co.kr/jsp/MISP/andown.jsp';
+				gdnvId = 'ispmobile://?TID='+ISP_TID;
+			} else {
+				gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
+				gdnvId = 'ispmobile://?TID='+ISP_TID;
+			}
+			
+			//call ISP APP
+			application.hasApp(gdnvId,function(rt) {
+				console.log(rt);
+				if (rt) {
+					application.startApplication(gdnvId);
+				} else {
+					notiPop(
+							'안내',
+							'결제를 위한 ISP앱이 설치되어있지 않습니다.<br/>설치 화면으로 이동하시겠습니까?',
+							true,
+							false,
+							{
+								list : [
+										{
+											type : '',
+											id : 'pCancelOK',
+											name : 'Store 이동'
+										},
+										{
+											type : '0',
+											id : 'pCancelNO',
+											name : '닫기'
+										} ]
+							});
+
+					$('.pCancelOK')
+							.click(
+									function() {
+										// url 연결
+										application.startWebBrowser(gdnvUrl);
+									});
+
+					$('.pCancelNO').click(
+							function() {
+								notiPopID.close();
+							});
+				}
+			});
+			
+			
+			//gclee ISP 임시 결제요청 수동호출
+			//goRequestISPPay();
+			
+		}, function(errorCode, errorMessage){
+			if (errorCode == "9999") {
+				loge('error :: 9999 :: hsUsrCommit');
+				alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+			} else {
+				loge('error :: other :: hsUsrCommit');
+				alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+			}
+		});
+		
+		
+	}
      
      //gclee card - ing - 테스트시 사용
 //     popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
@@ -410,12 +621,16 @@ function viewUnpaidList(){
 //				navigateGo('MBLMG0M2',param);
 				navigateBackToNaviParamGo('MBLMG0M2',param);
 				
-				//gclee bill end
-				
 		    });
+			
 		};
 		
+		completLoad();
+		
 	}, function(errorCode, errorMessage){
+		
+		completLoad();
+		
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: main');
 		} else {
