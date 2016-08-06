@@ -153,6 +153,8 @@ function goRequestISPPay(){
 //		if(Mcb.isSuccess == 'true'){
 //			
 //		}
+		hideProgressBar();
+		
 		if(cb2.resultYn == 'Y'){
 			
 			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
@@ -164,6 +166,8 @@ function goRequestISPPay(){
 		}
 		
 	}, function(errorCode, errorMessage){
+		
+		hideProgressBar();
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: hsUsrCommit');
 			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
@@ -414,17 +418,29 @@ function goMenuBLMG02(){
 		var param = {
 				"PgId" : 'K0024',
 				"GoodName" : vGoodName,
-				"Price" : vAmount,
+				"Price" : vAmount+"",
 				"Currency" : 'WON',
-				"NoInt" : String(Number(currentCa)),
-				"Noint_Inf" : String(Number(currentCa)),
+				"NoInt" : '0',
+				"Noint_Inf" : vInstallment,
 				"TID" : ISP_TID,
-				"CardCode" : pCardCode
+				"CardCode" : pCardCode,
+				"LoginGubun" : '',
+				"ReturnUrl" : '',
+				"WAPUrl" : '',
+				"HpNum" : '',
+				"MerchantNo" : '',
+				"Tcode" : '',
+				"IpAddr" : '',
+				"CancelUrl" : ''
+				
 		};
 		
 		logf('gclee getIspCertResult MBLMG3M0 ' + param);
 	//	
-		httpSend("getIspSertResult", param, function(cb2){
+		httpSend("getIspCertResult", param, function(cb2){
+			
+			
+			hideProgressBar();
 			
 			if(cb2.resultYn == 'N'){
 				
@@ -438,7 +454,7 @@ function goMenuBLMG02(){
 			var gdnvId = '';
 			if (device.osName == 'Android') {
 				gdnvUrl = 'http://mobile.vpay.co.kr/jsp/MISP/andown.jsp';
-				gdnvId = 'ispmobile://?TID='+ISP_TID;
+				gdnvId = 'kvp.jjy.MispAndroid320';
 			} else {
 				gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
 				gdnvId = 'ispmobile://?TID='+ISP_TID;
@@ -446,7 +462,7 @@ function goMenuBLMG02(){
 			
 			//call ISP APP
 			application.hasApp(gdnvId,function(rt) {
-				console.log(rt);
+				hideProgressBar();
 				if (rt) {
 					application.startApplication(gdnvId);
 				} else {

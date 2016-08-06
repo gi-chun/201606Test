@@ -401,11 +401,22 @@ NSString *pushServerIp_App = @"168.154.182.41";
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     
-    //scgcmobile://isp_success
-    //call page 수납
-    //scgcmobile://isp_fail
-    //call page 미수납 alert
     NSLog(@"url recieved: %@", url);
+    
+    NSString *myString = url.absoluteString;
+    
+    if([myString rangeOfString:@"isp_success"].location != NSNotFound)
+    {
+        NSString *jsString = [NSString stringWithFormat:@"%s(\"4\");", "popCardResult"];
+        
+        
+        UIWebView* thisView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
+        
+        [thisView stringByEvaluatingJavaScriptFromString:jsString];
+        
+    }else{
+        
+    }
     
     return YES;
 }

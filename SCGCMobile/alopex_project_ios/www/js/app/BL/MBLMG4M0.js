@@ -249,6 +249,8 @@ function goMenuBLMG02(){
 //				
 //			}
 			
+			hideProgressBar();
+			
 			if(cb2.resultYn == 'N'){
 				
 				notiPop('확인','ISP 결체취소가 실패했습니다.',true,false,null);
@@ -261,6 +263,9 @@ function goMenuBLMG02(){
 			
 			
 		}, function(errorCode, errorMessage){
+			
+			hideProgressBar();
+			
 			if (errorCode == "9999") {
 				loge('error :: 9999 :: hsUsrCommit');
 				alert('처리에 실패했습니다.\n다시 요청바랍니다.');
