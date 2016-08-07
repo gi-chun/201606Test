@@ -213,7 +213,7 @@ function goLogin(){
 	if(loginToken == 'undefined' || loginToken.length < 1){
 //		navigateGo('MACHP0M0');
 		loginToken = '';
-		return;
+//		return;
 	}
 	
 	var param = {

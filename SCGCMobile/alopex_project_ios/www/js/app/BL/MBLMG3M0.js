@@ -41,7 +41,22 @@ function mainStart(){
 
 function setEventListner(){    	
 
-	
+	$('#cardSelect').change(function(){
+		
+		var tCardCode = $("#cardSelect option:selected").val();
+		tCardCode = getRealCardCodeTest(tCardCode);
+		var tPayType = getPayType(tCardCode);
+				
+		if( tPayType == 'MPI'){
+			$('#label_Tcode').hide();
+			$('#select_box3').hide();
+		}else{
+			$('#label_Tcode').show();
+			$('#select_box3').show();
+		}
+        
+    });
+
 };
 
 //gclee card - ing
@@ -153,8 +168,6 @@ function goRequestISPPay(){
 //		if(Mcb.isSuccess == 'true'){
 //			
 //		}
-		hideProgressBar();
-		
 		if(cb2.resultYn == 'Y'){
 			
 			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
@@ -166,8 +179,6 @@ function goRequestISPPay(){
 		}
 		
 	}, function(errorCode, errorMessage){
-		
-		hideProgressBar();
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: hsUsrCommit');
 			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
@@ -280,6 +291,10 @@ function getRealCardCodeTest(pCardCode){
 	}else if(pCardCode == '59'){
 		return '0100';
 	}
+}
+
+function goTestISPPaied(){
+	goRequestISPPay();
 }
 
 function goMenuBLMG02(){
@@ -415,6 +430,8 @@ function goMenuBLMG02(){
 		
 		//gclee card -K0024 - A0029
 		//realform.KVP_PGID.value = "K0024";
+		//ISP인경우 HpNum(전화번호), Tcode(통신사) 필수, Tcode 결제시 입력하면 추가예정
+		//skt,ktf,lgt
 		var param = {
 				"PgId" : 'K0024',
 				"GoodName" : vGoodName,
@@ -427,9 +444,9 @@ function goMenuBLMG02(){
 				"LoginGubun" : '',
 				"ReturnUrl" : '',
 				"WAPUrl" : '',
-				"HpNum" : '',
+				"HpNum" : vPhoneNo,
 				"MerchantNo" : '',
-				"Tcode" : '',
+				"Tcode" : 'skt',
 				"IpAddr" : '',
 				"CancelUrl" : ''
 				
@@ -439,66 +456,78 @@ function goMenuBLMG02(){
 	//	
 		httpSend("getIspCertResult", param, function(cb2){
 			
-			
 			hideProgressBar();
 			
-			if(cb2.resultYn == 'N'){
-				
+			if((cb2.ResultCode == '10001000')==false){
 				notiPop('확인','ISP 카드승인 요청이 실패했습니다.',true,false,null);
 				return;
-				
 			}
-			
 	
-			var gdnvUrl = '';
-			var gdnvId = '';
 			if (device.osName == 'Android') {
-				gdnvUrl = 'http://mobile.vpay.co.kr/jsp/MISP/andown.jsp';
-				gdnvId = 'kvp.jjy.MispAndroid320';
-			} else {
-				gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
-				gdnvId = 'ispmobile://?TID='+ISP_TID;
-			}
-			
-			//call ISP APP
-			application.hasApp(gdnvId,function(rt) {
-				hideProgressBar();
-				if (rt) {
-					application.startApplication(gdnvId);
+				
+				var gdnvUrl = '';
+				var gdnvId = '';
+				if (device.osName == 'Android') {
+					gdnvUrl = 'http://mobile.vpay.co.kr/jsp/MISP/andown.jsp';
+					gdnvId = 'kvp.jjy.MispAndroid320';
 				} else {
-					notiPop(
-							'안내',
-							'결제를 위한 ISP앱이 설치되어있지 않습니다.<br/>설치 화면으로 이동하시겠습니까?',
-							true,
-							false,
-							{
-								list : [
-										{
-											type : '',
-											id : 'pCancelOK',
-											name : 'Store 이동'
-										},
-										{
-											type : '0',
-											id : 'pCancelNO',
-											name : '닫기'
-										} ]
-							});
-
-					$('.pCancelOK')
-							.click(
-									function() {
-										// url 연결
-										application.startWebBrowser(gdnvUrl);
-									});
-
-					$('.pCancelNO').click(
-							function() {
-								notiPopID.close();
-							});
+					gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
+					gdnvId = 'ispmobile://?TID='+ISP_TID;
 				}
-			});
-			
+				
+				//call ISP APP
+				application.hasApp(gdnvId,function(rt) {
+					hideProgressBar();
+					if (rt) {
+//						application.startApplication(gdnvId);
+						if (device.osName == 'Android') {
+							jsniCaller.invoke("CallSchemeUrl.call", "ispmobile://?TID="+ISP_TID);
+						} else {
+							gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
+							gdnvId = 'ispmobile://?TID='+ISP_TID;
+						}
+					} else {
+						notiPop(
+								'안내',
+								'결제를 위한 ISP앱이 설치되어있지 않습니다.<br/>설치 화면으로 이동하시겠습니까?',
+								true,
+								false,
+								{
+									list : [
+											{
+												type : '',
+												id : 'pCancelOK',
+												name : 'Store 이동'
+											},
+											{
+												type : '0',
+												id : 'pCancelNO',
+												name : '닫기'
+											} ]
+								});
+
+						$('.pCancelOK')
+								.click(
+										function() {
+											// url 연결
+											application.startWebBrowser(gdnvUrl);
+										});
+
+						$('.pCancelNO').click(
+								function() {
+									notiPopID.close();
+								});
+					}
+				});
+				
+			}else{
+				//iOS
+				var option = {
+					      "schemeUrl" : 'ispmobile://?TID='+ISP_TID
+				};
+					      
+			   jsniCaller.invoke("PaymentJSNI.callISPApp", JSON.stringify(option), "popCardResult");
+			}
 			
 			//gclee ISP 임시 결제요청 수동호출
 			//goRequestISPPay();
@@ -585,6 +614,9 @@ function viewUnpaidList(){
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));
 	
 	setDefault();
+	
+	$('#label_Tcode').hide();
+	$('#select_box3').hide();
 	
 	httpSend("getPayList", param, function(cb){
 		gUnpaiedList = cb;

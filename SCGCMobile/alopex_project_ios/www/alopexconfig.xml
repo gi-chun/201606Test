@@ -59,5 +59,6 @@
       <userDefinedJSNI class="com.skcc.nexcore.mobile.payment.PaymentJSNI"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.MarketVersionCheck"></userDefinedJSNI>
       <userDefinedJSNI class="etc.skcc.alopex.jsni.GcmPushManager"></userDefinedJSNI>
+      <userDefinedJSNI class="etc.skcc.alopex.jsni.CallSchemeUrl"></userDefinedJSNI>
   </userDefinedJSNIList>
 </alopexconfig>

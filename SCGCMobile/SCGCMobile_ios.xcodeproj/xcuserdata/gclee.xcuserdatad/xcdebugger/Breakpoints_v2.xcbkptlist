@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.payment/PaymentJSNI.m"
-            timestampString = "492004405.628279"
+            timestampString = "492240536.74121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "-showPaymentCtl:withDict:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,12 +90,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "alopex_project_ios/AlopexAppDelegate.m"
-            timestampString = "492182353.240282"
+            timestampString = "492249139.563527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
             landmarkName = "-application:handleOpenURL:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.payment/PaymentJSNI.m"
+            timestampString = "492250494.492906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-callISPApp:withDict:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

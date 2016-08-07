@@ -103,7 +103,7 @@ function contiLogin(){
 		var loginToken = getAlopexCookie('loginToken');
 		if(loginToken == 'undefined' || loginToken.length < 1){
 			navigateGo('MACHP0M0');
-			return;
+//			return;
 		}
 		
 		//gclee login

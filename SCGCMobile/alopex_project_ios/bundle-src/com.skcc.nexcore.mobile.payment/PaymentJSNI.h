@@ -15,6 +15,7 @@
 
 - (void)showPaymentCtl:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)setPushToken:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)callISPApp:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)paymentCtlSuccessCallback:(NSString *)result;
 - (void)touchCloseButton;
 @end

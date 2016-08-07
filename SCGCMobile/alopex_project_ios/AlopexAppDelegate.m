@@ -401,22 +401,22 @@ NSString *pushServerIp_App = @"168.154.182.41";
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     
-    NSLog(@"url recieved: %@", url);
+    NSLog(@"url ********************************** recieved: %@", url);
     
-    NSString *myString = url.absoluteString;
+//    NSString *myString = url.absoluteString;
     
-    if([myString rangeOfString:@"isp_success"].location != NSNotFound)
-    {
-        NSString *jsString = [NSString stringWithFormat:@"%s(\"4\");", "popCardResult"];
-        
-        
-        UIWebView* thisView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
-        
-        [thisView stringByEvaluatingJavaScriptFromString:jsString];
-        
-    }else{
-        
-    }
+//    if([myString rangeOfString:@"isp_success"].location != NSNotFound)
+//    {
+//        NSString *jsString = [NSString stringWithFormat:@"%s(\"4\");", "popCardResult"];
+//        
+//        
+////        UIWebView* thisView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
+////        
+////        [thisView stringByEvaluatingJavaScriptFromString:jsString];
+//    
+//    }else{
+//        
+//    }
     
     return YES;
 }

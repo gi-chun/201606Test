@@ -69,7 +69,8 @@
 		<p class="txt_red">납기일 과거 건부터 다수의 결제를 선택하실 수 있습니다.</p>
 		<p><strong class="bold">카드선택</strong></p>
 		<div id="select_box" >
-			<select id="cardSelect" title="select color name="신용카드">
+			<!-- <select id="cardSelect" title="select color name="신용카드"> -->
+			<select id="cardSelect" name="신용카드">
 				<option value="1">외환카드</option>
 				<option value="2">삼성카드</option>
 				<option value="4">현대카드</option>
@@ -104,7 +105,20 @@
 			</select>
 		</div>
 		
+		<div id="label_Tcode">
+		<p><strong class="bold" >통신사선택</strong></p>
+		</div>
+		
+		<div id="select_box3">
+			<select id="select_Tcode">
+				<option value="skt">SKT</option>
+				<option value="ktf">KTF</option>
+				<option value="lgt">LGT</option>
+			</select>
+		</div>
+		
 		<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >결제하기</a></p>
+		<p class="tac pt10"><a href="javascript:goTestISPPaied();" class="Button red big" >ISP결제요청</a></p>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../js/app/common/foot.js"></script>

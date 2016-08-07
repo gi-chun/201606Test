@@ -151,7 +151,7 @@ function popPhone(pn){
 				logf('gclee MMNST0M0 chkLoginToken #2' + chkLoginToken);
 				chkLoginToken = '';
 //				navigateGo('MACHP0M0'); //오픈 후 일정기간 지난 뒤에 로그인 토큰 체크하도록 변경해야 함
-				return;
+//				return;
 			}
 			
 //			logf('gclee MMNST0M0 chkLoginToken #3' + chkLoginToken);
@@ -410,7 +410,7 @@ function contiLogin(){
 		if(loginToken == 'undefined' || loginToken.length < 1){
 //			navigateGo('MACHP0M0');
 			loginToken = '';
-			return;
+//			return;
 		}
 		
 		//gclee login

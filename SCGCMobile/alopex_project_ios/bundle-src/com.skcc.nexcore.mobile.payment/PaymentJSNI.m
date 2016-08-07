@@ -33,9 +33,31 @@ static DataManager *dataManager = nil;
 @implementation PaymentJSNI
 
 
+- (void)callISPApp:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+    
+    NSLog(@" callISPApp from arguments values ==>%@", arguments);
+    
+    if (arguments.count==2) {
+        userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
+        NSLog(@"from callISPApp userParam values ==>%@", userParam);
+    }
+    
+    NSString* schemeUrl = [userParam objectForKey:@"schemeUrl"];
+    NSLog(@"callISPApp schemeUrl values ==>%@", schemeUrl);
+
+    BOOL installedApp = [[UIApplication sharedApplication] openURL: [NSURL URLWithString:schemeUrl]];
+    if(installedApp != 1)
+    {
+        NSLog(@"callISPApp . not ispApp install appstore go!!");
+        NSURL *downloadUrl = [NSURL URLWithString:@"http://itunes.apple.com/kr/app/id369125087?mt=8"];
+        [[UIApplication sharedApplication] openURL:downloadUrl];
+    }
+    
+}
+
 - (void)setPushToken:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     
-    NSLog(@"from arguments values ==>%@", arguments);
+    NSLog(@"setPushToken from arguments values ==>%@", arguments);
     
     if (arguments.count==2) {
         userParam = [[arguments objectAtIndex:0] JSONFragmentValue];
