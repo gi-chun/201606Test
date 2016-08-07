@@ -89,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "alopex_project_ios/AlopexAppDelegate.m"
-            timestampString = "492249139.563527"
+            filePath = "alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.payment/PaymentJSNI.m"
+            timestampString = "492250494.492906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "404"
-            endingLineNumber = "404"
-            landmarkName = "-application:handleOpenURL:"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-callISPApp:withDict:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "alopex_project_ios/bundle-src/com.skcc.nexcore.mobile.payment/PaymentJSNI.m"
-            timestampString = "492250494.492906"
+            filePath = "alopex_project_ios/AlopexAppDelegate.m"
+            timestampString = "492275793.943628"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-callISPApp:withDict:"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "-application:openURL:sourceApplication:annotation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

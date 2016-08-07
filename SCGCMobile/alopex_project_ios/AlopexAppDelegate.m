@@ -399,27 +399,36 @@ NSString *pushServerIp_App = @"168.154.182.41";
     
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
-    NSLog(@"url ********************************** recieved: %@", url);
+    NSString *myString = url.absoluteString;
+    NSLog(@"myString :  %@ ", myString);
     
-//    NSString *myString = url.absoluteString;
+    NSMutableDictionary* pageInfo = [[NSMutableDictionary alloc] init];
     
-//    if([myString rangeOfString:@"isp_success"].location != NSNotFound)
-//    {
-//        NSString *jsString = [NSString stringWithFormat:@"%s(\"4\");", "popCardResult"];
-//        
-//        
-////        UIWebView* thisView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
-////        
-////        [thisView stringByEvaluatingJavaScriptFromString:jsString];
-//    
-//    }else{
-//        
-//    }
+    if([myString rangeOfString:@"isp_success"].location != NSNotFound)
+    {
+        NSString *jsString = [NSString stringWithFormat:@"%@(\"4\");", @"popCardResult"];
+        [pageInfo setObject:@"MBLMG3M0" forKey:@"pageId"];
+        [pageInfo setObject:@"4" forKey:@"isp_result"];
+
+        NSLog(@"\n@@@@@@@ 4 pageInfo : \n%@", pageInfo);
+        [[Navigation getIncetance] backToOrNavigate:pageInfo];
+        //[mCurrentWebview stringByEvaluatingJavaScriptFromString:jsString];
+        
+    }else{
+        NSString *jsString = [NSString stringWithFormat:@"%@(\"5\");", @"popCardResult"];
+        [pageInfo setObject:@"MBLMG3M0" forKey:@"pageId"];
+        [pageInfo setObject:@"5" forKey:@"isp_result"];
+        NSLog(@"\n@@@@@@@ 5 pageInfo : \n%@", pageInfo);
+        [[Navigation getIncetance] backToOrNavigate:pageInfo];
+
+        [mCurrentWebview stringByEvaluatingJavaScriptFromString:jsString];
+       
+    }
     
     return YES;
+    
 }
-
 
 @end

@@ -1,6 +1,9 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++5C08A37",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "84B227E350DBCC6D2325F89B00282C171324B1CE+++5C08A37",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "84B227E350DBCC6D2325F89B00282C171324B1CE+++5C08A37" : {
+
+    },
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++2DF6761" : {
 
     },
@@ -10,17 +13,14 @@
     "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++936BE2C" : {
 
     },
-    "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++5C08A37" : {
-
-    },
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++59922ED" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++936BE2C" : 0,
-    "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++5C08A37" : 0,
     "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++171799E" : 0,
+    "84B227E350DBCC6D2325F89B00282C171324B1CE+++5C08A37" : 0,
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++013A3C9" : 0,
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++82F7754" : 0,
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++2DF6761" : 0,
@@ -29,8 +29,8 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "628536F7-1C3B-4EC5-9848-5275C100408F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++936BE2C" : "work_temp_2\/",
-    "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++5C08A37" : "gassPrj\/",
     "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++171799E" : "work_gas\/",
+    "84B227E350DBCC6D2325F89B00282C171324B1CE+++5C08A37" : "gassPrj\/",
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++013A3C9" : "gassPrj\/",
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++82F7754" : "201606Test\/",
     "84B227E350DBCC6D2325F89B00282C171324B1CE+++2DF6761" : "201606Test\/",
@@ -44,11 +44,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.9.100.134\/svn\/smartCGC",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++171799E"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.9.100.134\/svn\/smartCGC",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "489750df-3ce5-3f42-8493-6e9501b0d2b2++3458+++5C08A37"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gi-chun\/201606Test.git",
@@ -69,6 +64,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.9.100.134\/svn\/smartCGC",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "84B227E350DBCC6D2325F89B00282C171324B1CE+++59922ED"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.9.100.134\/svn\/smartCGC",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "84B227E350DBCC6D2325F89B00282C171324B1CE+++5C08A37"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gi-chun\/201606Test.git",
