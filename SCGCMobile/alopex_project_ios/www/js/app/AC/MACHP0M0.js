@@ -20,41 +20,9 @@ $a.page(function(){
 //gclee login token
 function popPhone(pn){
 //	setAlopexCookie('uPhone',codePhoneNM(pn));
-//	$('#pn').text(pn);
-//	$('#pn').val(pn);
-	
+	pn = pn.replace(/-/gi, '');
+	$('#pn').val(pn);
 };
-
-
-
-function popCardResult(ss){
-    
-    //1:취소(처음위치), 2:결제성공(결제목록화면이동), 3:결제실패(결제실패하였습니다. 다시 시도하십시요! alert)
-    
-    logf('popCardResult param = ' + ss);
-    
-    if(ss == '1'){
-        //1:취소(처음위치)
-        
-    }else if(ss == '2'){
-        //2:결제성공
-        navigateBackToNaviGo('MBLMG4M0');
-        
-    }else if(ss == '3'){
-        //3:결제실패
-        //alert
-        
-        popPayFail = $('.confirm_payFail').bPopup({
-                                                  opacity : 0.6,
-                                                  speed : 300,
-                                                  });	
-        
-    }else if(ss == '4'){
-        //4:카드승인완료 후 결제요청
-        alert("gclee zzzzzz");
-    }        
-}
-
 
 function setEventListner(){
 	$('#pop_certify_re').click(function(){

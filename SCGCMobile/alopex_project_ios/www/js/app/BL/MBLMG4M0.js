@@ -23,12 +23,135 @@ var vPhoneNo;
 var vCardCode;
 var vBPCode;
 var vConnectURL;
+var ispParams = '';
 
 function mainStart(){
 	setEventListner();
 	
+	//ios IPS 결제요청
+	ispParams = alopexController.parameters;
+	
+	logf('gclee MBLMG4M0 ###########################################1');
+	
+	if(ispParams == 'undefined' || ispParams == ''){
+		logf('gclee MBLMG4M0 ###########################################2');
+		
+	}else{
+		goRequestISPPayIOS();
+		ispParams = '';
+	}
+	
 	doPage();
 }
+
+function goRequestISPPayIOS(){
+	//gclee card
+	var paymentListCookie = getAlopexCookie('paymentList');
+	if(paymentListCookie == 'undefined'){
+		return;
+	}
+
+	logf('gclee MBLMG4M0 ###########################################2');
+	
+	var paymentCookieLists = JSON.parse(paymentListCookie);
+	var vtAmount = getAlopexCookie('tAmount');
+	var vInstallment = getAlopexCookie('vInstallment');
+	var vTERM_ID = getAlopexCookie('TERM_ID');
+	
+//  	showProgressBarMsg('정보를 처리중입니다.');
+	
+  	var vExpYear = '2049';
+	var vExpMon = '12';
+	
+	var tISP_TID = getAlopexCookie('ISP_TID');
+	
+	var param = {
+				"certiGubun" : 'I',	
+				"RGUBUN" : '03',
+				"CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+				"expyear" : vExpYear,
+				"expmon" : vExpMon,
+				"installment" : vInstallment,
+				"amount" : vtAmount,
+				"expdt" :  vExpYear.substring(2) + vExpMon,
+				"clientIp" : '',
+				"termID" : vTERM_ID,
+				"TID" : tISP_TID
+	};
+	
+	logf('gclee goRequestISPPay MBLMG3M0 ' + JSON.stringify(param));
+	
+	var param2 = JSON.parse(JSON.stringify(param));
+	param2.list = [{'payList' : []}];
+	
+	for(var i=0;i<paymentCookieLists.length;i++){
+		
+		param2.list[0].payList[i] = {
+				"BP_ADDRESS" : paymentCookieLists[0].BP_ADDRESS,	
+				"NAME_LAST" : paymentCookieLists[0].NAME_LAST,
+				"DATA_TOTAL" : paymentCookieLists[0].DATA_TOTAL,
+				"TOTAL_AMOUNT" : paymentCookieLists[0].TOTAL_AMOUNT,
+				"TOTAL_CARD_AM" : paymentCookieLists[0].TOTAL_CARD_AM,
+				"BUKRS" : paymentCookieLists[0].BUKRS,
+				"BUTXT" : paymentCookieLists[0].BUTXT,
+				"STCD2" : paymentCookieLists[0].STCD2,
+				"COM_ADDRESS" : paymentCookieLists[0].COM_ADDRESS,
+				"TEL_NUMBER" : paymentCookieLists[0].TEL_NUMBER,
+				"LDO_CODE" : paymentCookieLists[0].LDO_CODE,
+				"SEQ" : paymentCookieLists[0].SEQ,
+				"GPART" : paymentCookieLists[0].GPART,
+				"VKONT" : paymentCookieLists[0].DVKONT,
+				"OPBEL" : paymentCookieLists[0].OPBEL,
+				"FAEDN" : paymentCookieLists[0].FAEDN,
+				"STATUS" : paymentCookieLists[0].STATUS,
+				"BETRW" : paymentCookieLists[0].BETRW,
+				"BETRZ" : paymentCookieLists[0].BETRZ,
+				"CDSNG" : paymentCookieLists[0].CDSNG,
+				"CCINS" : paymentCookieLists[0].CCINS,
+				"CCDNO" : paymentCookieLists[0].CCDNO,
+				"CSI_DATE" : paymentCookieLists[0].CSI_DATE,
+				"CSI_TIME" : paymentCookieLists[0].CSI_TIME,
+				"CSINO" : paymentCookieLists[0].CSINO,
+				"CUHYY" : paymentCookieLists[0].CUHYY,
+				"CUHMM" : paymentCookieLists[0].CUHMM,
+				"ALLO_MONTH" : paymentCookieLists[0].ALLO_MONTH,
+				"VAN_TR" : paymentCookieLists[0].VAN_TR
+		};
+		
+	}
+
+	logf('gclee goRequestISPPay  param2 MBLMG4M0 ' + JSON.stringify(param2));
+	
+	httpSend("putPayList", param2, function(cb2){
+
+//		hideProgressBar();
+		
+		if(cb2.resultYn == 'Y'){
+			
+			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
+			setCookieKill('paymentList');
+			setCookieKill('tAmount');
+			setCookieKill('vInstallment');
+			navigateBackToNaviGo('MBLMG4M0');
+			
+		}else{
+			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
+			
+		}
+		
+	}, function(errorCode, errorMessage){
+//		hideProgressBar();
+		
+		if (errorCode == "9999") {
+			loge('error :: 9999 :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		} else {
+			loge('error :: other :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		}
+	});
+
+};
 
 function setEventListner(){    	
 //	var $p1 = $('.pop_input_num'),
@@ -368,7 +491,8 @@ function getRealCardCodeTest(pCardCode){
 }
 
 function onScreenBack(){
-	doPage();	
+	navigateGo('MBLMG0M2');
+//	doPage();	
 }
 
 function doPage(){
@@ -411,7 +535,7 @@ function viewPaidList(){
 	
 	var param = {
 			"COMPCD" : pMbp,	
-			"GUBUN" : '06',
+			"GUBUN" : '10',
 			"CANO" : String(Number(currentCa))
 	};
 	
@@ -435,7 +559,7 @@ function viewPaidList(){
 		
 		if(cb.list.resultList == undefined){
 			
-			var caList = '<p class="pb10">  수납 내역이 없습니다.</p>';
+			var caList = '<p class="pb10">  당일 수납 내역이 없습니다.</p>';
 			$('.box_CaList').html(caList);
 			
 		}else{
@@ -447,7 +571,7 @@ function viewPaidList(){
 				caList += '<div class="bill">'+
 				'<input type="hidden" value="'+' '+','+' '+'"/>'+
 				'<p><strong>승인일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].CSI_DATE)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+
-				'<p><strong>고객명</strong><span class="txt">'+cb.list.resultList[i].NAME_LAST+'&nbsp;</span></p>'+
+				'<p><strong>고객명</strong><span class="txt">'+ascUserNM(cb.list.resultList[i].NAME_LAST)+'&nbsp;</span></p>'+
 				'<p><strong>수납금액</strong><span class="txt">'+chgNumberToMoney(cb.list.resultList[i].BETRZ)+'원'+'&nbsp;</span></p>'+
 				'</div>';
 			}
