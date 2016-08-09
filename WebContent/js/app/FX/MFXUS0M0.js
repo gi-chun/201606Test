@@ -8,8 +8,10 @@ nowPGCode = 'MFXUS0M0';
 var ss = '';
 function mainStart(){
 	settingLoading();
-	$('.imgloading').show();
 	setEventListner();
+	
+	//설정메인화면 인입시 전문하나 태우기 
+	//http( )
 	
 	$('.versionV').html("v " + application.appVersion + "." + application.contentVersion);
 	
@@ -101,6 +103,7 @@ function setEventListner(){
 	});
 	
 	$('#app_secede_ok').click(function(){
+		
 		if($('[name=chk1]:checked').length < 3){
 			asaId = $('.app_secede_agree').bPopup({
     			opacity: 0.6,
@@ -125,6 +128,9 @@ function setEventListner(){
 			});
 			$('.pExitOk').click(function(){
 				//asId.close();
+//				$('.pExitNo').hide();
+//				$('.pExitOk').hide();
+//				$('.imgloading').show();
 				exitAppUser();
 			});
 		}
@@ -217,11 +223,17 @@ function setEventListner(){
 function exitAppUser(){
 	var pn = getAlopexCookie('uPhone');
 	var params = "";
+	
+	//gclee login
 	if(device.osName != 'iOS'){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexSession('loginSession'));
 	}
+	
+	
 	var param = {'list' : [{'bpCaReqList':[]}]};
 	for(var i=0;i<params.list.bpCaList.length;i++){
 		param.list[0].bpCaReqList[i] = {
@@ -239,6 +251,12 @@ function exitAppUser(){
 		hideProgressBar();
 		// 계량기 여러대
 		// 일치
+		
+		//gclee login
+		killAllSession();
+		killAllCookie();
+		//gclee login end
+		
 		if(device.osName == 'Android'){
 			alopexController.setCustomizedBack(function(){
 				//alopexController.exit();
@@ -268,6 +286,8 @@ function doPage(){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexCookie('loginSession'));
 	}
 	logf(params);
 	var mainBPCA = getAlopexCookie('MainBPCA');

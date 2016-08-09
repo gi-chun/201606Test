@@ -9,6 +9,56 @@
 	<script type="text/javascript" src="../../js/app/BL/MBLMG3M0.js"></script>
 	
 	<script>TITLE('미납 내역');	</script>
+
+<style>
+	.selectbox {
+	  position: relative;
+	  width: 200px;  /* 너비설정 */
+	  border: 1px solid #9fb3ca;  /* 테두리 설정 */
+	  z-index: 1;
+	  margin:5px 0px 15px 10px;
+	  background-color: #fff;
+	  height: 38px;
+	}
+
+	.selectbox:before {  /* 화살표 대체 */
+	  content: "";
+	  position: absolute;
+	  top: 50%;
+	  right: 15px;
+	  width: 0;
+	  height: 0;
+	  margin-top: -1px;
+	  border-left: 5px solid transparent;
+	  border-right: 5px solid transparent;
+	  border-top: 5px solid #3c4385;
+	}
+	
+	.selectbox label {
+	  position: absolute;
+	  top: 1px;  /* 위치정렬 */ 
+	  left: 5px;  /* 위치정렬 */
+	  padding: .8em .5em;  /* select의 여백 크기 만큼 */
+	  color: #333;  
+	  z-index: -1;  /* IE8에서 label이 위치한 곳이 클릭되지 않는 것 해결 */
+	}
+	
+	.selectbox select {
+	  width: 100%; 
+	  height: auto;  /* 높이 초기화 */
+	  line-height: normal;  /* line-height 초기화 */
+	  font-family: inherit;  /* 폰트 상속 */
+	  padding: .8em .5em;  /* 여백과 높이 결정 */
+	  border: 0;
+	  opacity: 0;  /* 숨기기 */
+	  filter:alpha(opacity=0);  /* IE8 숨기기 */
+	  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+	  -moz-appearance: none;
+	  appearance: none;
+	}
+</style>
+
+	
 </head>
 <body>
 <div id="wrap" class="sub">
@@ -21,108 +71,109 @@
 		<div class="box_type1 ">
 			<h3>납입자번호</h3>
 			<span class="col_red topBoxCaList"></span>
-			<!-- <span class="input input_no">미납</span> -->
-			<!--
-			<span class="input input_date">03.07</span>
-			<span class="input input_closed">마감</span>
-			-->
 			<p class="small btn_input_num showPlus"><button id="button_input_num">납입자번호 선택하기</button></p>
 		</div>
-		<div class="box_form">
-			<ul class='boxList'>
-				<!-- <li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 03월 청구서</p>
-							<p class="form_view">미열람</p>
-						</div>
-						<div class="pt10">
-							<p class="form_closed"><span class="bg_green">미납</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-					<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 02월 청구서</p>
-							<p class="form_view">미열람</p>
-						</div>
-						<div class="pt10">
-							<p class="form_closed"><span class="bg_gray">자동이체</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 01월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 12월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 11월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 10월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li> -->
-			</ul>
+		<div class="box_join">
+				<div><h2 class="bold">결제 선택 </h2></div> 
+				<div><h2 class="textAR totalAmount"></h2></div>
+				<div class="inner box_CaList">
+					<p class="pb10">.</p>
+					
+					<div class="bill" id="bill_n">
+						<!-- 
+						<p><strong></strong><span class="bold"></span><span class="check"><label for="chkc1"><input class="Checkbox" name="chkc0" value="check2" checked="checked" id="chkc1"></label></span></p>
+						<p><strong></strong><span class="txt"></span></p> 
+						-->
+					</div>
+				</div>
 		</div>
-		<!-- <p class="txt_red">청구서는 최근 12개월 까지만 조회 가능합니다.</p> -->
 		
-		<div id="tab1">
+		<p class="txt_red">납기일 과거 건부터 다수의 결제를 선택하실 수 있습니다.</p>
+		<p><strong class="bold">카드선택</strong></p>
+		
+		<div class="selectbox" id="select_box">
+		    <label for="cardSelect">카드선택</label>
+		    <select id="cardSelect">
+
+		    </select>
+		</div>
+
+		<!-- 
+		<div id="select_box" >
+			<select id="cardSelect" title="select color name="신용카드">
 			<select id="cardSelect" name="신용카드">
-			<option value="1">외환카드</option>
-			<option value="2">삼성카드</option>
-			<option value="4">현대카드</option>
-			<option value="5">롯데카드</option>
-			<option value="6">신한카드</option>
-			<option value="7">씨티(한미)카드</option>
-			<option value="11">하나카드</option>
-			<option value="14">농협카드</option>
-			<option value="0100">비씨카드</option>
-			<option value="0204">국민카드</option>
-			<option value="1800">수협카드</option>
-			<option value="0100">제주카드</option>
-			<option value="1500">광주카드</option>
-			<option value="1600">전북카드</option>
+				<option value="1">외환카드</option>
+				<option value="2">삼성카드</option>
+				<option value="4">현대카드</option>
+				<option value="5">롯데카드</option>
+				<option value="6">신한카드</option>
+				<option value="7">씨티(한미)카드</option>
+				<option value="11">하나카드</option>
+				<option value="14">농협카드</option>
+				<option value="0100">비씨카드</option>
+				<option value="0204">국민카드</option>
+				<option value="1800">수협카드</option>
+				<option value="0100">제주카드</option>
+				<option value="1500">광주카드</option>
+				<option value="1600">전북카드</option>
 			</select>
 		</div>
+		 -->
 		
-		<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >결제하기</a></p>
+		<p><strong class="bold">할부선택</strong></p>
+		<div class="selectbox" id="select_box2">
+		    <label for="installment">할부선택</label>
+		    <select id="installment">
+				<option value="00" selected>일시불</option>
+				<option value="03">03개월</option>
+				<option value="04">04개월</option>
+				<option value="05">05개월</option>
+				<option value="06">06개월</option>
+				<option value="07">07개월</option>
+				<option value="08">08개월</option>
+				<option value="09">09개월</option>
+				<option value="10">10개월</option>
+				<option value="11">11개월</option>
+				<option value="12">12개월</option>
+		    </select>
+		</div>
+		
+		<!-- 
+		<div id="select_box2">
+			<select id="installment">
+				<option value="00" selected>일시불</option>
+				<option value="03">03개월</option>
+				<option value="04">04개월</option>
+				<option value="05">05개월</option>
+				<option value="06">06개월</option>
+				<option value="07">07개월</option>
+				<option value="08">08개월</option>
+				<option value="09">09개월</option>
+				<option value="10">10개월</option>
+				<option value="11">11개월</option>
+				<option value="12">12개월</option>
+			</select>
+		</div>
+		 -->
+		 
+		<div id="label_Tcode">
+		<p><strong class="bold" >통신사선택</strong></p>
+		</div>
+		<div class="selectbox" id="select_box3">
+		    <label for="select_Tcode">통신사선택</label>
+		    <select id="select_Tcode">
+				<option value="skt" selected>SKT</option>
+				<option value="ktf">KTF</option>
+				<option value="lgt">LGT</option>
+		    </select>
+		</div>
+		
+		<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red2 big" >결제하기</a></p>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
 </div>
+
 <script type="text/javascript" src="../../js/app/common/android.js"></script>
 <!-- 납입자번호 선택 -->
 <div id="popup" class="pop_input_num">
@@ -179,7 +230,7 @@
 			</ul>
 		</div>
 		<div class="btSet">
-			<button class="Button red2" id="btn_save">초기화</button><button class="Button red" id="btn_save">확인</button>
+			<button class="Button red2" id="btn_save">초기화</button><button class="Button red2" id="btn_save">확인</button>
 		</div>
 		<div class="btClose">
 			<button class="b-close">닫기</button>
@@ -187,137 +238,7 @@
 	</div>
 </div>
 
-<!-- gclee bill -->
-<!-- gclee 아래 청구서보기전 비밀번호확인 구현 취소됨 삭제해도 무관-->
-<!-- 청구서보기 개인고객 인증번호 입력 -->
-<div id="popup" class="bill_perCerti">
-	<div class="pop_head">
-		<h4>인증번호 입력</h4>
-	</div>
-	
-	<!--  gclee ################################################################ -->
-	<div class="inner">
-	<p class="txt tal">도시가스 모바일 청구서를 조회하기 위해선<br/>인증번호를 설정하셔야 합니다.</p>
-				
-		<ul class="Accordion_menu guide">
-		<li>
-			<a href="#" class="tit">개인고객</a>
-			<div class="input_no">
-			<p>
-			<span class="w100per"><input type="tel" id="perCertiNo" name="perCertiNo" value="" maxlength="6" class="input_txt" /></span>
-			<label for="pn" style="margin-top:4px;">생년월일을 입력해주세요. <br/>예시)880101 (6자리 숫자)</label>
-			</p>
-			</div>
-			
-		</li>
-		</ul>
-		<p class="txt tal" id="erroDescPer" >Description</p>
-		<p class="tac pt10">
-		<span id="bill_perCerti_ok"><a href="javascript:void(0);" class="Button red big">승인</a></span>
-		<span id="closeBtnExitPer"><a href="javascript:void(0);" class="Button red2 big">이전화면</a></span>
-		</p>
-		<p class="tac pt10">
-		<span id="bill_perCerti_save_rego"><a href="javascript:void(0);" class="Button red2 big">인증번호 재등록</a></span>
-		</p>
-		<!-- <div class="btClose">
-			<button class="b-close">닫기</button>
-		</div> -->
-	</div>
-	<!--  gclee ################################################################ -->	
-	
-</div>
-
-<!-- 청구서보기 기업고객 인증번호 입력 -->
-<div id="popup" class="bill_comCerti">
-	<div class="pop_head">
-		<h4>인증번호 입력</h4>
-	</div>
-	
-	<!--  gclee ################################################################ -->
-	<div class="inner">
-	<p class="txt tal">도시가스 모바일 청구서를 조회하기 위해선<br/>인증번호를 설정하셔야 합니다.</p>
-				
-		<ul class="Accordion_menu guide">
-		<li>
-			<a href="#" class="tit">기업고객</a>
-			<div class="input_no">
-			<p>
-			<span class="w100per"><input type="tel" id="comCertiNo" name="comCertiNo" value="" maxlength="10" class="input_txt" /></span>
-			<label for="pn" style="margin-top:4px;">사업자번호를 입력해주세요. <br/>예시) 1112212345 (10자리 숫자)</label>
-			</p>
-			</div>
-			
-		</li>
-		</ul>
-		<p class="txt tal" id="erroDescCom" >Description</p>
-		<p class="tac pt10">
-		<span id="bill_comCerti_ok"><a href="javascript:void(0);" class="Button red big">승인</a></span>
-		<span id="closeBtnExitCom"><a href="javascript:void(0);" class="Button red2 big">이전화면</a></span>
-		</p>
-		<p class="tac pt10">
-		<span id="bill_comCerti_save_rego"><a href="javascript:void(0);" class="Button red2 big">인증번호 재등록</a></span>
-		</p>
-		<!-- <div class="btClose">
-			<button class="b-close">닫기</button>
-		</div> -->
-	</div>
-	<!--  gclee ################################################################ -->	
-	
-</div>
-
-<!-- 청구서보기 인증번호 등록 -->
-<div id="popup" class="bill_certi_save">
-	<div class="pop_head">
-		<h4>인증번호 등록</h4>
-	</div>
-	
-				<div class="inner">
-				<p class="txt tal">도시가스 모바일 청구서를 조회하기 위해선<br/>인증번호를 설정하셔야 합니다.<br/>도시가스 가입유형별로 선택해주세요.</p>
-				<span class="col_red">※  도시가스 가입시와 동일하게 선택해 주세요.</span></p>
-				
-					<ul class="Accordion_menu guide">
-						<li>
-							<a href="#" class="tit">개인고객</a>
-							<div class="input_no">
-							<p>
-							<span class="w100per"><input type="tel" id="perCertiSaveNo" name="perCertiSaveNo" value="" maxlength="6" class="input_txt" /></span>
-							<label for="pn" style="margin-top:4px;">생년월일을 입력해주세요. <br/>예시)880101 (6자리 숫자)</label>
-							</P>
-							<p>
-							<span class="w100per"><input type="tel" id="perCertiNoRe" name=""perCertiNoRe"" value="" maxlength="6" class="input_txt" /></span>
-							<label for="pn" style="margin-top:4px;">다시 한번 입력해 주세요.</label>
-							</p>
-							</div>
-						
-						</li>
-						<li>
-							<a href="#" class="tit">기업고객</a>
-							<div class="input_no">
-							<p>
-							<span class="w100per"><input type="tel" id="comCertiSaveNo" name="comCertiSaveNo" value="" maxlength="10" class="input_txt" /></span>
-							<label for="pn" style="margin-top:4px;">사업자번호를 입력해주세요. <br/>예시)1112212345 (10자리 숫자)</label>
-							</p>
-							<p>
-							<span class="w100per"><input type="tel" id="comCertiNoRe" name="comCertiNoRe" value="" maxlength="10" class="input_txt" /></span>
-							<label for="pn" style="margin-top:4px;">다시 한번 입력해 주세요.</label>
-							</p>
-							</div>
-						</li>
-					</ul>
-					<p class="txt tal" id="erroDescSave" >Description</p>
-					<p class="tac pt10">
-					<span id="bill_certi_save_ok"><a href="javascript:void(0);" class="Button red big">등록</a></span>
-					<span id="closeBtnExitSave"><a href="javascript:void(0);" class="Button red2 big">이전화면</a></span>
-					</p>
-					<!-- <div class="btClose">
-						<button class="b-close">닫기</button>
-					</div> -->
-					
-				</div>
-			
-</div>
-
-<!-- gclee bill end -->
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
 
 </body>
 </html>

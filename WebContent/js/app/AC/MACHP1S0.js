@@ -89,6 +89,9 @@ function setEventListner(){
 
 			console.log('gclee putAccInfo MACHP1S0' + param);
 			
+			$('.imgloading').show();
+			$('#pop_rep').hide();
+			
 			beforeSummit = true;
 			
 	    	httpSend("putAccInfo", param, function(cb2){
@@ -164,15 +167,29 @@ function contiLogin(){
 		//navigateGo('MACHP1M0');
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+//			navigateGo('MACHP0M0');
+			loginToken = '';
+//			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee getAccInfo MACHP1S0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		// 계량기 여러대
     		// 일치
     		
@@ -259,8 +276,24 @@ function runMain(){
 			}
 		}
 		
+		//gclee card push id
+		var pn = getAlopexCookie('uPhone');
+		var option = {
+			      "phoneno" : pn
+		};
+			      
+	   if(device.osName != 'iOS'){                                                                
+		   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
+	   }else{                                                                                     
+		   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+	   }
+	   //gclee card push id end
+	   
+		
 		if(dType=='Android'){
-			rtCBPush.push_id = pushID;
+			//gclee push
+			//rtCBPush.push_id = pushID;
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			rtCBPush.device_type = 'A';
 			httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 				var recomendr = '';
@@ -302,7 +335,9 @@ function runMain(){
 				setCookieKill('agreeProvideInfoYnCookie');
 			});
 		}else if(dType=='iOS'){
-			rtCBPush.push_id = pushID;
+			//gclee push
+			//rtCBPush.push_id = pushID;
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			rtCBPush.device_type = 'I';
 			if(device.osName != 'iOS'){
 				rtCBPush.agree_provide_info_yn = getAlopexSession('agreeProvideInfoYn');
@@ -344,8 +379,10 @@ function runMain(){
 				setCookieKill('agreeProvideInfoYnCookie');
 			});
 		}else{
-			rtCBPush.push_id = pushID;
+			//gclee push
+//			rtCBPush.push_id = pushID;
 			rtCBPush.device_type = 'A';
+			rtCBPush.token_key = getAlopexCookie('loginToken');
 			if(device.osName != 'iOS'){
 				if(getAlopexSession('agreeProvideInfoYn')!='undefined'){
 					rtCBPush.agree_provide_info_yn = getAlopexSession('agreeProvideInfoYn');
@@ -469,7 +506,7 @@ function runMainGo(rtCB){
 		navigateGo('MMNPG0M0',rtCB);
 	}else{
 		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 

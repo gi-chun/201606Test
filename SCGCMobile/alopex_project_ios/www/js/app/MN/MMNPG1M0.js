@@ -120,6 +120,7 @@ function setEventListner(){
 	$('#noMemPhone').click(function(){
 		//navigateBackToNaviGo('MBLMG0M0');
 		//전화번호 가입 테스트
+		navigateGo('MACHP0M0');
 		
 		//gclee login
 		var param = {

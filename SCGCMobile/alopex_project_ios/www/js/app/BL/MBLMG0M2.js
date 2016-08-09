@@ -365,12 +365,11 @@ function doPage(opbelNo){
 			var buymInfo = getBuym(currentCa);
 			//gclee card 테스트위해 betrw값 있다고 가정
 			if(Number(buymInfo.betrw) > 0){
-				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" style="width: 40%;">납부안내</a></span>';
-				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';				
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 big goPayPage" style="width: 40%;">납부안내</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';				
 			}else{
-				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big" style="width: 40%;">납부완료</a></span>';
-				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';
-				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" style="width: 40%;">납부안내</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="col_red big" style="width: 40%;">납부완료</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';
 			}
 						
 		}

@@ -32,7 +32,9 @@ function mainStart(){
 		logf('3');
 	}
 	
-	if(params.from != null && params.from == '60'){
+	if(params.list.bpCaList==undefined){
+		setScreen(2);
+	}else if(params.from != null && params.from == '60'){
 		if(params.retMsg.indexOf('대표번호 일치') > -1){
 			$('.msgBox3').html('해당 세대는 이미 등록 되어있습니다. <br /><span class="col_red">아래의 보조인증으로 회원가입을 계속해 주세요.</span>');
 			if(params.mobile == undefined){

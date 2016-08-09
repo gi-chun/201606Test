@@ -165,6 +165,7 @@ static DataManager *dataManager = nil;
 
 - (void)injection:(NSString *)result{
     NSString *jsString = [NSString stringWithFormat:@"%@(\"%@\");", self.successCallback, result];
+    NSLog(@"injection values ==>%@", jsString);
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 

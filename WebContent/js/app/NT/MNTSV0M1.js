@@ -55,7 +55,7 @@ function doPage(){
 				str += '<p class="btn">';
 				//RESPOND_AT
 				if(Mcb.list.surveyList[i].RESPOND_AT == 'N'){
-					str += '<a href="javascript:void(0);" class="Button red big goSv"><input type="hidden" value="'+Mcb.list.surveyList[i].QESTNR_ID+'"/>설문 참여</a>';
+					str += '<a href="javascript:void(0);" class="Button red2 big goSv"><input type="hidden" value="'+Mcb.list.surveyList[i].QESTNR_ID+'"/>설문 참여</a>';
 				}else{
 					str += '<a href="javascript:void(0);" class="Button red2 big"><input type="hidden" value="'+Mcb.list.surveyList[i].QESTNR_ID+'"/>작성 완료</a>';
 				}

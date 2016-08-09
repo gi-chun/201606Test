@@ -182,6 +182,8 @@ function doPage(){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexSession('loginSession'));
 	}
 	var chkBPCA = getMainBPCA();
 	if(chkBPCA == 'undefined'){
@@ -524,6 +526,9 @@ function viewPayList(){
 	var param2 = JSON.parse(JSON.stringify(param));
 	param2.list = [{'bpCaList' : []}];
 	for(var i=0;i<params.list.bpCaList.length;i++){
+		if(i==0){
+			param2.mbtlnum = getAlopexCookie('uPhone');
+		}
 		param2.list[0].bpCaList[i] = {
 				"bp" : String(Number(params.list.bpCaList[i].bp)),	
 				"ca" : String(Number(params.list.bpCaList[i].ca))
@@ -540,11 +545,11 @@ function viewPayList(){
 		logf(cb.list.billResultList);
 		
 		//gclee login token
-		if(cb.isTokenTrue == 'false'){
-			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-			navigateGo('MACHP0M0');
-			return;
-		}
+//		if(cb.isTokenTrue == 'false'){
+//			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//			navigateGo('MACHP0M0');
+//			return;
+//		}
 		//gclee login token end
 		
 		if(cb.list.billResultList == undefined){
@@ -574,6 +579,8 @@ function viewPayList(){
 						params = JSON.parse(getAlopexSession('loginSession'));
 					}else{
 						params = JSON.parse(getAlopexCookie('loginCookie'));
+						//gclee login
+//						params = JSON.parse(getAlopexSession('loginSession'));
 					}
 					var chkBPCA = getMainBPCA();
 					if(chkBPCA == 'undefined'){
@@ -589,8 +596,8 @@ function viewPayList(){
 //					}else{
 //						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
 //					}
-					contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >결제취소완료</a></p>';
-					contStr += '	<p class="tac pt10"><a href="javascript:goPayCancel();" class="Button red big" >결제취소</a></p>';
+					contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red2 big" >결제취소완료</a></p>';
+					contStr += '	<p class="tac pt10"><a href="javascript:goPayCancel();" class="Button red2 big" >결제취소</a></p>';
 				}
 				contStr += '</li>';
 			}

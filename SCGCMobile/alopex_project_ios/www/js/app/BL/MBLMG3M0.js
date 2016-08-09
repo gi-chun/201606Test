@@ -337,9 +337,11 @@ function goMenuBLMG02(){
 		
 	var isNoOld = false;
 	
-//	if($("input:checkbox[id=check0]").is(":checked")==false){
-//		isNoOld = true;
-//	}
+	if($('.Checkbox').length > 1){
+		if($("#chkc0:checked").length == 0){
+			isNoOld = true;
+		}
+	}
 	
 	var tempIndex = 0;
 	var tempCuIndex = 0;
@@ -401,6 +403,8 @@ function goMenuBLMG02(){
 		
 	if( vPayType == 'MPI'){
 		
+		logf("paymentList count : "+ paymentList.length);
+		
 		var option = {
 	    	     "ordername" : "",
 	    	     "ordernumber" : "",
@@ -414,6 +418,7 @@ function goMenuBLMG02(){
 	    	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
 	    	     "installment" : vInstallment,
 	    	     "RGUBUN" : "03",
+	    	     "certiGubun" : "M",
 	    	     "payListCount" : paymentList.length
 	    	     };
 
@@ -481,6 +486,10 @@ function goMenuBLMG02(){
 				"CancelUrl" : ''
 				
 		};
+		
+		logf('111111111111111111111111111111')
+		logf(JSON.stringify(param));
+		logf('111111111111111111111111111111')
 		
 		logf('gclee getIspCertResult MBLMG3M0 ' + param);
 	//	
@@ -662,7 +671,7 @@ function viewUnpaidList(){
 			
 		}else{
 			
-			var vTotalAmount = '결제 선택 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 미납금액 합계&nbsp&nbsp'+chgNumberToMoney(cb.list.resultList[0].TOTAL_AMOUNT)+'&nbsp원'+'&nbsp';
+			var vTotalAmount = '미납금액 합계&nbsp&nbsp'+chgNumberToMoney(cb.list.resultList[0].TOTAL_AMOUNT)+'&nbsp원'+'&nbsp';
 			$('.totalAmount').html(vTotalAmount);
 			
 			var caList = '<p class="pb10">  납기일 과거 건부터 다수의 결제를 선택하실 수 있습니다.</p>';

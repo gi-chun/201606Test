@@ -536,9 +536,9 @@ function viewBillInfo(){
 					}
 					var buymInfo = getBuym(currentCa);
 					if(Number(buymInfo.betrw) > 0){
-						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>';
+						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red2 big" >납부하기</a></p>';
 					}else{
-						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
+						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red2 big" >납부완료</a></p>';
 					}
 				}
 				contStr += '</li>';

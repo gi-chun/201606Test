@@ -16,6 +16,8 @@ function mainStart(){
 		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSessionInfo = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}
 	
 	setEventListner();
@@ -85,11 +87,16 @@ function setEventListner(){
 		}
 		mainParam = JSON.parse(mainParam);
 		
+		//gclee self order
+		//'ablbelnr' : cb.ablbelnr, 추가 
+		console.log('gclee putMrSelfOrderResult  data',mainParam);
+		
 		var cb = meParam;
 		param = {	
 				'bp' : cb.list.userInfoResult[0].BPNO,
 				'ca' : cb.list.userInfoResult[0].CANO,
 				'sernr' : cb.gasMrnrNo,
+				'ablbelnr' : cb.ablbelnr,
 				'anlage' : mainParam.anlage,
 				'v_ldo' : mainParam.regiogroup,
 				'adatsoll1' : cb.adatsoll1,
@@ -160,6 +167,7 @@ function doPage(){
 		mainParam = getAlopexCookie('mainParamCookie');
 	}
 	var param = JSON.parse(mainParam);
+	param.mbtlnum = getAlopexCookie('uPhone');
 	// bp,ca 리스트 체크 1건인경우 실행
 	//$('.plusBTN').hide();
 	
@@ -186,11 +194,11 @@ function pageSetting(cb){
 	meParam = cb;
 	
 	//gclee login token
-	if(cb.isTokenTrue == 'false'){
-		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-		navigateGo('MACHP0M0');
-		return;
-	}
+//	if(cb.isTokenTrue == 'false'){
+//		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//		navigateGo('MACHP0M0');
+//		return;
+//	}
 	//gclee login token end
 
 	var meNo = cb.list.userInfoResult[0].CANO;
@@ -236,7 +244,7 @@ function pageSetting(cb){
 	}
 	
 	if(!isChkEnd(cb.e_adatsoll1)){
-		infoStr += '		<p class="tac small btn_save"><button id="btn_save" class="Button red big">당월지침 입력</button></p>';
+		infoStr += '		<p class="tac small btn_save"><button id="btn_save" class="Button red2 big">당월지침 입력</button></p>';
 	}
 	infoStr += '	</li>'+
 	'</ul>';
@@ -298,7 +306,8 @@ function addBPCAList(){
 	var endME = getAlopexSession('endME');
 	httpSend("getMrSelfOrderBpCaInfo", pr, function(cb){
 //		logf('3333');
-//		console.log('2222',cb);
+		console.log('gclee getMrSelfOrderBpCaInfo result data',cb);
+		//gclee 
 		var popListStr = '';
 		$.each(cb.list.bpCaMeResultList, function(i,el){
 			logf(el);

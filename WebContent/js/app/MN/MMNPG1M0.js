@@ -1,5 +1,5 @@
 document.addEventListener('alopexready', mainStart);
-nowPGCode = 'MMNPG1M0';
+//nowPGCode = 'MMNPG1M0';
 var params = '';
 var pn = '';
 var pushID = '';
@@ -120,6 +120,7 @@ function setEventListner(){
 	$('#noMemPhone').click(function(){
 		//navigateBackToNaviGo('MBLMG0M0');
 		//전화번호 가입 테스트
+		navigateGo('MACHP0M0');
 		
 		//gclee login
 		var param = {

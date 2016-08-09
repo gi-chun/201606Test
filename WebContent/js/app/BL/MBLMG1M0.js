@@ -86,6 +86,8 @@ function doPage(){
 		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}
 	logf(loginSession);
 	
@@ -235,9 +237,6 @@ function showPayInfo(pr){
 
 			$('.cgInfo').html(cgInfoStr);
 			
-			//gclee card
-			cbq.list.billDetailResult[0].BANKA = '';
-			//gclee
 			// 납부방식 화면 헨들링
 			if(cbq.list.billDetailResult[0].BANKA == ''){
 				//일반
@@ -270,24 +269,30 @@ function showPayInfo(pr){
 			
 			$('.btn_account').click(function(){
 				console.log('편의점 수납');
-				// 오픈연기  16일 or 21일
-				// 구미 E, 전남 G, 전북 K
-				var mbp = getMainBP();
-				if(isCBNStart(cbq.list.billDetailResult[0].CDATE)){
-					if(mbp.indexOf('E') == 0 || mbp.indexOf('G') == 0 || mbp.indexOf('K') == 0){
-						navigateGo('MBLMG1M1');
-					}else{
-						$('.pop_prepare').bPopup({
-							opacity: 0.6,
-							speed: 300,
-						});
-					}
-				}else{
-					$('.pop_prepare').bPopup({
-						opacity: 0.6,
-						speed: 300,
-					});
-				}
+				
+				$('.pop_prepare').bPopup({
+					opacity: 0.6,
+					speed: 300,
+				});
+				
+//				// 오픈연기  16일 or 21일
+//				// 구미 E, 전남 G, 전북 K
+//				var mbp = getMainBP();
+//				if(isCBNStart(cbq.list.billDetailResult[0].CDATE)){
+//					if(mbp.indexOf('E') == 0 || mbp.indexOf('G') == 0 || mbp.indexOf('K') == 0){
+//						navigateGo('MBLMG1M1');
+//					}else{
+//						$('.pop_prepare').bPopup({
+//							opacity: 0.6,
+//							speed: 300,
+//						});
+//					}
+//				}else{
+//					$('.pop_prepare').bPopup({
+//						opacity: 0.6,
+//						speed: 300,
+//					});
+//				}
 			});
 			
 			

@@ -419,7 +419,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         [[Navigation getIncetance] backToOrNavigate:pageInfo];
         //[mCurrentWebview stringByEvaluatingJavaScriptFromString:jsString];
         
-    }else{
+    }else if([myString rangeOfString:@"isp_fail"].location != NSNotFound){
         NSString *jsString = [NSString stringWithFormat:@"%@(\"5\");", @"popCardResult"];
         [pageInfo setObject:@"MBLMG3M0" forKey:@"pageId"];
         [parameter setObject:@"5" forKey:@"isp_result"];
@@ -428,6 +428,10 @@ NSString *pushServerIp_App = @"168.154.182.41";
         NSLog(@"\n@@@@@@@ 5 pageInfo : \n%@", pageInfo);
         [[Navigation getIncetance] backToOrNavigate:pageInfo];
        
+    }else{
+        
+        NSLog(@"\n@@@@@@@ ** : \n%@", pageInfo);
+        
     }
     
     return YES;

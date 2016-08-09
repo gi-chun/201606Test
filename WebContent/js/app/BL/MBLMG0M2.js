@@ -256,6 +256,7 @@ function doPage(opbelNo){
 		saveBillNo(params.DOC_HEADER_OPBEL);
 		//gclee login token
 		param = {
+				"mbtlnum" : getAlopexCookie('uPhone'),
 				"doc_header_opbel" : params.DOC_HEADER_OPBEL,
 				"bp" : String(Number(navigation.parameters.bp)),	
 				"ca" : String(Number(navigation.parameters.ca)),
@@ -273,6 +274,7 @@ function doPage(opbelNo){
 		
 		//gclee login token
 		param = {
+				"mbtlnum" : getAlopexCookie('uPhone'),
 				"doc_header_opbel" : opbelNo,
 				"bp" : String(Number(navigation.parameters.bp)),	
 				"ca" : String(Number(navigation.parameters.ca)),
@@ -285,12 +287,15 @@ function doPage(opbelNo){
 	httpSend("getBillDetail", param, function(cb){
 		ss = cb;
 		
+		logf('gclee MBLMG0M2 return: ' + JSON.stringify(cb));
+		var returnStr = JSON.stringify(cb);
+		
 		//gclee login token
-		if(cb.isTokenTrue == 'false'){
-			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-			navigateGo('MACHP0M0');
-			return;
-		}
+//		if(cb.isTokenTrue == 'false'){
+//			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//			navigateGo('MACHP0M0');
+//			return;
+//		}
 		//gclee login token end
 		
 		// 이전월 다음월
@@ -325,7 +330,9 @@ function doPage(opbelNo){
 			//상단 정보
 			var topInfoViewStr = '<li class="tit"><strong>납입자번호</strong> <span class="col_red">'+Number(cb.list.billDetailResult[0].CANO)+'</span></li>'+
 			'	<li><strong>고객명</strong>'+ascUserNM(cb.list.billDetailResult[0].BUS_PART_NAME)+'</li>'+
-			'	<li><strong>고객주소</strong>'+cb.list.billGashtDetailResult[0].I_DEVICE_ADDRESS+'</li>';
+			'	<li><strong>고객주소</strong>'+cb.list.billDetailResult[0].CONT_ADDRESS+'</li>';
+			//gclee card billGashtDetailResult 데이터 없는 경우 발생 처리 
+			//'	<li><strong>고객주소</strong>'+cb.list.billGashtDetailResult[0].I_DEVICE_ADDRESS+'</li>';
 			
 			$('.topInfoView').html(topInfoViewStr);
 		}
@@ -345,6 +352,8 @@ function doPage(opbelNo){
 				params = JSON.parse(getAlopexSession('loginSession'));
 			}else{
 				params = JSON.parse(getAlopexCookie('loginCookie'));
+				//gclee login
+//				params = JSON.parse(getAlopexSession('loginSession'));
 			}
 			var chkBPCA = getMainBPCA();
 			if(chkBPCA == 'undefined'){
@@ -355,21 +364,25 @@ function doPage(opbelNo){
 			}
 			var buymInfo = getBuym(currentCa);
 			//gclee card 테스트위해 betrw값 있다고 가정
-//			if(Number(buymInfo.betrw) > 0){
-//				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
-//			}else{
-//				middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
-//			}
-			
-			middleInfoViewStr += '<p class="tac pt10"><a href="javascript:void(0);" class="Button red big goPayPage" >납부안내</a></p>';
-			//gclee end
-			
+			if(Number(buymInfo.betrw) > 0){
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 big goPayPage" style="width: 40%;">납부안내</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';				
+			}else{
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="col_red big" style="width: 40%;">납부완료</a></span>';
+				middleInfoViewStr += '<span class="tac pt10"><a href="javascript:void(0);" class="Button red2 goPayList" style="width: 40%; margin:10px;">당일수납내역</a></span>';
+			}
+						
 		}
+		
 		$('.middleInfoView').html(middleInfoViewStr);
 		
 		//gclee
 		$('.goPayPage').click(function(){
 			navigateBackToNaviGo('MBLMG1M0');
+		});
+		
+		$('.goPayList').click(function(){
+			navigateBackToNaviGo('MBLMG4M0');
 		});
 		
 		//tab1_1 ok
@@ -431,7 +444,13 @@ function doPage(opbelNo){
 		//tab3_1
 //    	var tab3_1Str = getTab3_1Str(cb);
 //    	$('.tab3_1').html(tab3_1Str);
-    	getTab3_1Str(cb);
+		//gclee card 아래데이터 없는경우 발생
+		getTab3_1Str(cb);
+		
+//		if( returnStr.indexOf('billGashtDetailResult') > -1 ){
+//			getTab3_1Str(cb);
+//		}
+    	
     	//tab3_2
     	//tab3_3
     	
@@ -625,6 +644,29 @@ function doPage(opbelNo){
     	
 //    	setTimeout('setLoadSwiper()',10);
     	//##################################################################
+		
+		//gclee push test  ############################# 임시로 푸시왔을때 상황을 테스트함
+		
+//		var chkAlready = getAlopexCookie('chkAlready');
+//	
+//		if(chkAlready != 'true'){
+//			
+//			setAlopexCookie('chkAlready', 'true');
+//			
+//			var rtMsg = {
+//					'PUSH_TYPE' : 'E',
+//					'BP' : '10030764',
+//					'CA' : '10007307',
+//					'DOC_HEADER_OPBEL' : '204006968472' //204006968472
+//			};
+//			
+//			logf('gclee pushstart MBLMG0M2 ' + JSON.stringify(rtMsg));
+//			
+//			navigateGo('pushstart',rtMsg);
+//		}
+		
+		//gclee push test end ##########################
+		
 	}, function(errorCode, errorMessage){
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: main');

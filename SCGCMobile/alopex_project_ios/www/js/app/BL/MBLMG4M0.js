@@ -36,17 +36,13 @@ function mainStart(){
 	
 	logf('gclee MBLMG4M0 ###########################################1');
 	
-	if(ispParams == 'undefined' || ispParams == ''){
+	if(ispParams == 'undefined' || ispParams == '' || ispParams == null){
 		logf('gclee MBLMG4M0 ###########################################2');
-        	doPage();
-		
+		doPage();
 	}else{
-        
-        ispParams = '';
+		ispParams = '';
 		goRequestISPPayIOS();
-		
 	}
-	
 
 }
 
@@ -143,13 +139,12 @@ function goRequestISPPayIOS(){
 			setCookieKill('vInstallment');
 			navigateBackToNaviGo('MBLMG3M0');
 		}
-             
-             doPage();
+		
+		doPage();
 		
 	}, function(errorCode, errorMessage){
 		//hideProgressBar();
-             
-             doPage();
+		doPage();
 		
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: hsUsrCommit');
@@ -199,7 +194,8 @@ function popCardResult(ss){
 		
 	}else if(ss == '2'){
 		//2:결제성공
-		navigateBackToNaviGo('MBLMG4M0');
+		//navigateBackToNaviGo('MBLMG4M0');
+		refrash();
 		
 	}else if(ss == '3'){
 		//3:결제실패

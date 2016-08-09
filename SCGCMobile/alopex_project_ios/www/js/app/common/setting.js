@@ -1423,12 +1423,12 @@
 	function notiPop(tit,cont,noti,modalClose,btnGrp){
 		if(btnGrp==null){
 			// no
-			$('.btnGrpNotiP2').html('<span class="small"><button class="Button red pNotiP2Ok">확인</button></span>');
+			$('.btnGrpNotiP2').html('<span class="small"><button class="Button red2 pNotiP2Ok">확인</button></span>');
 		}else{
 			// set BTN
 			var btnStr = '';
 			for(var i=0;i<btnGrp.list.length;i++){
-				btnStr += '<span class="small"><button class="Button red'+btnGrp.list[i].type+' '+btnGrp.list[i].id+'">'+btnGrp.list[i].name+'</button></span>';
+				btnStr += '<span class="small"><button class="Button red2'+btnGrp.list[i].type+' '+btnGrp.list[i].id+'">'+btnGrp.list[i].name+'</button></span>';
 			}
 			$('.btnGrpNotiP2').html(btnStr);
 		}

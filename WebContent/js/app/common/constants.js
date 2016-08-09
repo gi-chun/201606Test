@@ -31,7 +31,7 @@ CONSTANTS = {
 //	CIP_TEST_URL : "http://168.154.182.41/services/api/nmp",
 //	CIP_TEST_URL : "http://192.9.112.128:8090/scgc/services/nmp",
 	CIP_TEST_URL : "http://168.154.182.107:19681/cip/services/nmp",
-
+//	CIP_TEST_URL : "http://192.9.100.165:13331/api/nmp",
 	//운영
 	//CIP_URL : "http://scgc.skens.com:9090/services/nmp",
 	CIP_URL : "http://168.154.182.41/services/api/nmp",

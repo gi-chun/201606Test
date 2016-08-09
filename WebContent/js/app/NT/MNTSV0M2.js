@@ -75,11 +75,11 @@ function doPage(){
 			str += '</div>';
 			str += '<p class="btn"><input type="hidden" value="'+Mcb.list.qestList[i].QEST_NO+'"/>';
 			if(Mcb.list.qestList[i].QEST_NO != '1')	str += '<a href="javascript:void(0);" class="Button red2 big beforeQ">이전</a>';
-			str += '<span id="pop_end_poll"><a href="javascript:void(0);" class="Button red big exitQ">설문 중단</a></span>';
+			str += '<span id="pop_end_poll"><a href="javascript:void(0);" class="Button red2 big exitQ">설문 중단</a></span>';
 			if(Mcb.list.qestList[i].QEST_NO != String(Mcb.list.qestList.length)){
 				str += '<a href="javascript:void(0);" class="Button red2 big nextQ">다음</a>';
 			}else{
-				str += '<a href="javascript:void(0);" class="Button red big compQ">제출</a>';
+				str += '<a href="javascript:void(0);" class="Button red2 big compQ">제출</a>';
 			}
 			str += '</p></div>';
 		}
@@ -94,7 +94,7 @@ function doPage(){
 		str += '			<p class="bg_poll_end">설문에 참여해 주셔서 <br />감사합니다.</p>';
 		str += '			<p class="tac">보내주신 의견은 보다 편리한 도시가스 서비스를 <br />만드는데 적극 반영하도록 하겠습니다.</p>';
 		str += '		</div>';
-		str += '		<p class="btn"><a href="javascript:void(0);" class="Button red big lastExitBtn">목록보기</a></p>';
+		str += '		<p class="btn"><a href="javascript:void(0);" class="Button red2 big lastExitBtn">목록보기</a></p>';
 		str += '	</div>';
 //		str += '</div>';
 		//
@@ -181,6 +181,8 @@ function doPage(){
 				lc = JSON.parse(getAlopexSession('loginSession'));
 			}else{
 				lc = JSON.parse(getAlopexCookie('loginCookie'));
+				//gclee login
+//				lc = JSON.parse(getAlopexCookie('loginSession'));
 			}
 			var BPCA = JSON.parse(getAlopexCookie('MainBPCA'));
 			var bp = getMainBP();

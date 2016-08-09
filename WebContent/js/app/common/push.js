@@ -38,7 +38,9 @@ function getPushTokenCallBack(flag){
 }
 
 function savePushId(flag){
+	runMain();
 	
+	/*
 	pushNotification.getRegistrationId(function(regId){
 		
 		logf("Registration Id : " + regId);
@@ -56,7 +58,7 @@ function savePushId(flag){
 			}else{
 				var dType = device.osName;
 				if(dType=='Android'){
-					pushRegister(pn,'A',pushID, flag);
+//					pushRegister(pn,'A',pushID, flag);
 				}else if(dType=='iOS'){
 					//gclee ios 아래부분 사용안하는 로직이라 함
 					//pushRegister(pn,'I',pushID, flag);
@@ -79,6 +81,7 @@ function savePushId(flag){
 		}
 		logf('pushID :: '+pushID);
 	});
+	*/
 }
 
 /**

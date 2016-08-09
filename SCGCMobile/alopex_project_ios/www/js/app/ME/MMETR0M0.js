@@ -244,7 +244,7 @@ function pageSetting(cb){
 	}
 	
 	if(!isChkEnd(cb.e_adatsoll1)){
-		infoStr += '		<p class="tac small btn_save"><button id="btn_save" class="Button red big">당월지침 입력</button></p>';
+		infoStr += '		<p class="tac small btn_save"><button id="btn_save" class="Button red2 big">당월지침 입력</button></p>';
 	}
 	infoStr += '	</li>'+
 	'</ul>';

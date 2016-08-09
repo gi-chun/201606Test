@@ -122,6 +122,8 @@ function doPage(){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexSession('loginSession'));
 	}
 	var chkBPCA = getMainBPCA();
 	if(chkBPCA == 'undefined'){
@@ -469,6 +471,9 @@ function viewBillInfo(){
 	var param2 = JSON.parse(JSON.stringify(param));
 	param2.list = [{'bpCaList' : []}];
 	for(var i=0;i<params.list.bpCaList.length;i++){
+		if(i==0){
+			param2.mbtlnum = getAlopexCookie('uPhone');
+		}
 		param2.list[0].bpCaList[i] = {
 				"bp" : String(Number(params.list.bpCaList[i].bp)),	
 				"ca" : String(Number(params.list.bpCaList[i].ca))
@@ -486,14 +491,12 @@ function viewBillInfo(){
 		logf(cb);
 		logf(cb.list.billResultList);
 		
-		logf('gclee MBLMG0M0 isTokenTrue: ' + cb.isTokenTrue);
-		
 		//gclee login token
-		if(cb.isTokenTrue == 'false'){
-			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-			navigateGo('MACHP0M0');
-			return;
-		}
+//		if(cb.isTokenTrue == 'false'){
+//			notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//			navigateGo('MACHP0M0');
+//			return;
+//		}
 		//gclee login token end
 		
 		if(cb.list.billResultList == undefined){
@@ -521,6 +524,8 @@ function viewBillInfo(){
 						params = JSON.parse(getAlopexSession('loginSession'));
 					}else{
 						params = JSON.parse(getAlopexCookie('loginCookie'));
+						//gclee login
+//						params = JSON.parse(getAlopexSession('loginSession'));
 					}
 					var chkBPCA = getMainBPCA();
 					if(chkBPCA == 'undefined'){
@@ -531,9 +536,9 @@ function viewBillInfo(){
 					}
 					var buymInfo = getBuym(currentCa);
 					if(Number(buymInfo.betrw) > 0){
-						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>';
+						contStr += '	<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red2 big" >납부하기</a></p>';
 					}else{
-						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
+						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red2 big" >납부완료</a></p>';
 					}
 				}
 				contStr += '</li>';

@@ -69,14 +69,14 @@ function setEventListner(){
       logf("vConnectURL : "+vConnectURL);
       
       //gclee card 임시 결제완료, 결제실패, 이전
-//      if(device.osName != 'iOS'){
-//    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-//      }else{
-//    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
-//      }    
+      if(device.osName != 'iOS'){
+    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
+      }else{
+    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+      }    
       
       //gclee card - ing - 테스트시 사용
-      popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
+     // popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
       
      //gclee card 임시 결제완료, 결제실패, 이전
                     
@@ -102,6 +102,28 @@ function setEventListner(){
 };
 
 function doPage(){
+	
+	//gclee card 임시 결제완료, 결제실패, 이전
+	//gclee 임시테스트 
+//	var option = {
+//		      "ordername" : "test",
+//		      "ordernumber" : "111111",
+//		      "amount" : "1004",
+//		      "goodname" : "testGoodName",
+//		      "phoneno" : "0100004444",
+//		      "cardCode" : "",
+//		      "BPCode" : "B00",
+//		      "connectURL" : "http://168.154.182.107:8080/scgc/ksnet/mpi.do"
+//		      };
+//	
+//    if(device.osName != 'iOS'){
+//  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
+//    }else{
+//  	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
+//    }    
+    //gclee 임시테스트 끝
+    
+    
 	$('.topLogoDiv').html(getTitleBp());
 //	var mainPage = JSON.parse(getAlopexSession('mainPage'));
 	var loginSession = "";
@@ -109,6 +131,8 @@ function doPage(){
 		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSession = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSession = JSON.parse(getAlopexSession('loginSession'));
 	}
 	logf(loginSession);
 	

@@ -14,73 +14,61 @@ var currentCa = '';
 var pinId = '';
 var gUnpaiedList;
 
+var vOrderName;
+var vOrderNumber;
+var vAmount;
+var vGoodName;
+var vPhoneNo;
+var vCardCode;
+var vBPCode;
+var vConnectURL;
+var vInstallment;
+
+var pCardCode;
+var tAmount = 0;
+var paymentList = new Array();
+var ISP_TID = '';
+
 function mainStart(){
+	
+	settingLoading();
+	$('.imgloading').show();
+	
 	setEventListner();
 	
 	doPage();
 }
 
 function setEventListner(){    	
-//	var $p1 = $('.pop_input_num'),
-//    $p2 = $('.pop_input_save');
-//    // i = 0;
-//
-//      $('body').on('click', '.small', function(e) {
-//          e.preventDefault();
-//          var popup = $(this).hasClass('btn_input_num','btn_save') ? $p1 : $p2,
-////              content = $('.content'),
-//              self = $(this);
-//          popup.bPopup(self.data('bpopup') || {});
-//      });
-      
-	// gclee bill 청구서 보기전 암호입력 구현취소됨, 아래 삭제해도 무관
-//	$('#closeBtnExit').click(function() {
-//		popBillCerti.close();
-//	});
-	
-	//gclee card
-	$('.goPayPage').click(function(){
-		
-	  vCardCode = $("#cardSelect option:selected").val();
-	  vConnectURL = getCardPayURL(vCardCode);
 
-	  var chkBPCA = getMainBPCA();
-	  var useBPCA = JSON.parse(chkBPCA);
-	  vBPCode = useBPCA.regiogroup;
-	  
-      var option = {
-      "ordername" : vOrderName,
-      "ordernumber" : vOrderNumber,
-      "amount" : vAmount,
-      "goodname" : vGoodName,
-      "phoneno" : vPhoneNo,
-      "cardCode" : vCardCode,
-      "BPCode" : vBPCode,
-      "connectURL" : vConnectURL
-      };
-           
-      logf("vPhoneNo : "+vPhoneNo);
-      logf("vOrderName : "+vOrderName);
-      logf("vOrderNumber : "+vOrderNumber);
-      logf("vAmount : "+vAmount);
-      logf("vGoodName : "+vGoodName);
-      logf("vCardCode : "+vCardCode);
-      logf("vBPCode : "+vBPCode);
-      logf("vConnectURL : "+vConnectURL);
-      
-      //gclee card 임시 결제완료, 결제실패, 이전
-//      if(device.osName != 'iOS'){
-//    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-//      }else{
-//    	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
-//      }    
-      
-      //gclee card - ing - 테스트시 사용
-      popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
-		
+	var selectTarget = $('.selectbox select');
+	selectTarget.change(function(){
+		var select_name = $(this).children('option:selected').text();
+		$(this).siblings('label').text(select_name);
 	});
 	
+	$('#cardSelect').change(function(){
+		
+		showHideTcode();
+        
+    });
+
 };
+
+function showHideTcode(){
+	
+	var tCardCode = $("#cardSelect option:selected").val();
+	tCardCode = getRealCardCodeTest(tCardCode);
+	var tPayType = getPayType(tCardCode);
+			
+	if( tPayType == 'MPI'){
+		$('#label_Tcode').hide();
+		$('#select_box3').hide();
+	}else{
+		$('#label_Tcode').show();
+		$('#select_box3').show();
+	}
+}
 
 //gclee card - ing
 function popCardResult(ss){
@@ -95,7 +83,7 @@ function popCardResult(ss){
 	}else if(ss == '2'){
 		//2:결제성공
 		navigateBackToNaviGo('MBLMG4M0');
-		
+		 
 	}else if(ss == '3'){
 		//3:결제실패
 		//alert
@@ -105,56 +93,503 @@ function popCardResult(ss){
 			speed : 300,
 		});	
 		 
-	}    
+	}else if(ss == '4'){
+		//4:카드승인완료 후 결제요청
+		goRequestISPPay();
+	}        
+}
+
+function goRequestISPPay(){
+	//gclee card
+	var paymentListCookie = getAlopexCookie('paymentList');
+	if(paymentListCookie == 'undefined'){
+		return;
+	}
+
+	logf('gclee MBLMG4M0 ###########################################2');
+	
+	var paymentCookieLists = JSON.parse(paymentListCookie);
+	var vtAmount = getAlopexCookie('tAmount');
+	var vInstallment = getAlopexCookie('vInstallment');
+	var vTERM_ID = getAlopexCookie('TERM_ID');
+	
+  	//showProgressBarMsg('정보를 처리중입니다.');
+	
+  	var vExpYear = '2049';
+	var vExpMon = '12';
+	
+	var tISP_TID = getAlopexCookie('ISP_TID');
+	
+	var param = {
+				"certiGubun" : 'I',	
+				"RGUBUN" : '03',
+				"CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+				"expyear" : vExpYear,
+				"expmon" : vExpMon,
+				"installment" : vInstallment,
+				"amount" : vtAmount,
+				"expdt" :  vExpYear.substring(2) + vExpMon,
+				"clientIp" : '',
+				"termID" : vTERM_ID,
+				"TID" : tISP_TID
+	};
+	
+	logf('gclee goRequestISPPay MBLMG3M0 ' + JSON.stringify(param));
+	
+	var param2 = JSON.parse(JSON.stringify(param));
+	param2.list = [{'payList' : []}];
+	
+	for(var i=0;i<paymentCookieLists.length;i++){
+		
+		param2.list[0].payList[i] = {
+				"BP_ADDRESS" : paymentCookieLists[0].BP_ADDRESS,	
+				"NAME_LAST" : paymentCookieLists[0].NAME_LAST,
+				"DATA_TOTAL" : paymentCookieLists[0].DATA_TOTAL,
+				"TOTAL_AMOUNT" : paymentCookieLists[0].TOTAL_AMOUNT,
+				"TOTAL_CARD_AM" : paymentCookieLists[0].TOTAL_CARD_AM,
+				"BUKRS" : paymentCookieLists[0].BUKRS,
+				"BUTXT" : paymentCookieLists[0].BUTXT,
+				"STCD2" : paymentCookieLists[0].STCD2,
+				"COM_ADDRESS" : paymentCookieLists[0].COM_ADDRESS,
+				"TEL_NUMBER" : paymentCookieLists[0].TEL_NUMBER,
+				"LDO_CODE" : paymentCookieLists[0].LDO_CODE,
+				"SEQ" : paymentCookieLists[0].SEQ,
+				"GPART" : paymentCookieLists[0].GPART,
+				"VKONT" : paymentCookieLists[0].DVKONT,
+				"OPBEL" : paymentCookieLists[0].OPBEL,
+				"FAEDN" : paymentCookieLists[0].FAEDN,
+				"STATUS" : paymentCookieLists[0].STATUS,
+				"BETRW" : paymentCookieLists[0].BETRW,
+				"BETRZ" : paymentCookieLists[0].BETRZ,
+				"CDSNG" : paymentCookieLists[0].CDSNG,
+				"CCINS" : paymentCookieLists[0].CCINS,
+				"CCDNO" : paymentCookieLists[0].CCDNO,
+				"CSI_DATE" : paymentCookieLists[0].CSI_DATE,
+				"CSI_TIME" : paymentCookieLists[0].CSI_TIME,
+				"CSINO" : paymentCookieLists[0].CSINO,
+				"CUHYY" : paymentCookieLists[0].CUHYY,
+				"CUHMM" : paymentCookieLists[0].CUHMM,
+				"ALLO_MONTH" : paymentCookieLists[0].ALLO_MONTH,
+				"VAN_TR" : paymentCookieLists[0].VAN_TR
+		};
+		
+	}
+
+	logf('gclee goRequestISPPay  param2 MBLMG4M0 ' + JSON.stringify(param2));
+	
+	httpSend("putPayList", param2, function(cb2){
+
+		//hideProgressBar();
+		
+		if(cb2.resultYn == 'Y'){
+			
+			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
+			setCookieKill('paymentList');
+			setCookieKill('tAmount');
+			setCookieKill('vInstallment');
+			navigateBackToNaviGo('MBLMG4M0');
+			
+		}else{
+			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
+			
+		}
+		
+	}, function(errorCode, errorMessage){
+		//hideProgressBar();
+		
+		if (errorCode == "9999") {
+			loge('error :: 9999 :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		} else {
+			loge('error :: other :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		}
+	});
+
+};
+
+function getRealCardCode(pCardCode){
+	
+	var rCardCode = '';
+	var tCardCode = '';
+	for(var ii=0;ii<gUnpaiedList.list.cardStoreInfoList.length;ii++){
+		//rCardCode = '<option value="'+cb.list.cardStoreInfoList[ii].CARDCOMPCD+'">'+cb.list.cardStoreInfoList[ii].CARDCOMNAME+'</option>';
+		tCardCode = cb.list.cardStoreInfoList[ii].CARDCOMPCD; //서버에서 내려주는 real card code 설정
+		if( pCardCode == tCardCode){
+			rCardCode = cb.list.cardStoreInfoList[ii].CARDCOMPCD;
+			logf('gclee MBLMG3M0 getRealCardCode pCardCode : ' + pCardCode + ' rCardCode : ' + rCardCode);
+			return rCardCode;
+		}
+	}
+}
+
+function getRealCardCodeTest(pCardCode){
+	
+//	01	비씨
+//	02	국민
+//	03	외환
+//	04	삼성
+//	05	신한
+//	08	현대
+//	09	롯데
+//	11	한미
+//	12	수협
+//	13	신세계
+//	14	우리(구 평화)
+//	15	농협
+//	16	제주
+//	17	광주
+//	18	전북
+//	20	롯데
+//	23	주택(구 동남)
+//	24	11	하나SK
+//	25	해외
+//	26	7	씨티(한미)
+//	27	월드패스카드
+//	28	신보람
+//	29	SK-OkCashBag
+//	30	SK리더스
+//	42	LG-telecom
+//	47	KTF-coupon
+//	59	사이버카드
+//	99	부산비씨  오전 11:36
+	
+	if( pCardCode == '01'){
+		return '0100';
+	}else if(pCardCode == '02'){
+		return '0204';
+	}else if(pCardCode == '03'){
+		return '1';
+	}else if(pCardCode == '04'){
+		return '2';
+	}else if(pCardCode == '05'){
+		return '6';
+	}else if(pCardCode == '08'){
+		return '4';
+	}else if(pCardCode == '09'){
+		return '5';
+	}else if(pCardCode == '11'){
+		return '7';
+	}else if(pCardCode == '12'){
+		return '1800';
+	}else if(pCardCode == '13'){
+		return '0100';  //신세계? 
+	}else if(pCardCode == '14'){
+		return '0100';
+	}else if(pCardCode == '15'){
+		return '14';
+	}else if(pCardCode == '16'){
+		return '0100';
+	}else if(pCardCode == '17'){
+		return '1500';
+	}else if(pCardCode == '18'){
+		return '1600';
+	}else if(pCardCode == '20'){
+		return '5';
+	}else if(pCardCode == '23'){
+		return '0100';
+	}else if(pCardCode == '24'){
+		return '11';
+	}else if(pCardCode == '25'){
+		return '0100';
+	}else if(pCardCode == '26'){
+		return '7';
+	}else if(pCardCode == '27'){
+		return '0100';
+	}else if(pCardCode == '28'){
+		return '0100';
+	}else if(pCardCode == '29'){
+		return '0100';
+	}else if(pCardCode == '30'){
+		return '0100';
+	}else if(pCardCode == '42'){
+		return '0100';
+	}else if(pCardCode == '47'){
+		return '0100';
+	}else if(pCardCode == '59'){
+		return '0100';
+	}
 }
 
 function goMenuBLMG02(){
 	//gclee card
-	var pCardCode = $("#cardSelect option:selected").val();
+	pCardCode = $("#cardSelect option:selected").val();
 	
 	logf(gUnpaiedList);
-	logf(gUnpaiedList.resultList);
+	logf(gUnpaiedList.list.resultList);
 	
-	logf('gclee MBLMG3M0 goMenuBLMG02 미수납내역 : ' + gUnpaiedList.resultList);
+	logf('gclee MBLMG3M0 goMenuBLMG02 미수납내역 : ' + gUnpaiedList.list.resultList);
 	
-	//navigateBackToNaviGo('MBLMG1M0');
+	//여러 미수납 선택건 확인
+	//check select
+	var checkCount = 0;
+	var tempStr;
+	var i=0;
 	
-//	 vCardCode = $("#cardSelect option:selected").val();
-//	  vConnectURL = getCardPayURL(vCardCode);
-//
-//	  var chkBPCA = getMainBPCA();
-//	  var useBPCA = JSON.parse(chkBPCA);
-//	  vBPCode = useBPCA.regiogroup;
-//	  
-//     var option = {
-//     "ordername" : vOrderName,
-//     "ordernumber" : vOrderNumber,
-//     "amount" : vAmount,
-//     "goodname" : vGoodName,
-//     "phoneno" : vPhoneNo,
-//     "cardCode" : vCardCode,
-//     "BPCode" : vBPCode,
-//     "connectURL" : vConnectURL
-//     };
-//          
-//     logf("vPhoneNo : "+vPhoneNo);
-//     logf("vOrderName : "+vOrderName);
-//     logf("vOrderNumber : "+vOrderNumber);
-//     logf("vAmount : "+vAmount);
-//     logf("vGoodName : "+vGoodName);
-//     logf("vCardCode : "+vCardCode);
-//     logf("vBPCode : "+vBPCode);
-//     logf("vConnectURL : "+vConnectURL);
+	checkCount = $('[name=chkc0]:checked').length;
+	
+	logf('gclee MBLMG3M0 goMenuBLMG02 checked count : ' + checkCount);
+	
+	if( checkCount < 1){
+		notiPop('확인','결제대상을 선택해 주십시요.',true,false,null);
+		return;
+	}
+		
+	var isNoOld = false;
+	
+	if($('.Checkbox').length > 1){
+		if($("#chkc0:checked").length == 0){
+			isNoOld = true;
+		}
+	}
+	
+	var tempIndex = 0;
+	var tempCuIndex = 0;
+	//var paymentList = new Array();
+	tAmount = 0;
+	for(var i=0;i<$('[name=chkc0]:checked').length;i++){
+		
+		var s1 = $('[name=chkc0]:checked')[i].value;
+		logf('gclee MBLMG3M0 goMenuBLMG02 s1: ' + s1);
+		
+		tempCuIndex = s1;
+		
+		if((tempCuIndex-tempIndex) > 1){
+			isNoOld = true;
+			break;
+		}
+		
+		if (gUnpaiedList.list.resultList[s1].autoYn == 'Y'){
+			notiPop('확인','고객님은 현재 자동이체 청구중인 상태로 카드결제 시 이중출금될 수 있으므로 유의하시기 바랍니다.',true,false,null);
+		}
+		
+		paymentList.push(gUnpaiedList.list.resultList[s1]);
+		
+		tAmount += parseInt(gUnpaiedList.list.resultList[s1].BETRW);
+		tempIndex = tempCuIndex;
+	}
+	
+	logf('gclee MBLMG3M0 isNoOld  : ' + isNoOld);
+	
+	if(isNoOld){
+		notiPop('확인','과거건 부터 결제해 주십시요.',true,false,null);
+		return;
+	}
+	
+	  pCardCode = getRealCardCodeTest(pCardCode);
+	  vConnectURL = getCardPayURL(pCardCode);
+
+	  var chkBPCA = getMainBPCA();
+	  var useBPCA = JSON.parse(chkBPCA);
+	  vBPCode = useBPCA.regiogroup;
+	  vBPCode = vBPCode.substring(0, 1) + "000";
+	  
+	  logf("vBPCode : "+vBPCode);
+	 
+	  vGoodName = gUnpaiedList.list.resultList[0].BUTXT;
+	  vPhoneNo = getAlopexCookie('uPhone');
      
-     //gclee card 임시 결제완료, 결제실패, 이전
-//     if(device.osName != 'iOS'){
-//   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult");
-//     }else{
-//   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), "popCardResult"); 
-//     }    
+	  vAmount = tAmount;
+	  
+	 //MPI or ISP 분리
+	  var vPayType = getPayType(pCardCode);
+	  vInstallment = $("#installment option:selected").val();
+	  
+	//use iOS
+	setAlopexCookie('paymentList',JSON.stringify(paymentList));
+	setAlopexCookie('tAmount',tAmount);
+	setAlopexCookie('vInstallment',vInstallment);
+	setAlopexCookie('TERM_ID',gUnpaiedList.list.cardStoreInfoList[0].TERM_ID);
+		
+	if( vPayType == 'MPI'){
+		
+		logf("paymentList count : "+ paymentList.length);
+		
+		var option = {
+	    	     "ordername" : "",
+	    	     "ordernumber" : "",
+	    	     "amount" : vAmount,
+	    	     "goodname" : vGoodName, //bpname
+	    	     "phoneno" : vPhoneNo,
+	    	     "cardCode" : pCardCode,
+	    	     "BPCode" : vBPCode,
+	    	     "connectURL" : vConnectURL,
+	    	     "CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+	    	     "TERM_ID" : gUnpaiedList.list.cardStoreInfoList[0].TERM_ID,
+	    	     "installment" : vInstallment,
+	    	     "RGUBUN" : "03",
+	    	     "certiGubun" : "M",
+	    	     "payListCount" : paymentList.length
+	    	     };
+
+	     logf("vPhoneNo : "+vPhoneNo);
+	     logf("vOrderName : "+vOrderName);
+	     logf("vOrderNumber : "+vOrderNumber);
+	     logf("vAmount : "+vAmount);
+	     logf("vGoodName : "+vGoodName);
+	     logf("vBPCode : "+vBPCode);
+	     logf("vConnectURL : "+vConnectURL);
+	     logf("vInstallment : "+vInstallment);
+	     
+	     //gclee card 임시 결제완료, 결제실패, 이전
+	     //잠시 주석
+	     if(device.osName != 'iOS'){
+	   	  	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
+	   	  	paymentList = new Array();
+	     }else{
+	   	  	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
+	   	  	paymentList = new Array();
+	     }    
+			
+	}else{ //ISP
+		
+		var Now = new Date();
+		var NowTime = Now.getFullYear()+"";
+		NowTime += NowTime.substring(2);
+		NowTime += Now.getMonth() + 1 ;
+		NowTime += Now.getDate();
+		NowTime += Now.getHours();
+		NowTime += Now.getMinutes();
+		NowTime += Now.getSeconds();
+		
+		//M1111_16072609337_00001
+		
+		ISP_TID = 'M'+gUnpaiedList.list.resultList[0].DVKONT+'_'+NowTime+'_'+'00001';
+		 
+		showProgressBarMsg('정보를 처리중입니다.');
+		  
+		setAlopexCookie('ISP_TID',ISP_TID);
+		
+		//gclee card -K0024 - A0029
+		//realform.KVP_PGID.value = "K0024";
+		//ISP인경우 HpNum(전화번호), Tcode(통신사) 필수, Tcode 결제시 입력하면 추가예정
+		//skt,ktf,lgt
+		
+		var vTcode = $("#select_Tcode option:selected").val();
+		
+		var param = {
+				"PgId" : 'K0024',
+				"GoodName" : vGoodName,
+				"Price" : vAmount+"",
+				"Currency" : 'WON',
+				"NoInt" : '0',
+				"Noint_Inf" : vInstallment,
+				"TID" : ISP_TID,
+				"CardCode" : pCardCode,
+				"LoginGubun" : '',
+				"ReturnUrl" : '',
+				"WAPUrl" : '',
+				"HpNum" : vPhoneNo,
+				"MerchantNo" : '',
+				"Tcode" : vTcode,
+				"IpAddr" : '',
+				"CancelUrl" : ''
+				
+		};
+		
+		logf('111111111111111111111111111111')
+		logf(JSON.stringify(param));
+		logf('111111111111111111111111111111')
+		
+		logf('gclee getIspCertResult MBLMG3M0 ' + param);
+	//	
+		httpSend("getIspCertResult", param, function(cb2){
+			
+			hideProgressBar();
+			
+			if((cb2.ResultCode == '10001000')==false){
+				notiPop('확인','ISP 카드승인 요청이 실패했습니다.',true,false,null);
+				return;
+			}
+	
+			if (device.osName == 'Android') {
+				
+				var gdnvUrl = '';
+				var gdnvId = '';
+				if (device.osName == 'Android') {
+					gdnvUrl = 'http://mobile.vpay.co.kr/jsp/MISP/andown.jsp';
+					gdnvId = 'kvp.jjy.MispAndroid320';
+				} else {
+					gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
+					gdnvId = 'ispmobile://?TID='+ISP_TID;
+				}
+				
+				//call ISP APP
+				application.hasApp(gdnvId,function(rt) {
+					hideProgressBar();
+					if (rt) {
+//						application.startApplication(gdnvId);
+						if (device.osName == 'Android') {
+							jsniCaller.invoke("CallSchemeUrl.call", "ispmobile://?TID="+ISP_TID);
+						} else {
+							gdnvUrl = 'http://itunes.apple.com/kr/app/id369125087?mt=8';
+							gdnvId = 'ispmobile://?TID='+ISP_TID;
+						}
+					} else {
+						notiPop(
+								'안내',
+								'결제를 위한 ISP앱이 설치되어있지 않습니다.<br/>설치 화면으로 이동하시겠습니까?',
+								true,
+								false,
+								{
+									list : [
+											{
+												type : '',
+												id : 'pCancelOK',
+												name : 'Store 이동'
+											},
+											{
+												type : '0',
+												id : 'pCancelNO',
+												name : '닫기'
+											} ]
+								});
+
+						$('.pCancelOK')
+								.click(
+										function() {
+											// url 연결
+											application.startWebBrowser(gdnvUrl);
+										});
+
+						$('.pCancelNO').click(
+								function() {
+									notiPopID.close();
+								});
+					}
+				});
+				
+			}else{
+				//iOS
+				var option = {
+					      "schemeUrl" : 'ispmobile://?TID='+ISP_TID
+				};
+					      
+			   jsniCaller.invoke("PaymentJSNI.callISPApp", JSON.stringify(option), "popCardResult");
+			}
+			
+			//gclee ISP 임시 결제요청 수동호출
+			//goRequestISPPay();
+			
+		}, function(errorCode, errorMessage){
+			if (errorCode == "9999") {
+				loge('error :: 9999 :: hsUsrCommit');
+				alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+			} else {
+				loge('error :: other :: hsUsrCommit');
+				alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+			}
+		});
+		
+		
+	}
      
      //gclee card - ing - 테스트시 사용
-     popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
+//     popCardResult('2'); //1:취소, 2:결제성공, 3:결제실패
+     
+//     refrash();
+     
+     
 };
 
 function onScreenBack(){
@@ -162,6 +597,7 @@ function onScreenBack(){
 }
 
 function doPage(){
+	//gclee card ing
 	if(device.osName != 'iOS'){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
@@ -179,68 +615,22 @@ function doPage(){
 	$('.topLogoDiv').html(getTitleBp());
 	
 	logf('jysjys',params);
-	
-	viewBillList();
-}
-
-function viewBillList(){
-	var buymInfo = getBuym(currentCa);
-	var box_type1Str = '<h3>납입자번호</h3>'+
-	'<span class="col_red">'+currentCa+'</span>';
-	if(Number(buymInfo.betrw) > 0) box_type1Str += '<span class="input input_no">미납</span>';
-	if(params.list.bpCaList.length > 1) box_type1Str += '<p class="small btn_input_num showPlus"><button id="button_input_num">납입자번호 선택하기</button></p>';
-	$('.box_type1').html(box_type1Str);
-	//$('.topBoxCaList').html(Number(currentCa));
-
-	
-	if(params.list.bpCaList.length < 2){
-		$('.showPlus').hide();
-	}else{
-		var popCaListStr = '';
-    	for(var i=0;i<params.list.bpCaList.length;i++){
-    	//	var buymInfo = getBuym(cb.list.billResultList[i].CANO);
-    		popCaListStr += '<li class="'+(currentCa == Number(params.list.bpCaList[i].ca)?'key_':'')+'num goBillInfo"><input type="hidden" value="'+params.list.bpCaList[i].regiogroup+','+params.list.bpCaList[i].bp+','+params.list.bpCaList[i].ca+','+params.list.bpCaList[i].sernr+','+params.list.bpCaList[i].anlage+'"/><a href="javascript:void(0);">'+Number(params.list.bpCaList[i].ca)+'</a>';
-    		if(Number(params.list.bpCaList[i].betrw) > 0) popCaListStr += '<span class="input long input_no">미납</span>';
-    		popCaListStr += '</li>';
-    	}
-    	$('.popCaList').html(popCaListStr);
-	}
-	
-	$('.showPlus').click(function(){
-		//console.log('1111');
-		pinId = $('.pop_input_num').bPopup({
-			opacity: 0.6,
-			speed: 300,
-		});
-	});
-	
-	$('.goBillInfo').click(function(event){
-		var s1 = jQuery(event.currentTarget);
-//		var s2 = s1.children('a')[0].text;
-		//ss = s1;
-		var Str1 = s1.children('input')[0].value;
-		var Str2 = Str1.split(',');
-		var Str3 = {
-				bp : Str2[1],
-				ca : Str2[2],
-				sernr : Str2[3],
-				anlage : Str2[4],
-				regiogroup : Str2[0]
-		};
-		currentCa = Number(Str2[2]);
-		setAlopexSession('SessionBP',Str2[0]);
-		setAlopexSession('SessionBPCA',JSON.stringify(Str3));
-		putGlobalPreference('selectedBp', Str2[0]);
-		putGlobalPreference('selectedBpCa', JSON.stringify(Str3));
-		
-		viewBillList();
-		pinId.close();
-	});
 
 	viewUnpaidList();
 }
 
+function refrash(){
+	navigateGo('MBLMG4M0');//MBLMG4M0
+}
+
 function viewUnpaidList(){
+	
+	var box_type1Str = '<h3>납입자번호</h3>'+
+	'<span class="col_red">'+currentCa+'</span>';
+	
+	$('.box_type1').html(box_type1Str);
+	$('.showPlus').hide();
+		
 	//gclee card 2
 	var mbp = getMainBP();
 	logf('gclee setting mbp: ' + JSON.stringify(mbp));
@@ -249,43 +639,52 @@ function viewUnpaidList(){
 	
 	var param = {
 			"COMPCD" : pMbp,	
-			"GUBUN" : '03',
-			"CANO" : '10576739' //test
-//			"CANO" : String(Number(params.list.bpCaList[0].ca))
+			"GUBUN" : '04',
+			"CANO" : String(Number(currentCa))
 	};
+	
+//	var param = {
+//			"COMPCD" : 'B000',	
+//			"GUBUN" : '04',
+//			"CANO" : '15979102' //test
+////			"CANO" : String(Number(params.list.bpCaList[0].ca))
+//	};
+	
 	logf('gclee MBLMG3M0 ' + JSON.stringify(param));
 	
 	setDefault();
+	
+	$('#label_Tcode').hide();
+	$('#select_box3').hide();
 	
 	httpSend("getPayList", param, function(cb){
 		gUnpaiedList = cb;
 		logf(cb);
 		logf(cb.resultList);
 		
-		logf('gclee MBLMG3M0 미수납내역 : ' + cb.resultList);
+		logf('gclee MBLMG3M0 미납내역 : ' + cb.resultList);
 		
 		if(cb.list.resultList == undefined){
-			var contStr = '<li class="view_cont">미수납 내역이 없습니다.</li>';
-			$('.boxList').html(contStr);
-		}else{
-			var contStr = '';
-			for(var i=0;i<cb.list.resultList.length;i++){
-				contStr += '<li class="view_cont">'+
-				'<div>'+
-				'<p class="form_title"><input type="checkbox" id="check'+i+'" class="input'+i+'" />&nbsp;&nbsp;결제선택</p>'+
-			    '</div>'+
-				'		<div>'+
-				'			<p class="form_title">'+'납기일 : '+toDateAddDot(cb.list.resultList[i].FAEDN)+' </p>'+
-				'			<p class="form_view px0">'+'고객명 : '+cb.list.resultList[i].NAME_LAST+'</p>'+
-				'			<span class="col_red"><p class="form_title">'+'미납금액 : '+chgNumberToMoney(cb.list.resultList[i].BETRW)+'원</p></span>'+
-				'			<p class="form_view px0">'+'상태 : '+getStringPayStatus(cb.list.resultList[i].STATUS)+'</p>'+
-				'			<p class="form_title">'+'미납금액 합계 : '+chgNumberToMoney(cb.list.resultList[i].TOTAL_AMOUNT)+'원</p>'+
-				'		</div>';
-				
-				contStr += '</li>';
-			}
 			
-			$('.boxList').html(contStr);
+			var caList = '<p class="pb10">  미납 내역이 없습니다.</p>';
+			$('.box_CaList').html(caList);
+			
+		}else{
+			
+			var vTotalAmount = '미납금액 합계&nbsp&nbsp'+chgNumberToMoney(cb.list.resultList[0].TOTAL_AMOUNT)+'&nbsp원'+'&nbsp';
+			$('.totalAmount').html(vTotalAmount);
+			
+			var caList = '<p class="pb10">  납기일 과거 건부터 다수의 결제를 선택하실 수 있습니다.</p>';
+
+			for(var i=0;i<cb.list.resultList.length;i++){
+				caList += '<div class="bill">'+
+				'<input type="hidden" value="'+' '+','+' '+'"/>'+
+				'<p><strong>납기일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].FAEDN)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" checked="checked" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+
+				'<p><strong>고객명</strong><span class="txt">'+ascUserNM(cb.list.resultList[i].NAME_LAST)+'&nbsp;</span></p>'+
+				'<p><strong>미납금액</strong><span class="txt">'+chgNumberToMoney(cb.list.resultList[i].BETRW)+'원'+'&nbsp;</span></p>'+
+				'</div>';
+			}
+			$('.box_CaList').html(caList);
 			
 			//gclee card select box
 			list_numStr = '';
@@ -309,12 +708,18 @@ function viewUnpaidList(){
 //				navigateGo('MBLMG0M2',param);
 				navigateBackToNaviParamGo('MBLMG0M2',param);
 				
-				//gclee bill end
-				
 		    });
+			
+			showHideTcode();
+			
 		};
 		
+		completLoad();
+		
 	}, function(errorCode, errorMessage){
+		
+		completLoad();
+		
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: main');
 		} else {

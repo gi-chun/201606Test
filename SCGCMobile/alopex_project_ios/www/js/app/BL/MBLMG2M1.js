@@ -596,8 +596,8 @@ function viewPayList(){
 //					}else{
 //						contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >납부완료</a></p>';
 //					}
-					contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red big" >결제취소완료</a></p>';
-					contStr += '	<p class="tac pt10"><a href="javascript:goPayCancel();" class="Button red big" >결제취소</a></p>';
+					contStr += '	<p class="tac pt10"><a href="javascript:void(0);" class="Button red2 big" >결제취소완료</a></p>';
+					contStr += '	<p class="tac pt10"><a href="javascript:goPayCancel();" class="Button red2 big" >결제취소</a></p>';
 				}
 				contStr += '</li>';
 			}

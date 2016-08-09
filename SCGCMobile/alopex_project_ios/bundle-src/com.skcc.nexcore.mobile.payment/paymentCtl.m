@@ -61,6 +61,8 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         
             NSString *strListCount = [NSString stringWithFormat:@"%lu", (unsigned long)[userParam2 count]];
         
+        NSLog(@"strListCount ==>%@", strListCount);
+        
             NSString *firstBody = [NSString stringWithFormat: @"ordername=%@&ordernumber=%@&amount=%@&goodname=%@&phoneno=%@&cardCode=%@&BPCode=%@&CANO=%@&DATA_TOTAL=%@&TERM_ID=%@&installment=%@",
                                    [userParam objectForKey:@"ordername"],
                                    [userParam objectForKey:@"ordernumber"],
@@ -85,6 +87,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
             if (userParam2) {
                 for (NSInteger i=0; i<[userParam2 count]; i++) {
                     if(i==0){
+                        [body appendString:[NSString stringWithFormat:@"&certiGubun=%@", [userParam objectForKey:@"certiGubun"]]];
                         [body appendString:[NSString stringWithFormat:@"&RGUBUN=%@", [userParam objectForKey:@"RGUBUN"]]];
                         [body appendString:[NSString stringWithFormat:@"&BP_ADDRESS=%@", userParam2[i][@"BP_ADDRESS"]]];
                         [body appendString:[NSString stringWithFormat:@"&NAME_LAST=%@", userParam2[i][@"NAME_LAST"]]];
@@ -105,7 +108,6 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
                         [body appendString:[NSString stringWithFormat:@"&ALLO_MONTH=%@", userParam2[i][@"ALLO_MONTH"]]];
                         [body appendString:[NSString stringWithFormat:@"&CSI_DATE=%@", userParam2[i][@"CSI_DATE"]]];
                         [body appendString:[NSString stringWithFormat:@"&CSI_TIME=%@", userParam2[i][@"CSI_TIME"]]];
-                        [body appendString:[NSString stringWithFormat:@"&BETRZ=%@", userParam2[i][@"BETRZ"]]];
                         
                     }
                     
@@ -117,6 +119,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
                     [body appendString:[NSString stringWithFormat:@"&FAEDN=%@", userParam2[i][@"FAEDN"]]];
                     [body appendString:[NSString stringWithFormat:@"&STATUS=%@", userParam2[i][@"STATUS"]]];
                     [body appendString:[NSString stringWithFormat:@"&BETRW=%@", userParam2[i][@"BETRW"]]];
+                    [body appendString:[NSString stringWithFormat:@"&BETRZ=%@", userParam2[i][@"BETRZ"]]];
                 }
             }
             
@@ -200,7 +203,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         NSLog(@"param url==>%@", param);
         [self.delegate paymentCtlSuccessCallback:param];
         
-        return NO;
+        return YES;
     }
     
     if([reqUrl rangeOfString:@"scgcmobile://payment_success"].location != NSNotFound)
@@ -212,7 +215,7 @@ NSString *mpi_url = @"http://168.154.182.107:19681/cip/MPI/m_mpiTest.jsp";
         NSLog(@"param url==>%@", param);
         [self.delegate paymentCtlSuccessCallback:param];
         
-        return NO;
+        return YES;
     }
     
     if([reqUrl rangeOfString:@"ansimclick.hyundaicard.com"].location != NSNotFound)

@@ -8,11 +8,11 @@
 	<script type="text/javascript" src="../../js/app/common/common_http.js"></script>
 	<script type="text/javascript" src="../../js/app/BL/MBLMG4M0.js"></script>
 	
-	<script>TITLE('수납 내역');	</script>
+	<script>TITLE('당일 수납 내역');	</script>
 </head>
 <body>
 <div id="wrap" class="sub">
-	<script>HEADER('수납 내역');	</script>
+	<script>HEADER('당일 수납 내역');	</script>
 	<div id="container" class="clearfix">
 		<div class='topLogoDiv'>
 			<!-- <h2 class="ko-one">코원에너지서비스 | SK E&amp;S</h2> -->
@@ -28,77 +28,29 @@
 			-->
 			<p class="small btn_input_num showPlus"><button id="button_input_num">납입자번호 선택하기</button></p>
 		</div>
+		
+		<div class="box_join">
+				<h2 class="bold totalAmount">당일 수납 내역 </h2>
+				<div class="inner box_CaList">
+					<p class="pb10">취소는 한 건씩만 가능합니다.</p>
+					
+					<div class="bill" id="bill_n">
+						<!-- 
+						<p><strong>승인일</strong><span class="bold">123456789</span><span class="check"><label for="chkc1"><input class="Checkbox" name="chkc0" value="check2" checked="checked" id="chkc1"></label></span></p>
+						<p><strong>고객명</strong><span class="txt"> 101 802)</span></p>
+						<p><strong>수납금액</strong><span class="txt"> 101 802)</span></p> 
+						-->
+					</div>
+				</div>
+		</div>
+		
 		<div class="box_form">
 			<ul class='boxList'>
-				<!-- <li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 03월 청구서</p>
-							<p class="form_view">미열람</p>
-						</div>
-						<div class="pt10">
-							<p class="form_closed"><span class="bg_green">미납</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-					<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >납부하기</a></p>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 02월 청구서</p>
-							<p class="form_view">미열람</p>
-						</div>
-						<div class="pt10">
-							<p class="form_closed"><span class="bg_gray">자동이체</span> 납부마감일 <span class="col_red">2015.03.31</span></p>
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2015년 01월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 12월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 11월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li>
-				<li class="view_cont">
-					<a href="javascript:void(0);">
-						<div>
-							<p class="form_title">2014년 10월 청구서</p>
-						</div>
-						<div class="pt10">
-							<p class="form_price">81,510원</p>
-						</div>
-					</a>
-				</li> -->
+				
 			</ul>
 		</div>
-		<p class="txt_red">청구서는 최근 12개월 까지만 조회 가능합니다.</p>
-		<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red big" >결제취소하기</a></p>
+		<p class="txt_red">취소는 한 건씩만 가능합니다.</p>
+		<p class="tac pt10"><a href="javascript:goMenuBLMG02();" class="Button red2 big" >결제 취소</a></p>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../js/app/common/foot.js"></script>
@@ -122,6 +74,8 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="../../js/app/common/foot_popup.js"></script> 
 
 </body>
 </html>

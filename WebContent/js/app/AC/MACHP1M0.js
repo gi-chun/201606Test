@@ -20,6 +20,11 @@ var cb2_login = null;
 function mainStart(){
 	setDefault();
 	setEventListner();
+	
+	//gclee login
+	setAlopexCookie('joinStep', 'stepB');
+	setAlopexCookie('joinOK', 'false');
+	
 	if(isTest){
 		// 테스트
 		$('#uPhones').attr('readonly',false);
@@ -40,6 +45,17 @@ function popPhone(){
 }
 
 function setEventListner(){
+	
+	//이용약관 체크버튼 클릭
+	//agree_terms
+	$('#agree_terms').click(function(){
+		
+		view_privacy_pop = $('.view_privacy').bPopup({
+			opacity: 0.6,
+			speed: 300,
+		});
+	});
+	
 	// 개인정보동의 팝업
 	$('#view_privacy').click(function(){
 		view_privacy_pop = $('.view_privacy').bPopup({
@@ -85,12 +101,22 @@ function setEventListner(){
 	});
 	// 가입버튼
 	$('#agree_both').click(function(){
-//		var isPrivacy = $('#agree_privacy').getValues();
-		var isAgreeTerms = $('#agree_terms').getValues();
+		
+		var isPrivacy = $('#agree_privacy').getValues();
 		var isAgreeProvideInfo = $('#agree_provide_info').getValues();
 		var isRefuseProvideInfo = $('#refuse_provide_info').getValues();
 		
-		if(isAgreeTerms == ""){	// 이용약관 동의 안한 경우
+		var isChecked = false;
+		var classList = $('.af-checkbox-text').attr('class').split(/\s+/);
+		$.each(classList, function(index, item) {
+		    if (item == 'Checked') {
+		        //체크된 상태
+		    	isChecked = true;
+		    }
+		});
+		
+		if(!isChecked){
+			
 			agree_use_pop = $('.agree_use').bPopup({
     			opacity: 0.6,
     			speed: 300, 
@@ -101,7 +127,13 @@ function setEventListner(){
     			speed: 300, 
     		});
 		}else{
+			
+			//gclee login
+			setAlopexCookie('joinStep', 'stepC');
+			setAlopexCookie('joinOK', 'true');
+			
 			if(isTest){
+				
 				var pnChk = getAlopexCookie('uPhone');
 				if(pnChk == 'undefined'){
 					var pn = codePhoneNM($('#uPhones').val());
@@ -114,6 +146,7 @@ function setEventListner(){
 				//navigation.goHome();
 				
 			}else{
+				
 				chkUSER();
 			}
 			
@@ -130,7 +163,7 @@ function setEventListner(){
 	});
 	// 완료 - 이용약관 누락 - 확인
 	$('#auAgree').click(function(){
-		$('#agree_terms').setChecked(true);
+		$('#agree_use').setChecked(true);
 		agree_use_pop.close();
 	});
 	// 완료 - 이용약관 누락 - 닫기
@@ -205,10 +238,14 @@ function getChkUser(pn){
 	};
 	showProgressBarMsg('고객 정보를 조회 중입니다.');
 	logf('gclee getAccInfo MACHP1M0 ' + JSON.stringify(param));
+	
+	$('#agree_both').hide();
+	$('.imgloading').show();
+	
 	httpSend("getAccInfo", param, httpSuccessCallback, httpErrorCallback);
 }
 
-function httpSuccessCallback(cb){
+function httpSuccessCallback(cb){ 
 	logf(JSON.stringify(cb));
 	logf(cb);
 	setAlopexSession('uInfo',cb);
@@ -244,10 +281,12 @@ function httpSuccessCallback(cb){
 }
 
 function getDPCount(cb,type){
-	logf('test111'+type,cb);
 	var countDP = 0;
 	var listDP = [];
 	if(type=='N'){
+		if(cb.list.bpCaList==undefined){
+			return listDP;
+		}
 		for(var i=0;i<cb.list.bpCaList.length;i++){
 			logf('test222 :: '+cb.list.bpCaList[i].retMsg);
 			if(cb.list.bpCaList[i].retMsg.indexOf('대표번호 미존재') > -1){
@@ -257,6 +296,9 @@ function getDPCount(cb,type){
 		}
 		return listDP;
 	}else{
+		if(cb.list.bpCaList==undefined){
+			return listDP;
+		}
 		for(var i=0;i<cb.list.bpCaList.length;i++){
 			if(cb.list.bpCaList[i].retMsg.indexOf('대표번호 일치') > -1){
 				listDP[countDP] = cb.list.bpCaList[i];

@@ -34,12 +34,12 @@ function init(){
 		var jsonResult;
 		httpSend("getLscData", param, function(Mcb){
 			jsonResult = JSON.stringify(Mcb.list.Results);
-			logf("getLscData json data : \n");
-			logf(jsonResult);
+			//logf("getLscData json data : \n");
+			//logf(jsonResult);
 			setAlopexCookie('lscDB',jsonResult);
 			//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
 			//setAlopexCookie('lscDB',Mcb.list.Results);
-			loge('@@@@@@@@gclee \n save lscDB \n');
+			//loge('@@@@@@@@gclee \n save lscDB \n');
 			
 				// gclee lsc next /////////////////////////////////////////////////////////
 				 param = {
@@ -48,9 +48,10 @@ function init(){
 		
 				httpSend("getLscNextData", param, function(Mcb){
 					jsonResult = JSON.stringify(Mcb.list.Results);
-					logf("getLscNextData json data : \n");
-					logf(jsonResult);
+					//logf("getLscNextData json data : \n");
+					//logf(jsonResult);
 					setAlopexCookie('lscDB2',jsonResult);
+					setAlopexCookie('lscDB2All', JSON.stringify(Mcb));
 					
 					for(var i=0;i<Mcb.list.Results.length;i++){
 						jsonResult = Mcb.list.Results[i];
@@ -59,7 +60,7 @@ function init(){
 //						logf("per json data : \n");
 //						logf( JSON.stringify(jsonResult));
 						//gclee push
-						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+						//logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
 						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
 					}
 					loge('@@@@@@@@gclee \n save lscDB2 \n');
@@ -141,21 +142,75 @@ function popPhone(pn){
 			//SAP에 요청결과 가입자면 아래 로그인프로세스 진행
 			//SAP에 요청결과 미가입자면 앱 회원가입 화면으로 이동 (MACHP1M0)
 			
+			//gclee login token
+			//토큰이 없다면 sms인증 화면으로
+			var chkLoginToken = getAlopexCookie('loginToken');
+			logf('gclee MMNST0M0 chkLoginToken' + chkLoginToken);
+			
+			if(chkLoginToken == 'undefined' || chkLoginToken.length < 1){
+				logf('gclee MMNST0M0 chkLoginToken #2' + chkLoginToken);
+				chkLoginToken = '';
+//				navigateGo('MACHP0M0'); //오픈 후 일정기간 지난 뒤에 로그인 토큰 체크하도록 변경해야 함
+//				return;
+			}
+			
+//			logf('gclee MMNST0M0 chkLoginToken #3' + chkLoginToken);
+			
 				//gclee login 80번은 신규
 				var param = {
-					"phoneNum" : vPn, "gubun" : "80"
+					"phoneNum" : vPn, "gubun" : "80", "token" : chkLoginToken
 				};
 				
 				logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
 				
 				httpSend("getAccInfo", param, function(cb){
-							
+					
 		    		logf("getAccInfo: " + cb);
 		    		logf("getAccInfo:joinCode: " + cb.joinCode);
+
+//		    		오픈 후 일정기간 지난 뒤에 로그인 토큰 체크하도록 변경해야 함
+//		    		if(cb.isTokenTrue == 'false'){
+//		    			navigateGo('MACHP0M0');
+//		    			return;
+//		    		}
 		    		
-		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 
+		    		// 1: 앱가입자, 2: sap가입자, 3: 미가입자, 4: 클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    		if(cb.joinCode == '3'){
-		    			navigateGo('MACHP1M0');
+		    			//gclee login
+		    			var joinStep = getAlopexCookie('joinStep');
+		    			var chkJoin = getAlopexCookie('joinOK');
+		    			
+		    			logf("gclee joinStep: " + joinStep);
+		    			logf("gclee chkJoin: " + chkJoin);
+		    			
+		    			if(joinStep == 'undefined'){
+		    				
+		    				navigateGo('MACHP0M0');
+		    				
+		    			}else if(joinStep == 'stepA'){ //sms인증번호 전송 step
+		    				
+		    				navigateGo('MACHP1M0');
+		    				
+		    			}else if(joinStep == 'stepB'){ //가입화면으로 이동된 상태
+		    				
+		    				if(chkJoin == 'false'){
+		    					navigateGo('MACHP0M0');
+		    				}else{
+		    					navigateGo('MACHP1M0');
+		    				}
+		    				
+		    			}else if(joinStep == 'stepC'){ //가입버튼 클릭 시, 앱설정 가입관리 변경버튼 클릭 시 
+		    				
+		    				if(chkJoin == 'true'){
+		    					runMain();
+		    				}else{
+		    					navigateGo('MACHP0M0');
+		    				}
+		    				//navigateGo('MACHP1M0');
+		    			}
+		    			
+//		    			navigateGo('MACHP1M0');
+		    			
 		    		}else if(cb.joinCode == '4'){ //클라이언트 vs 서버토큰 상이 -> 번호인증화면
 		    			navigateGo('MACHP0M0');
 		    		}else{
@@ -355,14 +410,28 @@ function contiLogin(){
 		//navigateGo('MACHP1M0');
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+//			navigateGo('MACHP0M0');
+			loginToken = '';
+//			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee getAccInfo MMNST0M0 ' + JSON.stringify(param));
     	httpSend("getAccInfo", param, function(Mcb){
     		logf('cb',Mcb);
     		cb = Mcb;
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		// 계량기 여러대
     		// 일치
     		
@@ -439,6 +508,7 @@ function runMain(){
 	logf(rtCBPush);
 	var pn = getAlopexCookie('uPhone');
 	var pushID = getAlopexCookie("pushID");
+	
 	if(rtCB.list.bpCaList.length > 0){										// 쓸수있는 정보있는지 확인
 //		if(pushID == 'undefined'){												// PushID 여부 확인
 //			runMainGo(rtCB);
@@ -455,9 +525,24 @@ function runMain(){
 				}
 			}
 			
+			//gclee card push id
+			var option = {
+				      "phoneno" : pn
+			};
+				      
+		   if(device.osName != 'iOS'){                                                                
+			   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }else{                                                                                     
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }
+		   //gclee card push id end
+			
 			if(dType=='Android'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					var recomendr = getAlopexSession('recomendr');
 					var recomendr = '';
@@ -497,8 +582,11 @@ function runMain(){
 					runMainGo(rtCB);
 				});
 			}else if(dType=='iOS'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'I';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					runMainGo(rtCB);
 //					var recomendr = getAlopexSession('recomendr');
@@ -548,8 +636,11 @@ function runMain(){
 //				runMainGo(rtCB); // 운영 배포시 주석 처리
 				
 				// 운영 배포시 아래 부터는 주석 해제
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 					var recomendr = '';
 					if(device.osName != 'iOS'){
@@ -585,7 +676,7 @@ function runMain(){
 	}else{
 		console.log(cb);
 //		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 
@@ -651,7 +742,7 @@ function runMainGo(rtCB){
 //	    	});
 //		}else{
 //			alert('변경 안함');
-		//gclee push test 잠시 주석	
+
 		navigateGo('MMNPG0M0',rtCB);
 			
 			//gclee push test
@@ -668,7 +759,7 @@ function runMainGo(rtCB){
 //		}
 	}else{
 		console.log(rtCB);
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 
@@ -690,6 +781,10 @@ function chkFLength(cb){
 }
 
 function clopCB(cb){
+	if(cb.list==undefined){
+		navigateGo('MACHP1M0');
+	}
+	
 	var rtCB = { 'result': "1000", 
 			'resultMessage': "OK", 
 			'list' : {

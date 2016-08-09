@@ -5,7 +5,7 @@ document.write('</div>');
 document.write('<div class="inner">');
 document.write('<p class="txt" id="contNotiP2">&nbsp;</p>');
 document.write('<div class="tac btnGrpNotiP2">');
-document.write('<span class="small"><button class="Button red pNotiP2Ok">확인</button></span>');
+document.write('<span class="small"><button class="Button red2 pNotiP2Ok">확인</button></span>');
 document.write('</div>');
 document.write('</div>');
 document.write('</div>');

@@ -152,7 +152,7 @@ function pageSetting(cb){
 		'	</li>';
 		//				'	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">다시입력</button><button class="Button red big" id="btn_last_save">확인</button></li>'+
 	}
-		me01Str += '	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">수정하기</button><button class="Button red" id="btn_home">입력완료</button></li>';
+		me01Str += '	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">수정하기</button><button class="Button red2" id="btn_home">입력완료</button></li>';
 		'</ul>';
 	
 	

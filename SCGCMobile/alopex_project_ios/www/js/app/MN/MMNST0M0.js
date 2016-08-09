@@ -34,12 +34,12 @@ function init(){
 		var jsonResult;
 		httpSend("getLscData", param, function(Mcb){
 			jsonResult = JSON.stringify(Mcb.list.Results);
-			logf("getLscData json data : \n");
-			logf(jsonResult);
+			//logf("getLscData json data : \n");
+			//logf(jsonResult);
 			setAlopexCookie('lscDB',jsonResult);
 			//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
 			//setAlopexCookie('lscDB',Mcb.list.Results);
-			loge('@@@@@@@@gclee \n save lscDB \n');
+			//loge('@@@@@@@@gclee \n save lscDB \n');
 			
 				// gclee lsc next /////////////////////////////////////////////////////////
 				 param = {
@@ -48,8 +48,8 @@ function init(){
 		
 				httpSend("getLscNextData", param, function(Mcb){
 					jsonResult = JSON.stringify(Mcb.list.Results);
-					logf("getLscNextData json data : \n");
-					logf(jsonResult);
+					//logf("getLscNextData json data : \n");
+					//logf(jsonResult);
 					setAlopexCookie('lscDB2',jsonResult);
 					setAlopexCookie('lscDB2All', JSON.stringify(Mcb));
 					
@@ -201,6 +201,11 @@ function popPhone(pn){
 		    				
 		    			}else if(joinStep == 'stepC'){ //가입버튼 클릭 시, 앱설정 가입관리 변경버튼 클릭 시 
 		    				
+		    				if(chkJoin == 'true'){
+		    					runMain();
+		    				}else{
+		    					navigateGo('MACHP0M0');
+		    				}
 		    				//navigateGo('MACHP1M0');
 		    			}
 		    			
@@ -776,6 +781,10 @@ function chkFLength(cb){
 }
 
 function clopCB(cb){
+	if(cb.list==undefined){
+		navigateGo('MACHP1M0');
+	}
+	
 	var rtCB = { 'result': "1000", 
 			'resultMessage': "OK", 
 			'list' : {

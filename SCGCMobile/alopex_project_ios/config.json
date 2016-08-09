@@ -7,7 +7,7 @@
     "remote_contents" : {
         "use_plugin" : false,
         "plugin_class" : "RemoteContentManager",
-        "server_url" : "http://168.154.182.107:9082/apps",
+        "server_url" : "com.skcc.alopex.market",
         "current_remote_content_version":"109"
     }
 }

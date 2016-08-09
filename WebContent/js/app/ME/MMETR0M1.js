@@ -12,6 +12,8 @@ function mainStart(){
 		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		loginSessionInfo = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		loginSessionInfo = JSON.parse(getAlopexSession('loginSession'));
 	}
 	
 	//params = param;
@@ -54,8 +56,9 @@ function doPage(){
 		mainParam = getAlopexCookie('mainParamCookie');
 	}
 	var param = JSON.parse(mainParam);
+	param.mbtlnum = getAlopexCookie('uPhone');
 	
-	logf('mainParam::'+mainParam);
+	logf('gclee getMrSelfOrderInfo mainParam::'+mainParam);
 	setDefault();
 	httpSend("getMrSelfOrderInfo", param, pageSetting, function(errorCode, errorMessage){
 		if (errorCode == "9999") {
@@ -72,11 +75,11 @@ function pageSetting(cb){
 //	var pr = params;
 	
 	//gclee login token
-	if(cb.isTokenTrue == 'false'){
-		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
-		navigateGo('MACHP0M0');
-		return;
-	}
+//	if(cb.isTokenTrue == 'false'){
+//		notiPop('확인','비정상 접근입니다. <br />초기화면으로 이동하겠습니다.',true,false,null);
+//		navigateGo('MACHP0M0');
+//		return;
+//	}
 	//gclee login token end
 	
 	logf(params);
@@ -90,7 +93,7 @@ function pageSetting(cb){
 	}
 	*/
 	var useGS = cb.currUsage *1;
-	
+		
 	//console.log('3');
 	
 //		for(var i=0;i<cb.list.userInfoResult.length;i++){
@@ -116,6 +119,7 @@ function pageSetting(cb){
 		//var me01Str = '<ul>'+
 		me01Str = '<ul>'+
 		'	<li><strong>고객명</strong> '+ascUserNM(cb.list.userInfoResult[0].BUS_PART_NAME)+'</li>'+
+//		'	<li><strong>고객주소</strong>'+cb.list.userInfoResult[0].CONT_ADDRESS+'</li>';
 		'	<li><strong>고객주소</strong>'+meAddr+'</li>';
 		me01Str += '	<li><strong>등록기간</strong> '+toMEDate(cb.s_adatsoll1,cb.e_adatsoll1)+'</li>'+
 		'	<li><strong>계량기번호</strong> '+cb.gasMrnrNo+'</li>'+
@@ -148,7 +152,7 @@ function pageSetting(cb){
 		'	</li>';
 		//				'	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">다시입력</button><button class="Button red big" id="btn_last_save">확인</button></li>'+
 	}
-		me01Str += '	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">수정하기</button><button class="Button red" id="btn_home">입력완료</button></li>';
+		me01Str += '	<li class="none tac pt10"><button class="Button red2 big" id="btn_back">수정하기</button><button class="Button red2" id="btn_home">입력완료</button></li>';
 		'</ul>';
 	
 	

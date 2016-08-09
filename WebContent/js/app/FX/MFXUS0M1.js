@@ -16,7 +16,6 @@ var pop_saveComp = '';
 function mainStart(){
 	//params = navigation.parameters;
 	settingLoading();
-	$('.imgloading').show();
 	
 	uPhone = getAlopexCookie('uPhone');
 	//setBoxList(params);
@@ -67,6 +66,8 @@ function setBoxList(cbr){
 		params = JSON.parse(getAlopexSession('loginSession'));
 	}else{
 		params = JSON.parse(getAlopexCookie('loginCookie'));
+		//gclee login
+//		params = JSON.parse(getAlopexSession('loginSession'));
 	}
 	for(var i=0;i<params.list.bpCaList.length;i++){
 		try{
@@ -107,6 +108,7 @@ function setEventListner(){
 	$('#pop_rep').click(function(){
 		// 검증
 		// 이전과 값이 동일
+		
 		if(chkChanged()){
 			logf('go Change');
 			if($('[name=chkc0]:checked').length > 0){
@@ -145,6 +147,10 @@ function setEventListner(){
 		pop_saveComp.close();
 	});
 	$('.beOK').click(function(){
+		$('.beNO').hide();
+		$('.beOK').hide();
+		$('.imgloading').show();
+		
 		logf($('[name=chkc0]:checked').length);
 		
 		var param = {'list' : 		[{'bpCaReqList' : []	}]  			};
@@ -169,8 +175,37 @@ function setEventListner(){
 //			setAlopexCookie('MainBP','undefined');
 //			setAlopexCookie('MainBPCA','undefined');
 			//navigation.goHome();
+			//killAllSession();
+			//gclee login
+			///////////////////////////////////////////////////////////////////////////////////////////////
+			var pn = getAlopexCookie('uPhone');
+			var loginToken = getAlopexCookie('loginToken');
+			var lscDB = getAlopexCookie('lscDB');
+			var lscDB2 = getAlopexCookie('lscDB2')
+			var lscDB2All = getAlopexCookie('lscDB2All')
+			
 			killAllSession();
+			killAllCookie();
+			
+			setAlopexCookie('uPhone',pn);
+			setAlopexCookie('loginToken',loginToken);
+			setAlopexCookie('lscDB',lscDB);
+			setAlopexCookie('lscDB2',lscDB2);
+			setAlopexCookie('lscDB2All',lscDB2All);
+			
+			var results = JSON.parse(lscDB2All);
+			var jsonResult = '';
+			for(var i=0;i<results.list.Results.length;i++){
+				jsonResult = results.list.Results[i];
+				setAlopexCookie(results.list.Results[i].lsc, JSON.stringify(jsonResult) );
+			}	
+			
+			//setAlopexCookie('joinStep', 'stepC');
+			///////////////////////////////////////////////////////////////////////////////////////////////
 			navigateGo('index');
+			
+			//gclee login end
+			
 		}, function(errorCode, errorMessage){
 			if (errorCode == "9999") {
 				alert('처리에 실패했습니다.\n다시 요청바랍니다.');

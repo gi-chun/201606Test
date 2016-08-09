@@ -96,8 +96,8 @@ function initStart(st) {
 	}catch(e){
 		httpSend("getLscData", param, function(Mcb){
 			jsonResult = JSON.stringify(Mcb.list.Results);
-			logf("getLscData json data : \n");
-			logf(jsonResult);
+			//logf("getLscData json data : \n");
+			//logf(jsonResult);
 			setAlopexCookie('lscDB',jsonResult);
 			//setAlopexCookie('lscDB',JSON.stringify(Mcb.list.Results));
 			//setAlopexCookie('lscDB',Mcb.list.Results);
@@ -110,14 +110,14 @@ function initStart(st) {
 		
 				httpSend("getLscNextData", param, function(Mcb){
 					jsonResult = JSON.stringify(Mcb.list.Results);
-					logf("getLscNextData json data : \n");
-					logf(jsonResult);
+					//logf("getLscNextData json data : \n");
+					//logf(jsonResult);
 					setAlopexCookie('lscDB2',jsonResult);
 					setAlopexCookie('lscDB2All', JSON.stringify(Mcb));
 					
 					for(var i=0;i<Mcb.list.Results.length;i++){
 						jsonResult = Mcb.list.Results[i];
-						logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+						//logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
 						setAlopexCookie(Mcb.list.Results[i].lsc, JSON.stringify(jsonResult) );
 					}
 					loge('@@@@@@@@gclee \n save lscDB2 \n');
@@ -399,18 +399,55 @@ function setEventListner() {
 	$('#goBill').click(function() {
 		// $a.navigate('BL/MBLMG0M2');
 		
-		if (billNo == '') {
-			navigateBackToNaviGo('MBLMG0M0');
-		} else {
-			var rtMsg = {
-				'bp' : bp,
-				'ca' : ca,
-				'DOC_HEADER_OPBEL' : billNo
-			};
-			// navigateGo('MBLMG0M2',rtMsg);
-			navigateBackToNaviParamGo(
-					'MBLMG0M2', rtMsg);
+		var pn = getAlopexCookie('uPhone');
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+//			navigateGo('MACHP0M0');
+//			return;
 		}
+		var param = {
+    		"phoneNum" : pn, "token" : loginToken
+    	};
+    	httpSend("getBetrw", param, function(cb){
+    		var rtCB = clopCB(cb);
+			if(getAlopexCookie('MainBP') == 'undefined'){
+				var Str3 = {
+						bp : String(Number(cb.list.bpCaList[0].bp)),
+						ca : String(Number(cb.list.bpCaList[0].ca)),
+						sernr : cb.list.bpCaList[0].sernr,
+						anlage : String(Number(cb.list.bpCaList[0].anlage)),
+						regiogroup : cb.list.bpCaList[0].regiogroup
+				};
+				setAlopexCookie('MainBP',getSelBP(cb.list.bpCaList[0].regiogroup));
+				setAlopexCookie('MainBPCA',JSON.stringify(Str3));
+			}
+			if(rtCB.list.bpCaList.length > 0){
+				// 공통 처리
+				setAlopexSession('loginSession',JSON.stringify(rtCB));	// 로그인 세션 생성
+				setAlopexCookie('loginCookie',JSON.stringify(rtCB));	// 로그인 세션 생성
+			}
+			
+			if (billNo == '') {
+				navigateBackToNaviGo('MBLMG0M0');
+			} else {
+				var rtMsg = {
+					'bp' : bp,
+					'ca' : ca,
+					'DOC_HEADER_OPBEL' : billNo
+				};
+				// navigateGo('MBLMG0M2',rtMsg);
+				navigateBackToNaviParamGo(
+						'MBLMG0M2', rtMsg);
+			}
+			
+			
+    	}, function(errorCode, errorMessage){
+			if (errorCode == "9999") {
+				loge('error :: 9999 :: main');
+    		} else {
+    			loge('error :: other :: main');
+    		}
+		});
 		
 	}); // 청구서 상세
 
@@ -1106,15 +1143,36 @@ function mainSetting(cb) {
 	// --
 
 	// 각 사별 공지사항 팝업
-	var isDisablePopup = getGlobalPreference("isDisableNoticePopup_"
-			+ cb.noticePopupSeq);
-	if (isDisablePopup == "true") {
-		var disableTime = getGlobalPreference("isDisableNoticePopup_time_"
+	var isDisablePopup = '';
+	if(device.osName != 'iOS'){
+		isDisablePopup = getGlobalPreference("isDisableNoticePopup_"
 				+ cb.noticePopupSeq);
+	}else{
+		isDisablePopup = getAlopexCookie("isDisableNoticePopup_"
+				+ cb.noticePopupSeq);
+	}
+			
+	if (isDisablePopup == "true") {
+		
+		var disableTime = '';
+		if(device.osName != 'iOS'){
+			disableTime = getGlobalPreference("isDisableNoticePopup_time_"
+					+ cb.noticePopupSeq);
+		}else{
+			disableTime = getAlopexCookie("isDisableNoticePopup_time_"
+					+ cb.noticePopupSeq);
+		}
+		
 		var currentTime = new Date().getTime();
 		if ((currentTime - disableTime) > (1000 * 60 * 60 * 24 * 7)) {
-			putGlobalPreference("isDisableNoticePopup_" + cb.noticePopupSeq,
-					"false");
+			
+			if(device.osName != 'iOS'){
+				putGlobalPreference("isDisableNoticePopup_" + cb.noticePopupSeq,
+						"false");
+			}else{
+				setAlopexCookie("isDisableNoticePopup_" + cb.noticePopupSeq,
+				"false");
+			}
 			isDisablePopup = "false";
 		}
 	}
@@ -1133,10 +1191,22 @@ function mainSetting(cb) {
 		});
 		$('.noticePopupDontLookBack').click(
 				function() {
-					putGlobalPreference("isDisableNoticePopup_"
-							+ cb.noticePopupSeq, "true");
-					putGlobalPreference("isDisableNoticePopup_time_"
-							+ cb.noticePopupSeq, new Date().getTime());
+					
+					if(device.osName != 'iOS'){
+					
+						putGlobalPreference("isDisableNoticePopup_"
+								+ cb.noticePopupSeq, "true");
+						putGlobalPreference("isDisableNoticePopup_time_"
+								+ cb.noticePopupSeq, new Date().getTime());
+						
+					}else{
+						
+						setAlopexCookie("isDisableNoticePopup_"
+								+ cb.noticePopupSeq, "true");
+						setAlopexCookie("isDisableNoticePopup_time_"
+								+ cb.noticePopupSeq, new Date().getTime());
+						
+					}
 
 					notiPopID.close();
 				});
@@ -1298,6 +1368,28 @@ function mainSetting(cb) {
 // spaceBetween: 0
 // });
 // }
+
+function clopCB(cb){
+	var rtCB = { 'result': "1000", 
+			'resultMessage': "OK", 
+			'list' : {
+			           'bpCaList' : []
+			}};
+	logf(rtCB);
+	var rtCBNo = 0;
+	for(var i=0;i<cb.list.bpCaList.length;i++){
+		if(cb.list.bpCaList[i].retCd == 'F'){
+			if(cb.list.bpCaList[i].retMsg.indexOf('검침 계량기가') > 0){
+				rtCB.list.bpCaList[rtCBNo] = cb.list.bpCaList[i];
+				rtCBNo++;
+			}	
+		}else{
+			rtCB.list.bpCaList[rtCBNo] = cb.list.bpCaList[i];
+			rtCBNo++;
+		}
+	}
+	return rtCB;
+}
 
 $a.page(function() {
 

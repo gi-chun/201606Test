@@ -131,9 +131,6 @@ function setEventListner(){
 //				$('.pExitNo').hide();
 //				$('.pExitOk').hide();
 //				$('.imgloading').show();
-				
-				showProgressBarMsg('정보를 처리중입니다.');
-				
 				exitAppUser();
 			});
 		}

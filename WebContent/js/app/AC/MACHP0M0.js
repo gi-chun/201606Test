@@ -19,10 +19,9 @@ $a.page(function(){
 
 //gclee login token
 function popPhone(pn){
-	setAlopexCookie('uPhone',codePhoneNM(pn));
-	//$('#pn').text(pn);
+//	setAlopexCookie('uPhone',codePhoneNM(pn));
+	pn = pn.replace(/-/gi, '');
 	$('#pn').val(pn);
-	
 };
 
 function setEventListner(){
@@ -69,14 +68,9 @@ function setEventListner(){
 //    			setAlopexSession('testPn',$('#pn').val());
     			setAlopexCookie('testPnCookie',$('#pn').val());
     			
-    			// sms 전송
-    			//sendAccSms
-    			var testNum = '01000001111';
-    			
     			//gclee login token
     			var param = {
 		    		"phoneNum" : $('#pn').val(),
-		    		"message" : "[도시가스앱] 인증번호["+testNum+"]을 입력 해 주세요.",
 		    		"lsctn" : $('input[name=lsctnRadio]:checked').val()
 		    	};
 				logf(param);
@@ -89,13 +83,14 @@ function setEventListner(){
 					//gclee sms
 					httpSend("sendAccSms", param, function(Mcb){
 						
-						
 						logf("Mcb: " + JSON.stringify(Mcb));
-						logf("Mcb:certiNo: " + Mcb.certiNo);
-						setAlopexCookie('testPwdCookie', Mcb.certiNo);
 			    		
 			    		notiPop('인증코드 발송','고객님의 휴대폰 문자로 <br />인증코드가 발송되었습니다.',false,false,null);
 			    		$('.pNotiP2Ok').click(function(){
+			    			//gclee login
+			    			setAlopexCookie('joinStep', 'stepA');
+			    			setAlopexCookie('joinOK', 'false');
+			    			
 	        	    		navigateGo('MACHP0M1');
 	        	    	});
 			    	}, function(errorCode, errorMessage){

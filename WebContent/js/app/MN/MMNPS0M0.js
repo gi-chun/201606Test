@@ -17,19 +17,46 @@ var pushParams = '';
 function init(){
 	
 	//gclee push
-//	killAllSession();
-//	killAllCookie();
+//	var pn = getAlopexCookie('uPhone');
+//	var loginToken = getAlopexCookie('loginToken');
+//	var lscDB = getAlopexCookie('lscDB');
+//	var lscDB2 = getAlopexCookie('lscDB2');
+//	var lscDB2All = getAlopexCookie('lscDB2All');
+//	var MainBP = getAlopexCookie('MainBP');
+//	var MainBPCA = getAlopexCookie('MainBPCA');
 	
-	//gclee push
+	killAllSession();
+//	killAllCookie();
+	killAllCookieAndExceptLscDb();
+	
 	pushParams = alopexController.parameters;  // push 파라미터 받기
 	
-	if(device.osName == 'Android'){
-		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
-//		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
-	}else{
-		// 번호인증
-		popPhone(1);
-	}
+//	setAlopexCookie('uPhone',pn);
+//	setAlopexCookie('loginToken',loginToken);
+//	setAlopexCookie('lscDB',lscDB);
+//	setAlopexCookie('lscDB2',lscDB2);
+//	setAlopexCookie('lscDB2All',lscDB2All);
+//	setAlopexCookie('MainBP', MainBP);
+//	setAlopexCookie('MainBPCA', MainBPCA);
+	
+	var lscDB2All = getAlopexCookie('lscDB2All');
+	var results = JSON.parse(lscDB2All);
+	var jsonResult = '';
+	for(var i=0;i<results.list.Results.length;i++){
+		jsonResult = results.list.Results[i];
+		//logf('gclee MMNST0M0 LSC :' + Mcb.list.Results[i].lsc + ' DATA :' + JSON.stringify(jsonResult));
+		setAlopexCookie(results.list.Results[i].lsc, JSON.stringify(jsonResult) );
+	}	
+	//gclee push test
+	popPhone(1);
+	
+//	if(device.osName == 'Android'){
+//		jsniCaller.invoke("GetPhoneNumber.setDefault","setDefaultBadge");
+////		jsniCaller.invoke("GetPhoneNumber.myPhone","popPhone");
+//	}else{
+//		// 번호인증
+//		popPhone(1);
+//	}
 	
 	settingLoading();
 	$('.imgloading').show();
@@ -72,16 +99,30 @@ function contiLogin(){
 		alopexController.exit();
 	}else{
 		
+		//토큰이 없다면 sms인증 화면으로
+		var loginToken = getAlopexCookie('loginToken');
+		if(loginToken == 'undefined' || loginToken.length < 1){
+			navigateGo('MACHP0M0');
+//			return;
+		}
+		
 		//gclee login
 		var param = {
-    		"phoneNum" : pn, "gubun" : "10"
+    		"phoneNum" : pn, "gubun" : "10", "token" : loginToken
     	};
 		logf('gclee MMNPS0M0 ' + JSON.stringify(param));
 		
     	httpSend("getAccInfo", param, function(cb){
-    		logf('cb',cb);
+    		logf('gclee MMNPS0M0 getAccInfo result: ', JSON.stringify(cb));
+    		
+//    		if(cb.isTokenTrue == 'false'){
+//    			navigateGo('MACHP0M0');
+//    			return;
+//    		}
+    		
     		var rtCB = clopCB(cb);
-    		logf(rtCB);
+    		logf('gclee MMNPS0M0 getAccInfo result rtCB : ', JSON.stringify(rtCB));
+    		
     			if(getAlopexCookie('MainBP') == 'undefined'){
     				
     				var Str3 = {
@@ -124,7 +165,7 @@ function contiLogin(){
     				}
     				
     			}else{
-    				navigateGo('MACHP1M0');
+    				navigateGo('MMNPG0M0');
     			}
 //	    		}
     	}, function(errorCode, errorMessage){
@@ -141,8 +182,13 @@ function setDefaultStartData(cb,rtCB){
 	console.log('##11122#');
 	//gclee login token
 	if(pushParams.PUSH_TYPE == 'E' || pushParams.PUSH_TYPE == 'D' || pushParams.PUSH_TYPE == 'B' || pushParams.PUSH_TYPE == 'C'){
+		
 		for(var j=0;j<cb.list.bpCaList.length;j++){
+			
+			logf('gclee setDefaultStartData MMNPS0M0 param CA value: ' + pushParams.CA + 'getAccInfo CA value: ' + String(Number(cb.list.bpCaList[j].ca)));
+			
 			if(String(Number(cb.list.bpCaList[j].ca)) == pushParams.CA){
+				
 				var rtMsg = {
 						bp : String(Number(cb.list.bpCaList[j].bp)),
 						ca : String(Number(cb.list.bpCaList[j].ca)),
@@ -171,7 +217,8 @@ function setDefaultStartData(cb,rtCB){
 							ca : String(Number(cb.list.bpCaList[j].ca)),
 							sernr : cb.list.bpCaList[j].sernr,
 							anlage : String(Number(cb.list.bpCaList[j].anlage)),
-							regiogroup : cb.list.bpCaList[j].regiogroup
+							regiogroup : cb.list.bpCaList[j].regiogroup,
+							"token" : getAlopexCookie('loginToken')                                                     //gclee push - token추가 서버올라오면 확인예정
 					};
 					setSelfChkCode(rtCB,cb.list.bpCaList[j].bp,cb.list.bpCaList[j].ca);									// 자가검침 플래그 생성
 					setAlopexSession('mainParam',JSON.stringify(rtMsg));
@@ -181,7 +228,7 @@ function setDefaultStartData(cb,rtCB){
 				}
 			}
 		}else{
-			navigateGo('MACHP1M0');
+			navigateGo('MMNPG0M0');
 		}
 	}
 }
@@ -201,7 +248,7 @@ function mainSetting(ccb){
 	setAlopexSession('mainPage',JSON.stringify(ccb));
 	logf(ccb);
 	// 자가검침이 입력된 경우 체크
-	if(ccb.custReadingresult == ""){ 
+	if (ccb.custReadingresult == "0" ||ccb.custReadingresult == "null") {
 		endME = false;
 		setAlopexSession('endME',endME);
 	}else{
@@ -304,6 +351,10 @@ function callBackSetGoing(){
 				'seq' : pushParams.seq
 		};
 		navigateGo('MNTQA0M1',rtMsg);
+	}else if(pushParams.PUSH_TYPE == 'G'){	// QnA ~7/14
+		
+		navigateGo('index');
+		
 	}else{
 //	        					alert('잘못된 PUSH 입니다.');
 //	        					if(device.osName == 'Android'){
@@ -338,9 +389,25 @@ function runMain(){
 				}
 			}
 			
+			//gclee card push id
+			var pn = getAlopexCookie('uPhone');
+			var option = {
+				      "phoneno" : pn
+			};
+				      
+		   if(device.osName != 'iOS'){                                                                
+			   jsniCaller.invoke("GcmPushManager.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }else{                                                                                     
+			   jsniCaller.invoke("PaymentJSNI.setPushToken", JSON.stringify(option), "popCardResult"); 
+		   }
+		   //gclee card push id end
+			
 			if(dType=='Android'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+				//rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'A';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					console.log('push id save ok1');//
 					setSessionKill('agreeProvideInfoYn');
@@ -353,8 +420,11 @@ function runMain(){
 					runMainGo(rtCB);
 				});
 			}else if(dType=='iOS'){
-				rtCBPush.push_id = pushID;
+				//gclee push
+//				rtCBPush.push_id = pushID;
 				rtCBPush.device_type = 'I';
+				rtCBPush.token_key = getAlopexCookie('loginToken');
+				
 				httpSend("putScgcMemberInfo", rtCBPush, function(Mcb){
 //					console.log('push id save ok2');
 					setSessionKill('agreeProvideInfoYn');
@@ -372,7 +442,7 @@ function runMain(){
 			}
 //		}
 	}else{
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 
@@ -392,7 +462,7 @@ function runMainGo(rtCB){
 	if(rtCB.list.bpCaList.length > 0){
 		navigateGo('MMNPG0M0',rtCB);
 	}else{
-		navigateGo('MACHP1M0');
+		navigateGo('MMNPG0M0');
 	}
 }
 

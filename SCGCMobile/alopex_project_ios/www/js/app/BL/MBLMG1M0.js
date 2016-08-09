@@ -237,9 +237,6 @@ function showPayInfo(pr){
 
 			$('.cgInfo').html(cgInfoStr);
 			
-			//gclee card - important
-			cbq.list.billDetailResult[0].BANKA = '';
-			//gclee
 			// 납부방식 화면 헨들링
 			if(cbq.list.billDetailResult[0].BANKA == ''){
 				//일반
