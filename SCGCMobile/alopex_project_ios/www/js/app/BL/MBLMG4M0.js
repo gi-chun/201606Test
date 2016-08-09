@@ -24,6 +24,9 @@ var vCardCode;
 var vBPCode;
 var vConnectURL;
 var ispParams = '';
+var vExpYear = '2049';
+var vExpMon = '12';
+
 
 function mainStart(){
 	setEventListner();
@@ -35,13 +38,16 @@ function mainStart(){
 	
 	if(ispParams == 'undefined' || ispParams == ''){
 		logf('gclee MBLMG4M0 ###########################################2');
+        	doPage();
 		
 	}else{
+        
+        ispParams = '';
 		goRequestISPPayIOS();
-		ispParams = '';
+		
 	}
 	
-	doPage();
+
 }
 
 function goRequestISPPayIOS(){
@@ -58,10 +64,7 @@ function goRequestISPPayIOS(){
 	var vInstallment = getAlopexCookie('vInstallment');
 	var vTERM_ID = getAlopexCookie('TERM_ID');
 	
-//  	showProgressBarMsg('정보를 처리중입니다.');
-	
-  	var vExpYear = '2049';
-	var vExpMon = '12';
+  	//showProgressBarMsg('정보를 처리중입니다.');
 	
 	var tISP_TID = getAlopexCookie('ISP_TID');
 	
@@ -124,7 +127,7 @@ function goRequestISPPayIOS(){
 	
 	httpSend("putPayList", param2, function(cb2){
 
-//		hideProgressBar();
+		//hideProgressBar();
 		
 		if(cb2.resultYn == 'Y'){
 			
@@ -132,15 +135,21 @@ function goRequestISPPayIOS(){
 			setCookieKill('paymentList');
 			setCookieKill('tAmount');
 			setCookieKill('vInstallment');
-			navigateBackToNaviGo('MBLMG4M0');
 			
 		}else{
 			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
-			
+			setCookieKill('paymentList');
+			setCookieKill('tAmount');
+			setCookieKill('vInstallment');
+			navigateBackToNaviGo('MBLMG3M0');
 		}
+             
+             doPage();
 		
 	}, function(errorCode, errorMessage){
-//		hideProgressBar();
+		//hideProgressBar();
+             
+             doPage();
 		
 		if (errorCode == "9999") {
 			loge('error :: 9999 :: hsUsrCommit');
@@ -304,12 +313,8 @@ function goMenuBLMG02(){
 		logf('gclee MBLMG4M0 ISP 결제취소 : ' + JSON.stringify(paymentList));
 
 	  	showProgressBarMsg('정보를 처리중입니다.');
-			
-	  	vExpYear.substring(2) + vExpMon
-	  	
-	  	var vISP_TID = getAlopexCookie('ISP_TID');
-	  	
-		var param = {
+		
+	  	var param = {
 					"certiGubun" : 'I',	
 					"RGUBUN" : '07',
 					"CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
@@ -317,10 +322,8 @@ function goMenuBLMG02(){
 					"expmon" : gPaiedList.list.cardStoreInfoList[s1].CUHMM,
 					"installment" : gPaiedList.list.cardStoreInfoList[s1].ALLO_MONTH,
 					"amount" : vAmount,
-					"expdt" :  gPaiedList.list.cardStoreInfoList[s1].CUHYY.substring(2)+gPaiedList.list.cardStoreInfoList[s1].CUHMM,
 					"clientIp" : '',
-					"termID" : gPaiedList.list.cardStoreInfoList[s1].TERM_ID,
-					"TID" : vISP_TID
+					"termID" : gPaiedList.list.cardStoreInfoList[s1].TERM_ID
 		};
 		
 		//gclee login token
@@ -329,6 +332,14 @@ function goMenuBLMG02(){
 		var param2 = JSON.parse(JSON.stringify(param));
 		param2.list = [{'payList' : []}];
 		
+		//도기가스앱에서 결제하지 않은 건은 결제 하실 수 없습니다. 
+		//도시가스 APP에서 결제하신 내역만 취소가 가능합니다. 
+		 if( paymentList[0].VAN_TR == ''){
+			 hideProgressBar();
+			 notiPop('확인','도시가스 APP에서 결제하신 내역만 취소가 가능합니다.',true,false,null);
+			 return;
+		 }
+			 
 		for(var i=0;i<paymentList.length;i++){
 			
 			param2.list[0].payList[i] = {
@@ -345,7 +356,7 @@ function goMenuBLMG02(){
 					"LDO_CODE" : paymentList[0].LDO_CODE,
 					"SEQ" : paymentList[0].SEQ,
 					"GPART" : paymentList[0].GPART,
-					"VKONT" : paymentList[0].VKONT,
+					"VKONT" : paymentList[0].DVKONT,
 					"OPBEL" : paymentList[0].OPBEL,
 					"FAEDN" : paymentList[0].FAEDN,
 					"STATUS" : paymentList[0].STATUS,
@@ -365,7 +376,7 @@ function goMenuBLMG02(){
 			
 		}
 	
-		httpSend("putPayList", param, function(cb2){
+		httpSend("putPayList", param2, function(cb2){
 
 //			getCheckAccCodeSms
 //			if(Mcb.isSuccess == 'true'){
@@ -382,7 +393,8 @@ function goMenuBLMG02(){
 			}
 
 			notiPop('확인','결제취소 완료되었습니다. .',true,false,null);
-			navigateBackToNaviGo('MBLMG4M0');
+			//navigateBackToNaviGo('MBLMG4M0');
+			doPage();
 			
 			
 		}, function(errorCode, errorMessage){
@@ -535,7 +547,7 @@ function viewPaidList(){
 	
 	var param = {
 			"COMPCD" : pMbp,	
-			"GUBUN" : '10',
+			"GUBUN" : '06',
 			"CANO" : String(Number(currentCa))
 	};
 	
@@ -553,10 +565,7 @@ function viewPaidList(){
 	httpSend("getPayList", param, function(cb){
 		gPaiedList = cb;
 		logf(cb);
-		logf(cb.resultList);
-		
-		logf('gclee MBLMG4M0 수납내역 : ' + JSON.stringify(cb.resultList));
-		
+	
 		if(cb.list.resultList == undefined){
 			
 			var caList = '<p class="pb10">  당일 수납 내역이 없습니다.</p>';
@@ -567,7 +576,7 @@ function viewPaidList(){
 			var caList = '<p class="pb10">  취소는 한 건씩만 가능합니다.</p>';
 
 			//'<p><strong>승인일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].CSI_DATE)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" checked="checked" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+
-			for(var i=0;i<cb.list.resultList.length;i++){
+			for(var i=0;i< cb.list.resultList.length;i++){
 				caList += '<div class="bill">'+
 				'<input type="hidden" value="'+' '+','+' '+'"/>'+
 				'<p><strong>승인일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].CSI_DATE)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+

@@ -281,10 +281,12 @@ function httpSuccessCallback(cb){
 }
 
 function getDPCount(cb,type){
-	logf('test111'+type,cb);
 	var countDP = 0;
 	var listDP = [];
 	if(type=='N'){
+		if(cb.list.bpCaList==undefined){
+			return listDP;
+		}
 		for(var i=0;i<cb.list.bpCaList.length;i++){
 			logf('test222 :: '+cb.list.bpCaList[i].retMsg);
 			if(cb.list.bpCaList[i].retMsg.indexOf('대표번호 미존재') > -1){
@@ -294,6 +296,9 @@ function getDPCount(cb,type){
 		}
 		return listDP;
 	}else{
+		if(cb.list.bpCaList==undefined){
+			return listDP;
+		}
 		for(var i=0;i<cb.list.bpCaList.length;i++){
 			if(cb.list.bpCaList[i].retMsg.indexOf('대표번호 일치') > -1){
 				listDP[countDP] = cb.list.bpCaList[i];

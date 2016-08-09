@@ -108,7 +108,7 @@ function setEventListner(){
 				
 				notiPop('인증코드 확인','정확한 인증코드가 입력되었습니다.',false,false,{
 				list : [{
-					name : '회원가입 계속',
+					name : '다음',
 					id : 'pJoinCont',
 					type : ''
 				}]

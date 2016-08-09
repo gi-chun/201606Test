@@ -8,7 +8,6 @@ nowPGCode = 'MFXUS0M0';
 var ss = '';
 function mainStart(){
 	settingLoading();
-	$('.imgloading').show();
 	setEventListner();
 	
 	//설정메인화면 인입시 전문하나 태우기 
@@ -104,6 +103,7 @@ function setEventListner(){
 	});
 	
 	$('#app_secede_ok').click(function(){
+		
 		if($('[name=chk1]:checked').length < 3){
 			asaId = $('.app_secede_agree').bPopup({
     			opacity: 0.6,
@@ -128,6 +128,12 @@ function setEventListner(){
 			});
 			$('.pExitOk').click(function(){
 				//asId.close();
+//				$('.pExitNo').hide();
+//				$('.pExitOk').hide();
+//				$('.imgloading').show();
+				
+				showProgressBarMsg('정보를 처리중입니다.');
+				
 				exitAppUser();
 			});
 		}

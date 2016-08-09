@@ -16,7 +16,6 @@ var pop_saveComp = '';
 function mainStart(){
 	//params = navigation.parameters;
 	settingLoading();
-	$('.imgloading').show();
 	
 	uPhone = getAlopexCookie('uPhone');
 	//setBoxList(params);
@@ -109,6 +108,7 @@ function setEventListner(){
 	$('#pop_rep').click(function(){
 		// 검증
 		// 이전과 값이 동일
+		
 		if(chkChanged()){
 			logf('go Change');
 			if($('[name=chkc0]:checked').length > 0){
@@ -147,6 +147,10 @@ function setEventListner(){
 		pop_saveComp.close();
 	});
 	$('.beOK').click(function(){
+		$('.beNO').hide();
+		$('.beOK').hide();
+		$('.imgloading').show();
+		
 		logf($('[name=chkc0]:checked').length);
 		
 		var param = {'list' : 		[{'bpCaReqList' : []	}]  			};

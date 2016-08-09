@@ -421,7 +421,7 @@ NSString *pushServerIp_App = @"168.154.182.41";
         
     }else{
         NSString *jsString = [NSString stringWithFormat:@"%@(\"5\");", @"popCardResult"];
-        [pageInfo setObject:@"MBLMG4M0" forKey:@"pageId"];
+        [pageInfo setObject:@"MBLMG3M0" forKey:@"pageId"];
         [parameter setObject:@"5" forKey:@"isp_result"];
         [pageInfo setObject:parameter forKey:@"parameters"];
         

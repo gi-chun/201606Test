@@ -95,9 +95,118 @@ function popCardResult(ss){
 		 
 	}else if(ss == '4'){
 		//4:카드승인완료 후 결제요청
-		//goRequestISPPay();
+		goRequestISPPay();
 	}        
 }
+
+function goRequestISPPay(){
+	//gclee card
+	var paymentListCookie = getAlopexCookie('paymentList');
+	if(paymentListCookie == 'undefined'){
+		return;
+	}
+
+	logf('gclee MBLMG4M0 ###########################################2');
+	
+	var paymentCookieLists = JSON.parse(paymentListCookie);
+	var vtAmount = getAlopexCookie('tAmount');
+	var vInstallment = getAlopexCookie('vInstallment');
+	var vTERM_ID = getAlopexCookie('TERM_ID');
+	
+  	//showProgressBarMsg('정보를 처리중입니다.');
+	
+  	var vExpYear = '2049';
+	var vExpMon = '12';
+	
+	var tISP_TID = getAlopexCookie('ISP_TID');
+	
+	var param = {
+				"certiGubun" : 'I',	
+				"RGUBUN" : '03',
+				"CANO" : JSON.parse(getAlopexCookie('MainBPCA')).ca,
+				"expyear" : vExpYear,
+				"expmon" : vExpMon,
+				"installment" : vInstallment,
+				"amount" : vtAmount,
+				"expdt" :  vExpYear.substring(2) + vExpMon,
+				"clientIp" : '',
+				"termID" : vTERM_ID,
+				"TID" : tISP_TID
+	};
+	
+	logf('gclee goRequestISPPay MBLMG3M0 ' + JSON.stringify(param));
+	
+	var param2 = JSON.parse(JSON.stringify(param));
+	param2.list = [{'payList' : []}];
+	
+	for(var i=0;i<paymentCookieLists.length;i++){
+		
+		param2.list[0].payList[i] = {
+				"BP_ADDRESS" : paymentCookieLists[0].BP_ADDRESS,	
+				"NAME_LAST" : paymentCookieLists[0].NAME_LAST,
+				"DATA_TOTAL" : paymentCookieLists[0].DATA_TOTAL,
+				"TOTAL_AMOUNT" : paymentCookieLists[0].TOTAL_AMOUNT,
+				"TOTAL_CARD_AM" : paymentCookieLists[0].TOTAL_CARD_AM,
+				"BUKRS" : paymentCookieLists[0].BUKRS,
+				"BUTXT" : paymentCookieLists[0].BUTXT,
+				"STCD2" : paymentCookieLists[0].STCD2,
+				"COM_ADDRESS" : paymentCookieLists[0].COM_ADDRESS,
+				"TEL_NUMBER" : paymentCookieLists[0].TEL_NUMBER,
+				"LDO_CODE" : paymentCookieLists[0].LDO_CODE,
+				"SEQ" : paymentCookieLists[0].SEQ,
+				"GPART" : paymentCookieLists[0].GPART,
+				"VKONT" : paymentCookieLists[0].DVKONT,
+				"OPBEL" : paymentCookieLists[0].OPBEL,
+				"FAEDN" : paymentCookieLists[0].FAEDN,
+				"STATUS" : paymentCookieLists[0].STATUS,
+				"BETRW" : paymentCookieLists[0].BETRW,
+				"BETRZ" : paymentCookieLists[0].BETRZ,
+				"CDSNG" : paymentCookieLists[0].CDSNG,
+				"CCINS" : paymentCookieLists[0].CCINS,
+				"CCDNO" : paymentCookieLists[0].CCDNO,
+				"CSI_DATE" : paymentCookieLists[0].CSI_DATE,
+				"CSI_TIME" : paymentCookieLists[0].CSI_TIME,
+				"CSINO" : paymentCookieLists[0].CSINO,
+				"CUHYY" : paymentCookieLists[0].CUHYY,
+				"CUHMM" : paymentCookieLists[0].CUHMM,
+				"ALLO_MONTH" : paymentCookieLists[0].ALLO_MONTH,
+				"VAN_TR" : paymentCookieLists[0].VAN_TR
+		};
+		
+	}
+
+	logf('gclee goRequestISPPay  param2 MBLMG4M0 ' + JSON.stringify(param2));
+	
+	httpSend("putPayList", param2, function(cb2){
+
+		//hideProgressBar();
+		
+		if(cb2.resultYn == 'Y'){
+			
+			notiPop('확인','ISP 결제가 완료되었습니다.',true,false,null);
+			setCookieKill('paymentList');
+			setCookieKill('tAmount');
+			setCookieKill('vInstallment');
+			navigateBackToNaviGo('MBLMG4M0');
+			
+		}else{
+			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
+			
+		}
+		
+	}, function(errorCode, errorMessage){
+		//hideProgressBar();
+		
+		if (errorCode == "9999") {
+			loge('error :: 9999 :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		} else {
+			loge('error :: other :: hsUsrCommit');
+			alert('처리에 실패했습니다.\n다시 요청바랍니다.');
+		}
+	});
+
+};
 
 function getRealCardCode(pCardCode){
 	
@@ -247,6 +356,11 @@ function goMenuBLMG02(){
 			isNoOld = true;
 			break;
 		}
+		
+		if (gUnpaiedList.list.resultList[s1].autoYn == 'Y'){
+			notiPop('확인','고객님은 현재 자동이체 청구중인 상태로 카드결제 시 이중출금될 수 있으므로 유의하시기 바랍니다.',true,false,null);
+		}
+		
 		paymentList.push(gUnpaiedList.list.resultList[s1]);
 		
 		tAmount += parseInt(gUnpaiedList.list.resultList[s1].BETRW);
@@ -315,9 +429,11 @@ function goMenuBLMG02(){
 	     //gclee card 임시 결제완료, 결제실패, 이전
 	     //잠시 주석
 	     if(device.osName != 'iOS'){
-	   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
+	   	  	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult", "refrash");
+	   	  	paymentList = new Array();
 	     }else{
-	   	  jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult"); 
+	   	  	jsniCaller.invoke("PaymentJSNI.showPaymentCtl", JSON.stringify(option), JSON.stringify(paymentList), "popCardResult");
+	   	  	paymentList = new Array();
 	     }    
 			
 	}else{ //ISP
