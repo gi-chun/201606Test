@@ -86,35 +86,35 @@ function goRequestISPPayIOS(){
 	for(var i=0;i<paymentCookieLists.length;i++){
 		
 		param2.list[0].payList[i] = {
-				"BP_ADDRESS" : paymentCookieLists[0].BP_ADDRESS,	
-				"NAME_LAST" : paymentCookieLists[0].NAME_LAST,
-				"DATA_TOTAL" : paymentCookieLists[0].DATA_TOTAL,
-				"TOTAL_AMOUNT" : paymentCookieLists[0].TOTAL_AMOUNT,
-				"TOTAL_CARD_AM" : paymentCookieLists[0].TOTAL_CARD_AM,
-				"BUKRS" : paymentCookieLists[0].BUKRS,
-				"BUTXT" : paymentCookieLists[0].BUTXT,
-				"STCD2" : paymentCookieLists[0].STCD2,
-				"COM_ADDRESS" : paymentCookieLists[0].COM_ADDRESS,
-				"TEL_NUMBER" : paymentCookieLists[0].TEL_NUMBER,
-				"LDO_CODE" : paymentCookieLists[0].LDO_CODE,
-				"SEQ" : paymentCookieLists[0].SEQ,
-				"GPART" : paymentCookieLists[0].GPART,
-				"VKONT" : paymentCookieLists[0].DVKONT,
-				"OPBEL" : paymentCookieLists[0].OPBEL,
-				"FAEDN" : paymentCookieLists[0].FAEDN,
-				"STATUS" : paymentCookieLists[0].STATUS,
-				"BETRW" : paymentCookieLists[0].BETRW,
-				"BETRZ" : paymentCookieLists[0].BETRZ,
-				"CDSNG" : paymentCookieLists[0].CDSNG,
-				"CCINS" : paymentCookieLists[0].CCINS,
-				"CCDNO" : paymentCookieLists[0].CCDNO,
-				"CSI_DATE" : paymentCookieLists[0].CSI_DATE,
-				"CSI_TIME" : paymentCookieLists[0].CSI_TIME,
-				"CSINO" : paymentCookieLists[0].CSINO,
-				"CUHYY" : paymentCookieLists[0].CUHYY,
-				"CUHMM" : paymentCookieLists[0].CUHMM,
-				"ALLO_MONTH" : paymentCookieLists[0].ALLO_MONTH,
-				"VAN_TR" : paymentCookieLists[0].VAN_TR
+				"BP_ADDRESS" : paymentCookieLists[i].BP_ADDRESS,	
+				"NAME_LAST" : paymentCookieLists[i].NAME_LAST,
+				"DATA_TOTAL" : paymentCookieLists[i].DATA_TOTAL,
+				"TOTAL_AMOUNT" : paymentCookieLists[i].TOTAL_AMOUNT,
+				"TOTAL_CARD_AM" : paymentCookieLists[i].TOTAL_CARD_AM,
+				"BUKRS" : paymentCookieLists[i].BUKRS,
+				"BUTXT" : paymentCookieLists[i].BUTXT,
+				"STCD2" : paymentCookieLists[i].STCD2,
+				"COM_ADDRESS" : paymentCookieLists[i].COM_ADDRESS,
+				"TEL_NUMBER" : paymentCookieLists[i].TEL_NUMBER,
+				"LDO_CODE" : paymentCookieLists[i].LDO_CODE,
+				"SEQ" : paymentCookieLists[i].SEQ,
+				"GPART" : paymentCookieLists[i].GPART,
+				"VKONT" : paymentCookieLists[i].DVKONT,
+				"OPBEL" : paymentCookieLists[i].OPBEL,
+				"FAEDN" : paymentCookieLists[i].FAEDN,
+				"STATUS" : paymentCookieLists[i].STATUS,
+				"BETRW" : paymentCookieLists[i].BETRW,
+				"BETRZ" : paymentCookieLists[i].BETRZ,
+				"CDSNG" : paymentCookieLists[i].CDSNG,
+				"CCINS" : paymentCookieLists[i].CCINS,
+				"CCDNO" : paymentCookieLists[i].CCDNO,
+				"CSI_DATE" : paymentCookieLists[i].CSI_DATE,
+				"CSI_TIME" : paymentCookieLists[i].CSI_TIME,
+				"CSINO" : paymentCookieLists[i].CSINO,
+				"CUHYY" : paymentCookieLists[i].CUHYY,
+				"CUHMM" : paymentCookieLists[i].CUHMM,
+				"ALLO_MONTH" : paymentCookieLists[i].ALLO_MONTH,
+				"VAN_TR" : paymentCookieLists[i].VAN_TR
 		};
 		
 	}
@@ -133,11 +133,30 @@ function goRequestISPPayIOS(){
 			setCookieKill('vInstallment');
 			
 		}else{
-			notiPop('확인','ISP 결제가 실패했습니다.',true,false,null);
 			setCookieKill('paymentList');
 			setCookieKill('tAmount');
 			setCookieKill('vInstallment');
-			navigateBackToNaviGo('MBLMG3M0');
+			
+			notiPop('확인','ISP 결제가 실패했습니다.',false,false,{
+				list : [{
+					type : 2,
+					id : 'pPhoneSendOK',
+					name : '확인'
+				},{
+					type : '',
+					id : 'pPhoneSendNO',
+					name : '취소'
+				}]
+			});
+			$('.pPhoneSendNO').click(function(){
+	    		//공용
+	    		notiPopID.close();
+	    		navigateBackToNaviGo('MBLMG3M0');
+	    	});
+			$('.pPhoneSendOK').click(function(){
+				notiPopID.close();
+				navigateBackToNaviGo('MBLMG3M0');
+			});
 		}
 		
 		doPage();
@@ -268,6 +287,7 @@ function goMenuBLMG02(){
 	if( vPayType == 'MPI'){
 	
 		var option = {
+			"certiGubun" : "M",	
 			"ordername" : "",
 			"ordernumber" : "",
 			"amount" : vAmount,
@@ -495,6 +515,8 @@ function getRealCardCodeTest(pCardCode){
 		return '0100';
 	}else if(pCardCode == '59'){
 		return '0100';
+	}else if(pCardCode == '99'){
+		return '0100';
 	}
 }
 
@@ -572,6 +594,12 @@ function viewPaidList(){
 			var caList = '<p class="pb10">  취소는 한 건씩만 가능합니다.</p>';
 
 			//'<p><strong>승인일</strong><span class="bold"><label for="chkc'+i+'" class="af-checkbox-text">'+toDateAddDot(cb.list.resultList[i].CSI_DATE)+'</label></span><span class="check"><input class="Checkbox" name="chkc0" value="'+i+'" checked="checked" id="chkc'+i+'" data-type="checkbox" data-classinit="true" type="checkbox" data-converted="true"></span></p>'+
+			
+			var sortRule = function(a, b) {//내림차순 정렬
+			  if(a.CSI_DATE+a.CSI_TIME == b.CSI_DATE+b.CSI_TIME){ return 0} return  a.CSI_DATE+a.CSI_TIME > b.CSI_DATE+b.CSI_TIME ? -1 : 1;
+			}
+			cb.list.resultList.sort(sortRule);
+			
 			for(var i=0;i< cb.list.resultList.length;i++){
 				caList += '<div class="bill">'+
 				'<input type="hidden" value="'+' '+','+' '+'"/>'+
